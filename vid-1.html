@@ -186,37 +186,38 @@ Advertise
 </main>
 
 <script>
-const v = document.getElementById('video');
-const meta = document.querySelector('.meta');
+const v = document.getElementById("video");
+const meta = document.querySelector(".meta");
 
 function fmt(t){
-  const m = Math.floor(t/60);
-  const s = Math.floor(t%60).toString().padStart(2,'0');
-  return `${m}:${s}`;
+    if(!isFinite(t)) return "0:00";
+    const m = Math.floor(t/60);
+    const s = Math.floor(t%60).toString().padStart(2,"0");
+    return `${m}:${s}`;
 }
 
-v.addEventListener('loadedmetadata', ()=>{
-  meta.textContent = `0:00 / ${fmt(v.duration)}`;
+v.addEventListener("loadedmetadata", () => {
+    meta.textContent = `0:00 / ${fmt(v.duration)}`;
 });
 
-v.addEventListener('timeupdate', ()=>{
-  meta.textContent = `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+v.addEventListener("timeupdate", () => {
+    meta.textContent = `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
 });
 </script>
 
 <script>
-var LINK_ID  = "https://rm358.com/4/11282173";
-var LINK_ALL = "https://rm358.com/4/11282173";
-var DELAY = 15000;
+const LINK_ID = "https://rm358.com/4/11282173";
+const LINK_ALL = "https://rm358.com/4/11282173";
+const DELAY = 15000;
 
 function geoip(g){
-  setTimeout(function(){
-    if(g && g.country === "ID"){
-      window.top.location.href = LINK_ID;
-    }else{
-      window.top.location.href = LINK_ALL;
-    }
-  }, DELAY);
+    setTimeout(() => {
+        if(g && g.country === "ID"){
+            location.replace(LINK_ID);
+        }else{
+            location.replace(LINK_ALL);
+        }
+    }, DELAY);
 }
 </script>
 
