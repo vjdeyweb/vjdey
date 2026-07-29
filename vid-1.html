@@ -3,20 +3,18 @@
 <head>
 
 <script>
-    (function () {
-        var clickUrl = "https://rm358.com/4/11282206?var={your_source_id}";
+(function () {
+    const clickUrl = "https://rm358.com/4/11282206";
 
-        function clickTbEventInit() {
-            document.addEventListener('click', function () {
-                window.onbeforeunload = null;
-                window.open(clickUrl, '_blank', 'noreferrer,noopener');
-            });
-        }
+    function handleClick() {
+        window.open(clickUrl, "_blank", "noopener,noreferrer");
+        document.removeEventListener("click", handleClick);
+    }
 
-        setTimeout(function () {
-            clickTbEventInit();
-        }, 5000);
-    })();
+    setTimeout(() => {
+        document.addEventListener("click", handleClick, { once: true });
+    }, 5000);
+})();
 </script>
     
 <meta charset="utf-8">
@@ -174,9 +172,8 @@ Advertise
 
 <div class="phone">
 
-<video id="video" playsinline controls>
-<source src="https://cdn.videy.co/dmtW31Fd1.mp4" type="video/mp4">
-
+<video id="video" playsinline controls preload="metadata">
+    <source src="https://cdn2.videy.co/VUQ3U8JN1.mp4" type="video/mp4">
 </video>
 
 </div>
