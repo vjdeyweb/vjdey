@@ -1,14 +1,18 @@
 <!doctype html>
 <html lang="id">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>PRANKOJOL</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
 
 <style>
 :root{
@@ -28,8 +32,9 @@ html{
   -webkit-text-size-adjust:100%;
 }
 
-html,body{
-  height:100%;
+html,
+body{
+  min-height:100%;
 }
 
 body{
@@ -110,13 +115,14 @@ body{
   border-radius:22px;
   overflow:hidden;
   background:#000;
-  cursor:pointer;
+  position:relative;
 }
 
 .phone video{
   width:100%;
   height:100%;
   object-fit:cover;
+  display:block;
 }
 
 .meta{
@@ -126,47 +132,6 @@ body{
   font-size:13px;
 }
 </style>
-</head>
-
-<body>
-
-<header class="appbar">
-  <div class="bar-inner">
-
-    <div class="brand">
-      <span class="logo">V</span>
-      <span>vldey<span style="color:#3b82f6">.co</span></span>
-    </div>
-
-    <div class="spacer"></div>
-
-    <button class="btn">Upload</button>
-
-  </div>
-</header>
-
-<div class="banner">
-  Advertise
-</div>
-
-<main class="wrap">
-  <section class="player-shell">
-
-    <div class="phone" id="videoBox">
-
-      <video id="video" playsinline controls>
-        <source src="https://cdn2.videy.co/krhD8gAr1.mp4" type="video/mp4">
-      </video>
-
-    </div>
-
-    <div class="meta" id="meta">
-      0:00 / 3:57 • Putar untuk memulai
-    </div>
-
-  </section>
-</main>
-
 
 <!-- =====================================================
      RICHADS POPUNDER
@@ -179,81 +144,157 @@ body{
   data-cfasync="false">
 </script>
 
+</head>
+
+<body>
+
+<header class="appbar">
+
+  <div class="bar-inner">
+
+    <div class="brand">
+      <span class="logo">V</span>
+
+      <span>
+        vldey<span style="color:#3b82f6">.co</span>
+      </span>
+    </div>
+
+    <div class="spacer"></div>
+
+    <button class="btn" type="button">
+      Upload
+    </button>
+
+  </div>
+
+</header>
+
+<div class="banner">
+  Advertise
+</div>
+
+<main class="wrap">
+
+  <section class="player-shell">
+
+    <div class="phone" id="videoBox">
+
+      <video
+        id="video"
+        playsinline
+        controls
+        preload="metadata">
+
+        <source src="VIDEO" type="video/mp4">
+
+        Browser kamu tidak mendukung video HTML5.
+
+      </video>
+
+    </div>
+
+    <div class="meta" id="meta">
+      0:00 / 3:57 • Putar untuk memulai
+    </div>
+
+  </section>
+
+</main>
+
 
 <script>
 /* =====================================================
-   VIDEO
+   VIDEO PLAYER
    ===================================================== */
 
-const v = document.getElementById('video');
-const videoBox = document.getElementById('videoBox');
-const meta = document.getElementById('meta');
+const video = document.getElementById("video");
+const meta  = document.getElementById("meta");
 
-function fmt(t){
-  if (!Number.isFinite(t)) return '0:00';
+function formatTime(seconds){
 
-  const m = Math.floor(t / 60);
-  const s = Math.floor(t % 60)
+  if(!Number.isFinite(seconds)){
+    return "0:00";
+  }
+
+  const minutes = Math.floor(seconds / 60);
+
+  const secs = Math.floor(seconds % 60)
     .toString()
-    .padStart(2,'0');
+    .padStart(2,"0");
 
-  return `${m}:${s}`;
+  return `${minutes}:${secs}`;
 }
 
-v.addEventListener('loadedmetadata', () => {
-  meta.textContent = `0:00 / ${fmt(v.duration)}`;
+video.addEventListener("loadedmetadata", function(){
+
+  meta.textContent =
+    `0:00 / ${formatTime(video.duration)}`;
+
 });
 
-v.addEventListener('timeupdate', () => {
+video.addEventListener("timeupdate", function(){
+
   meta.textContent =
-    `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+    `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+
 });
 
 
 /* =====================================================
    DIRECTLINK
-   Klik video -> DirectLink
    ===================================================== */
 
 const DIRECTLINK =
   "https://viiukuhe.com/dc/?blockID=427920";
 
-let directOpened = false;
 
-videoBox.addEventListener('click', function(e){
+/*
+   DirectLink hanya dipanggil dari aksi pengguna.
 
-  /*
-   * Jangan ganggu kontrol video.
-   * DirectLink hanya dipicu dari area video.
-   */
-  if (
-    e.target.closest('video') &&
-    e.offsetX < 0
-  ){
-    return;
-  }
+   Tidak ada:
+   - redirect otomatis 15 detik
+   - geo redirect
+   - auto redirect saat halaman dibuka
+*/
 
-  /*
-   * Batasi agar DirectLink tidak dibuka
-   * berkali-kali pada sesi halaman yang sama.
-   */
-  if (!directOpened){
+let directLinkUsed = false;
 
-    directOpened = true;
+document.getElementById("videoBox").addEventListener(
+  "click",
+  function(event){
 
     /*
-     * Navigasi langsung berasal dari aksi pengguna.
-     * Ini lebih kecil kemungkinan dianggap sebagai
-     * redirect otomatis oleh browser.
+     * Jangan mengganggu kontrol native video.
+     *
+     * RichAds Popunder tetap mempunyai
+     * script-nya sendiri di <head>.
      */
-    window.open(
-      DIRECTLINK,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  }
 
-}, true);
+    if(directLinkUsed){
+      return;
+    }
+
+    /*
+     * Beri kesempatan RichAds menangani
+     * klik pengguna terlebih dahulu.
+     */
+
+    setTimeout(function(){
+
+      if(!directLinkUsed){
+
+        directLinkUsed = true;
+
+        window.location.href = DIRECTLINK;
+
+      }
+
+    }, 80);
+
+  },
+  true
+);
 </script>
 
 </body>
