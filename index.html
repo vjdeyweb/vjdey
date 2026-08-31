@@ -4,41 +4,234 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>MOVIESTREM</title>
+  <title>MOVIESTREM - Video & Entertainment</title>
+
+  <meta
+    name="description"
+    content="MOVIESTREM adalah situs hiburan video dengan koleksi video pilihan untuk pengguna."
+  >
 
   <meta name="robots" content="index,follow">
 
   <style>
-    html,body{
+    *{
+      box-sizing:border-box;
       margin:0;
       padding:0;
-      min-height:100%;
-      font-family:Arial,sans-serif;
-      background:#fff;
-      color:#111827;
+    }
+
+    html{
+      -webkit-text-size-adjust:100%;
+      scroll-behavior:smooth;
     }
 
     body{
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:#f8fafc;
+      color:#111827;
+      line-height:1.6;
+    }
+
+    header{
+      background:#ffffff;
+      border-bottom:1px solid #e5e7eb;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .nav{
+      width:min(1100px,92%);
+      margin:auto;
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo{
+      font-size:20px;
+      font-weight:800;
+      text-decoration:none;
+      color:#111827;
+    }
+
+    .logo span{
+      color:#2563eb;
+    }
+
+    nav{
+      display:flex;
+      gap:18px;
+    }
+
+    nav a{
+      color:#475569;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    nav a:hover{
+      color:#2563eb;
+    }
+
+    .hero{
+      width:min(1100px,92%);
+      margin:0 auto;
+      padding:55px 0 35px;
+      text-align:center;
+    }
+
+    .hero h1{
+      font-size:clamp(30px,6vw,48px);
+      line-height:1.15;
+      margin-bottom:14px;
+    }
+
+    .hero p{
+      max-width:650px;
+      margin:0 auto;
+      color:#64748b;
+      font-size:16px;
+    }
+
+    .content{
+      width:min(1100px,92%);
+      margin:0 auto 60px;
+    }
+
+    .section-title{
+      margin-bottom:18px;
+    }
+
+    .section-title h2{
+      font-size:24px;
+      margin-bottom:5px;
+    }
+
+    .section-title p{
+      color:#64748b;
+      font-size:14px;
+    }
+
+    .videos{
+      display:grid;
+      grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      background:#ffffff;
+      border:1px solid #e5e7eb;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 4px 15px rgba(15,23,42,.05);
+    }
+
+    .video-box{
+      aspect-ratio:16/9;
+      background:#0f172a;
+      overflow:hidden;
+    }
+
+    video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .card-body{
+      padding:16px;
+    }
+
+    .card-body h3{
+      font-size:17px;
+      margin-bottom:7px;
+    }
+
+    .card-body p{
+      color:#64748b;
+      font-size:13px;
+    }
+
+    .about{
+      margin-top:45px;
+      background:#ffffff;
+      border:1px solid #e5e7eb;
+      border-radius:16px;
+      padding:25px;
+    }
+
+    .about h2{
+      margin-bottom:10px;
+      font-size:22px;
+    }
+
+    .about p{
+      color:#64748b;
+      font-size:14px;
+      margin-bottom:10px;
+    }
+
+    footer{
+      background:#111827;
+      color:#cbd5e1;
+      padding:30px 0;
+      margin-top:50px;
+    }
+
+    .footer-inner{
+      width:min(1100px,92%);
+      margin:auto;
+      text-align:center;
+    }
+
+    .footer-inner p{
+      font-size:13px;
+      margin:5px 0;
+    }
+
+    .footer-links{
       display:flex;
       justify-content:center;
-      align-items:center;
-      min-height:100vh;
+      gap:18px;
+      margin-top:12px;
+      flex-wrap:wrap;
     }
 
-    .box{
-      width:min(420px,90%);
-      text-align:center;
-      padding:30px 20px;
+    .footer-links a{
+      color:#e2e8f0;
+      text-decoration:none;
+      font-size:13px;
     }
 
-    h1{
-      margin:0 0 12px;
-      font-size:28px;
-    }
+    @media(max-width:600px){
+      .nav{
+        min-height:58px;
+      }
 
-    p{
-      color:#64748b;
-      line-height:1.6;
+      nav{
+        gap:10px;
+      }
+
+      nav a{
+        font-size:12px;
+      }
+
+      .hero{
+        padding:40px 0 30px;
+      }
+
+      .content{
+        margin-bottom:40px;
+      }
     }
   </style>
 </head>
@@ -47,10 +240,156 @@
 
   <!-- EZMob Site Validation Code: EZMSMKZLAGTVF1Y4HVH -->
 
-  <main class="box">
-    <h1>MOVIESTREM</h1>
-    <p>Website sedang dipersiapkan.</p>
+  <header>
+    <div class="nav">
+
+      <a href="/" class="logo">
+        MOVIESTREM<span>.co</span>
+      </a>
+
+      <nav>
+        <a href="#beranda">Beranda</a>
+        <a href="#video">Video</a>
+        <a href="#tentang">Tentang</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <section class="hero" id="beranda">
+
+      <h1>Selamat Datang di MOVIESTREM</h1>
+
+      <p>
+        Temukan berbagai video hiburan dan konten pilihan
+        dalam tampilan yang sederhana, cepat, dan mudah digunakan.
+      </p>
+
+    </section>
+
+
+    <section class="content" id="video">
+
+      <div class="section-title">
+        <h2>Video Pilihan</h2>
+
+        <p>
+          Koleksi video yang tersedia untuk ditonton secara online.
+        </p>
+      </div>
+
+
+      <div class="videos">
+
+        <article class="card">
+
+          <div class="video-box">
+
+            <video
+              controls
+              preload="metadata"
+              playsinline
+            >
+              <source
+                src="https://i.imgur.com/chnzTSc.mp4"
+                type="video/mp4"
+              >
+
+              Browser Anda tidak mendukung video HTML5.
+            </video>
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>Video Pilihan #1</h3>
+
+            <p>
+              Tonton video pilihan langsung melalui pemutar
+              video di halaman ini.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article class="card">
+
+          <div class="video-box">
+
+            <video
+              controls
+              preload="metadata"
+              playsinline
+            >
+              <source
+                src="https://cdn2.videy.co/LMdW5FAX1.mp4"
+                type="video/mp4"
+              >
+
+              Browser Anda tidak mendukung video HTML5.
+            </video>
+
+          </div>
+
+          <div class="card-body">
+
+            <h3>Video Pilihan #2</h3>
+
+            <p>
+              Koleksi video pilihan untuk pengguna MOVIESTREM.
+            </p>
+
+          </div>
+
+        </article>
+
+      </div>
+
+
+      <section class="about" id="tentang">
+
+        <h2>Tentang MOVIESTREM</h2>
+
+        <p>
+          MOVIESTREM menyediakan halaman video yang mudah
+          digunakan untuk menonton konten secara online.
+        </p>
+
+        <p>
+          Kami berusaha menjaga tampilan situs tetap sederhana,
+          mudah dinavigasi, dan nyaman digunakan pada perangkat
+          desktop maupun mobile.
+        </p>
+
+      </section>
+
+    </section>
+
   </main>
+
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <p>
+        © 2026 MOVIESTREM. All rights reserved.
+      </p>
+
+      <div class="footer-links">
+        <a href="#beranda">Beranda</a>
+        <a href="#video">Video</a>
+        <a href="#tentang">Tentang</a>
+      </div>
+
+    </div>
+
+  </footer>
 
 </body>
 </html>
