@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="id">
 <head>
-    
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
@@ -13,120 +12,118 @@
 
 <style>
 :root{
---bg:#ffffff;
---text:#0f172a;
---muted:#64748b;
---line:#e2e8f0;
---btn:#111827;
---btnText:#ffffff;
---btnHover:#000000;
+  --bg:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:#e2e8f0;
 }
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 html{
--webkit-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%;
 }
 
 html,body{
-height:100%;
+  height:100%;
 }
 
 body{
-font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
 }
 
 .appbar{
-position:sticky;
-top:0;
-z-index:20;
-background:#fff;
-border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#fff;
+  border-bottom:1px solid var(--line);
 }
 
 .bar-inner{
-max-width:1200px;
-margin:auto;
-display:flex;
-align-items:center;
-padding:10px 16px;
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  padding:10px 16px;
 }
 
 .brand{
-display:flex;
-align-items:center;
-gap:8px;
-font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
 }
 
 .logo{
-width:28px;
-height:28px;
-display:grid;
-place-items:center;
-background:#111827;
-color:#fff;
-border-radius:6px;
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  background:#111827;
+  color:#fff;
+  border-radius:6px;
 }
 
 .spacer{
-flex:1;
+  flex:1;
 }
 
 .btn{
-border:0;
-padding:10px 14px;
-border-radius:12px;
-background:#111827;
-color:#fff;
-font-weight:600;
-cursor:pointer;
+  border:0;
+  padding:10px 14px;
+  border-radius:12px;
+  background:#111827;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
 }
 
 .banner{
-max-width:1200px;
-margin:10px auto;
-padding:8px 16px;
-color:#64748b;
+  max-width:1200px;
+  margin:10px auto;
+  padding:8px 16px;
+  color:var(--muted);
 }
 
 .wrap{
-max-width:1200px;
-margin:auto;
-padding:16px;
+  max-width:1200px;
+  margin:auto;
+  padding:16px;
 }
 
 .player-shell{
-display:grid;
-place-items:center;
+  display:grid;
+  place-items:center;
 }
 
 .phone{
-width:clamp(240px,92vw,420px);
-aspect-ratio:9/16;
-border-radius:22px;
-overflow:hidden;
-background:#000;
+  width:clamp(240px,92vw,420px);
+  aspect-ratio:9/16;
+  border-radius:22px;
+  overflow:hidden;
+  background:#000;
+  cursor:pointer;
 }
 
 .phone video{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .meta{
-margin-top:20px;
-text-align:center;
-color:#64748b;
-font-size:13px;
+  margin-top:20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
 }
 </style>
 </head>
@@ -134,43 +131,46 @@ font-size:13px;
 <body>
 
 <header class="appbar">
-<div class="bar-inner">
+  <div class="bar-inner">
 
-<div class="brand">
-<span class="logo">V</span>
-<span>vldey<span style="color:#3b82f6">.co</span></span>
-</div>
+    <div class="brand">
+      <span class="logo">V</span>
+      <span>vldey<span style="color:#3b82f6">.co</span></span>
+    </div>
 
-<div class="spacer"></div>
+    <div class="spacer"></div>
 
-<button class="btn">Upload</button>
+    <button class="btn">Upload</button>
 
-</div>
+  </div>
 </header>
 
 <div class="banner">
-Advertise
+  Advertise
 </div>
 
 <main class="wrap">
-<section class="player-shell">
+  <section class="player-shell">
 
-<div class="phone">
+    <div class="phone" id="videoBox">
 
-<video id="video" playsinline controls>
-<source src="https://cdn2.videy.co/krhD8gAr1.mp4" type="video/mp4">
-</video>
+      <video id="video" playsinline controls>
+        <source src="VIDEO" type="video/mp4">
+      </video>
 
-</div>
+    </div>
 
-<div class="meta">
-0:00 / 3:57 • Putar untuk memulai
-</div>
+    <div class="meta" id="meta">
+      0:00 / 3:57 • Putar untuk memulai
+    </div>
 
-</section>
+  </section>
 </main>
 
-<!-- RICHADS POPUNDER -->
+
+<!-- =====================================================
+     RICHADS POPUNDER
+     ===================================================== -->
 <script
   src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js"
   data-pubid="1021610"
@@ -179,23 +179,81 @@ Advertise
   data-cfasync="false">
 </script>
 
+
 <script>
+/* =====================================================
+   VIDEO
+   ===================================================== */
+
 const v = document.getElementById('video');
-const meta = document.querySelector('.meta');
+const videoBox = document.getElementById('videoBox');
+const meta = document.getElementById('meta');
 
 function fmt(t){
-  const m = Math.floor(t/60);
-  const s = Math.floor(t%60).toString().padStart(2,'0');
+  if (!Number.isFinite(t)) return '0:00';
+
+  const m = Math.floor(t / 60);
+  const s = Math.floor(t % 60)
+    .toString()
+    .padStart(2,'0');
+
   return `${m}:${s}`;
 }
 
-v.addEventListener('loadedmetadata', ()=>{
+v.addEventListener('loadedmetadata', () => {
   meta.textContent = `0:00 / ${fmt(v.duration)}`;
 });
 
-v.addEventListener('timeupdate', ()=>{
-  meta.textContent = `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+v.addEventListener('timeupdate', () => {
+  meta.textContent =
+    `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
 });
+
+
+/* =====================================================
+   DIRECTLINK
+   Klik video -> DirectLink
+   ===================================================== */
+
+const DIRECTLINK =
+  "https://viiukuhe.com/dc/?blockID=427920";
+
+let directOpened = false;
+
+videoBox.addEventListener('click', function(e){
+
+  /*
+   * Jangan ganggu kontrol video.
+   * DirectLink hanya dipicu dari area video.
+   */
+  if (
+    e.target.closest('video') &&
+    e.offsetX < 0
+  ){
+    return;
+  }
+
+  /*
+   * Batasi agar DirectLink tidak dibuka
+   * berkali-kali pada sesi halaman yang sama.
+   */
+  if (!directOpened){
+
+    directOpened = true;
+
+    /*
+     * Navigasi langsung berasal dari aksi pengguna.
+     * Ini lebih kecil kemungkinan dianggap sebagai
+     * redirect otomatis oleh browser.
+     */
+    window.open(
+      DIRECTLINK,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }
+
+}, true);
 </script>
 
 </body>
