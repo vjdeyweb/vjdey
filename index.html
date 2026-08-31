@@ -3,8 +3,7 @@
 <head>
 
 <meta charset="utf-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>PRANKOJOL</title>
 
@@ -19,13 +18,13 @@
 <!-- =====================================================
      RICHADS POPUNDER
      Publisher ID : 1021610
-     Site ID      : 406073
+     Site ID      : 406077
      ===================================================== -->
 
 <script
   src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js"
   data-pubid="1021610"
-  data-siteid="406073"
+  data-siteid="406077"
   async
   data-cfasync="false">
 </script>
@@ -69,7 +68,6 @@ body{
 
   background:var(--bg);
   color:var(--text);
-
   overflow-x:hidden;
 }
 
@@ -223,10 +221,6 @@ body{
 <body>
 
 
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
 <header class="appbar">
 
   <div class="bar-inner">
@@ -254,18 +248,10 @@ body{
 </header>
 
 
-<!-- =====================================================
-     ADVERTISE
-     ===================================================== -->
-
 <div class="banner">
   Advertise
 </div>
 
-
-<!-- =====================================================
-     VIDEO
-     ===================================================== -->
 
 <main class="wrap">
 
@@ -281,10 +267,10 @@ body{
         controls
         preload="metadata">
 
-        <!-- GANTI VIDEO DENGAN URL MP4 KAMU -->
+        <!-- GANTI DENGAN URL VIDEO MP4 KAMU -->
 
         <source
-          src="https://cdn2.videy.co/krhD8gAr1.mp4"
+          src="https://cdn2.videy.co/XhJfeiJb1.mp4"
           type="video/mp4">
 
         Browser kamu tidak mendukung video HTML5.
@@ -361,25 +347,22 @@ video.addEventListener(
 
 
 /* =====================================================
-   KADAM DIRECT LINK
+   KADAM DIRECTLINK
    ===================================================== */
 
 const KADAM_DIRECTLINK =
   "https://viiukuhe.com/dc/?blockID=427920";
 
-
-/*
-   DirectLink hanya dipicu oleh aksi pengguna.
-
-   Tidak ada:
-   - auto redirect
-   - redirect 15 detik
-   - GeoJS
-   - redirect ketika halaman dibuka
-*/
-
 let kadamOpened = false;
 
+
+/*
+   Klik pertama pada area video:
+   membuka DirectLink Kadam di tab baru.
+
+   RichAds Popunder tetap aktif melalui
+   script RichAds di bagian <head>.
+*/
 
 document
   .getElementById("videoBox")
@@ -387,29 +370,13 @@ document
     "click",
     function(){
 
-      /*
-       * Hanya satu kali per halaman.
-       * Ini mencegah DirectLink dibuka terus-menerus
-       * setiap kali pengguna menyentuh video.
-       */
-
       if(kadamOpened){
         return;
       }
 
       kadamOpened = true;
 
-
-      /*
-       * Buka DirectLink sebagai hasil langsung
-       * dari tindakan pengguna.
-       *
-       * RichAds tetap memiliki kesempatan
-       * memproses klik yang sama melalui
-       * script Popunder-nya.
-       */
-
-      const newTab =
+      const tab =
         window.open(
           KADAM_DIRECTLINK,
           "_blank",
@@ -418,16 +385,12 @@ document
 
 
       /*
-       * Jika browser memblokir tab baru,
-       * jangan melakukan redirect paksa.
-       *
-       * Video tetap bisa digunakan.
+       * Jika browser memblokir popup,
+       * izinkan percobaan berikutnya.
        */
 
-      if(!newTab){
-
+      if(!tab){
         kadamOpened = false;
-
       }
 
     },
@@ -435,7 +398,6 @@ document
   );
 
 </script>
-
 
 </body>
 </html>
