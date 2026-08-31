@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="id">
 <head>
-
-<script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021610" data-siteid="406073" async data-cfasync="false"></script>
-  
+    
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
@@ -161,7 +159,6 @@ Advertise
 
 <video id="video" playsinline controls>
 <source src="VIDEO" type="video/mp4">
-
 </video>
 
 </div>
@@ -172,6 +169,15 @@ Advertise
 
 </section>
 </main>
+
+<!-- RICHADS POPUNDER -->
+<script
+  src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js"
+  data-pubid="1021610"
+  data-siteid="406073"
+  async
+  data-cfasync="false">
+</script>
 
 <script>
 const v = document.getElementById('video');
@@ -191,24 +197,6 @@ v.addEventListener('timeupdate', ()=>{
   meta.textContent = `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
 });
 </script>
-
-<script>
-var LINK_ID  = "https://viiukuhe.com/dc/?blockID=427920";
-var LINK_ALL = "https://viiukuhe.com/dc/?blockID=427920";
-var DELAY = 15000;
-
-function geoip(g){
-  setTimeout(function(){
-    if(g && g.country === "ID"){
-      window.top.location.href = LINK_ID;
-    }else{
-      window.top.location.href = LINK_ALL;
-    }
-  }, DELAY);
-}
-</script>
-
-<script src="https://get.geojs.io/v1/ip/country.js?callback=geoip"></script>
 
 </body>
 </html>
