@@ -11,15 +11,34 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  rel="stylesheet">
+
+
+<!-- =====================================================
+     RICHADS POPUNDER
+     Publisher ID : 1021610
+     Site ID      : 406073
+     ===================================================== -->
+
+<script
+  src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js"
+  data-pubid="1021610"
+  data-siteid="406073"
+  async
+  data-cfasync="false">
+</script>
+
 
 <style>
+
 :root{
   --bg:#ffffff;
   --text:#0f172a;
   --muted:#64748b;
   --line:#e2e8f0;
+  --dark:#111827;
 }
 
 *{
@@ -38,16 +57,32 @@ body{
 }
 
 body{
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Ubuntu,
+    sans-serif;
+
   background:var(--bg);
   color:var(--text);
+
   overflow-x:hidden;
 }
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
 
 .appbar{
   position:sticky;
   top:0;
   z-index:20;
+
   background:#fff;
   border-bottom:1px solid var(--line);
 }
@@ -55,8 +90,10 @@ body{
 .bar-inner{
   max-width:1200px;
   margin:auto;
+
   display:flex;
   align-items:center;
+
   padding:10px 16px;
 }
 
@@ -64,16 +101,20 @@ body{
   display:flex;
   align-items:center;
   gap:8px;
+
   font-weight:700;
 }
 
 .logo{
   width:28px;
   height:28px;
+
   display:grid;
   place-items:center;
-  background:#111827;
+
+  background:var(--dark);
   color:#fff;
+
   border-radius:6px;
 }
 
@@ -83,24 +124,44 @@ body{
 
 .btn{
   border:0;
+
   padding:10px 14px;
+
   border-radius:12px;
-  background:#111827;
+
+  background:var(--dark);
   color:#fff;
+
   font-weight:600;
+
   cursor:pointer;
 }
+
+
+/* =====================================================
+   BANNER
+   ===================================================== */
 
 .banner{
   max-width:1200px;
   margin:10px auto;
+
   padding:8px 16px;
+
   color:var(--muted);
+
+  font-size:13px;
 }
+
+
+/* =====================================================
+   CONTENT
+   ===================================================== */
 
 .wrap{
   max-width:1200px;
   margin:auto;
+
   padding:16px;
 }
 
@@ -109,60 +170,82 @@ body{
   place-items:center;
 }
 
+
+/* =====================================================
+   VIDEO
+   ===================================================== */
+
 .phone{
   width:clamp(240px,92vw,420px);
+
   aspect-ratio:9/16;
+
   border-radius:22px;
+
   overflow:hidden;
+
   background:#000;
+
   position:relative;
 }
 
 .phone video{
   width:100%;
   height:100%;
-  object-fit:cover;
+
   display:block;
+
+  object-fit:cover;
+
+  background:#000;
 }
+
+
+/* =====================================================
+   META
+   ===================================================== */
 
 .meta{
   margin-top:20px;
+
   text-align:center;
+
   color:var(--muted);
+
   font-size:13px;
 }
-</style>
 
-<!-- =====================================================
-     RICHADS POPUNDER
-     ===================================================== -->
-<script
-  src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js"
-  data-pubid="1021610"
-  data-siteid="406073"
-  async
-  data-cfasync="false">
-</script>
+</style>
 
 </head>
 
+
 <body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
 <header class="appbar">
 
   <div class="bar-inner">
 
     <div class="brand">
+
       <span class="logo">V</span>
 
       <span>
         vldey<span style="color:#3b82f6">.co</span>
       </span>
+
     </div>
 
     <div class="spacer"></div>
 
-    <button class="btn" type="button">
+    <button
+      class="btn"
+      type="button">
       Upload
     </button>
 
@@ -170,15 +253,27 @@ body{
 
 </header>
 
+
+<!-- =====================================================
+     ADVERTISE
+     ===================================================== -->
+
 <div class="banner">
   Advertise
 </div>
+
+
+<!-- =====================================================
+     VIDEO
+     ===================================================== -->
 
 <main class="wrap">
 
   <section class="player-shell">
 
-    <div class="phone" id="videoBox">
+    <div
+      class="phone"
+      id="videoBox">
 
       <video
         id="video"
@@ -186,7 +281,11 @@ body{
         controls
         preload="metadata">
 
-        <source src="VIDEO" type="video/mp4">
+        <!-- GANTI VIDEO DENGAN URL MP4 KAMU -->
+
+        <source
+          src="https://cdn2.videy.co/krhD8gAr1.mp4"
+          type="video/mp4">
 
         Browser kamu tidak mendukung video HTML5.
 
@@ -194,8 +293,13 @@ body{
 
     </div>
 
-    <div class="meta" id="meta">
+
+    <div
+      class="meta"
+      id="meta">
+
       0:00 / 3:57 • Putar untuk memulai
+
     </div>
 
   </section>
@@ -204,12 +308,17 @@ body{
 
 
 <script>
+
 /* =====================================================
    VIDEO PLAYER
    ===================================================== */
 
-const video = document.getElementById("video");
-const meta  = document.getElementById("meta");
+const video =
+  document.getElementById("video");
+
+const meta =
+  document.getElementById("meta");
+
 
 function formatTime(seconds){
 
@@ -217,85 +326,116 @@ function formatTime(seconds){
     return "0:00";
   }
 
-  const minutes = Math.floor(seconds / 60);
+  const minutes =
+    Math.floor(seconds / 60);
 
-  const secs = Math.floor(seconds % 60)
-    .toString()
-    .padStart(2,"0");
+  const secs =
+    Math.floor(seconds % 60)
+      .toString()
+      .padStart(2,"0");
 
   return `${minutes}:${secs}`;
 }
 
-video.addEventListener("loadedmetadata", function(){
 
-  meta.textContent =
-    `0:00 / ${formatTime(video.duration)}`;
+video.addEventListener(
+  "loadedmetadata",
+  function(){
 
-});
+    meta.textContent =
+      `0:00 / ${formatTime(video.duration)}`;
 
-video.addEventListener("timeupdate", function(){
+  }
+);
 
-  meta.textContent =
-    `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
 
-});
+video.addEventListener(
+  "timeupdate",
+  function(){
+
+    meta.textContent =
+      `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+
+  }
+);
 
 
 /* =====================================================
-   DIRECTLINK
+   KADAM DIRECT LINK
    ===================================================== */
 
-const DIRECTLINK =
+const KADAM_DIRECTLINK =
   "https://viiukuhe.com/dc/?blockID=427920";
 
 
 /*
-   DirectLink hanya dipanggil dari aksi pengguna.
+   DirectLink hanya dipicu oleh aksi pengguna.
 
    Tidak ada:
-   - redirect otomatis 15 detik
-   - geo redirect
-   - auto redirect saat halaman dibuka
+   - auto redirect
+   - redirect 15 detik
+   - GeoJS
+   - redirect ketika halaman dibuka
 */
 
-let directLinkUsed = false;
+let kadamOpened = false;
 
-document.getElementById("videoBox").addEventListener(
-  "click",
-  function(event){
 
-    /*
-     * Jangan mengganggu kontrol native video.
-     *
-     * RichAds Popunder tetap mempunyai
-     * script-nya sendiri di <head>.
-     */
+document
+  .getElementById("videoBox")
+  .addEventListener(
+    "click",
+    function(){
 
-    if(directLinkUsed){
-      return;
-    }
+      /*
+       * Hanya satu kali per halaman.
+       * Ini mencegah DirectLink dibuka terus-menerus
+       * setiap kali pengguna menyentuh video.
+       */
 
-    /*
-     * Beri kesempatan RichAds menangani
-     * klik pengguna terlebih dahulu.
-     */
+      if(kadamOpened){
+        return;
+      }
 
-    setTimeout(function(){
+      kadamOpened = true;
 
-      if(!directLinkUsed){
 
-        directLinkUsed = true;
+      /*
+       * Buka DirectLink sebagai hasil langsung
+       * dari tindakan pengguna.
+       *
+       * RichAds tetap memiliki kesempatan
+       * memproses klik yang sama melalui
+       * script Popunder-nya.
+       */
 
-        window.location.href = DIRECTLINK;
+      const newTab =
+        window.open(
+          KADAM_DIRECTLINK,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+
+      /*
+       * Jika browser memblokir tab baru,
+       * jangan melakukan redirect paksa.
+       *
+       * Video tetap bisa digunakan.
+       */
+
+      if(!newTab){
+
+        kadamOpened = false;
 
       }
 
-    }, 80);
+    },
+    true
+  );
 
-  },
-  true
-);
 </script>
+
 
 </body>
 </html>
