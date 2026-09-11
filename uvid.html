@@ -1,0 +1,3031 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>VIRALFLIX — Streaming Premium</title>
+  <meta name="description" content="VIRALFLIX — Platform streaming video modern dan responsif.">
+  <meta name="theme-color" content="#0b0b0e">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#e50914',
+            darkbg: '#0b0b0e'
+          },
+          boxShadow: {
+            glow: '0 0 30px rgba(229,9,20,.18)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0b0b0e;
+      color: #f8fafc;
+      transition:
+        background-color .3s ease,
+        color .3s ease;
+    }
+
+    body.light-mode {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .glass {
+      background: rgba(18, 18, 23, .72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .light-mode .glass {
+      background: rgba(255, 255, 255, .82);
+    }
+
+    .movie-card {
+      transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,.28);
+    }
+
+    .movie-poster {
+      transition: transform .45s ease;
+    }
+
+    .movie-card:hover .movie-poster {
+      transform: scale(1.06);
+    }
+
+    .poster-overlay {
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .movie-card:hover .poster-overlay {
+      opacity: 1;
+    }
+
+    .modal-backdrop {
+      animation: fadeIn .2s ease forwards;
+    }
+
+    .modal-box {
+      animation: modalIn .25s ease forwards;
+    }
+
+    .toast {
+      animation: toastIn .3s ease forwards;
+    }
+
+    .toast.hide {
+      animation: toastOut .3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes toastOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      scrollbar-width: none;
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.15);
+      border-radius: 20px;
+    }
+
+    .light-mode .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,.15);
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+    }
+
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,.04),
+        rgba(255,255,255,.09),
+        rgba(255,255,255,.04)
+      );
+      background-size: 200% 100%;
+      animation: skeleton 1.4s infinite;
+    }
+
+    @keyframes skeleton {
+      from { background-position: 200% 0; }
+      to { background-position: -200% 0; }
+    }
+
+    .light-mode .skeleton {
+      background: linear-gradient(
+        90deg,
+        rgba(0,0,0,.04),
+        rgba(0,0,0,.08),
+        rgba(0,0,0,.04)
+      );
+      background-size: 200% 100%;
+    }
+
+    button,
+    a,
+    input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    @media (max-width: 767px) {
+      .desktop-only {
+        display: none !important;
+      }
+
+      .mobile-full {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .mobile-only {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       APPLICATION
+  ========================================================== -->
+
+  <div id="app" class="min-h-screen">
+
+    <!-- =======================================================
+         TOP NAVBAR
+    ======================================================== -->
+
+    <header
+      id="topNavbar"
+      class="fixed top-0 left-0 right-0 z-40 h-16 border-b border-white/10 dark:border-white/10 bg-[#0b0b0e]/90 backdrop-blur-xl"
+    >
+      <div class="h-full max-w-[1800px] mx-auto px-3 sm:px-5 lg:px-7 flex items-center gap-3">
+
+        <!-- Mobile Menu -->
+        <button
+          id="mobileMenuBtn"
+          type="button"
+          aria-label="Buka menu"
+          class="mobile-only w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/10 transition"
+        >
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Logo -->
+        <button
+          type="button"
+          onclick="navigateTo('home')"
+          class="shrink-0 flex items-center gap-2 group"
+          aria-label="VIRALFLIX Home"
+        >
+          <span class="w-9 h-9 rounded-xl bg-brand flex items-center justify-center shadow-glow">
+            <i data-lucide="play" class="w-5 h-5 fill-white"></i>
+          </span>
+
+          <span class="hidden sm:block text-xl font-black tracking-tight">
+            VIRAL<span class="text-brand">FLIX</span>
+          </span>
+        </button>
+
+        <!-- Search -->
+        <div class="flex-1 max-w-xl mx-auto relative">
+          <i
+            data-lucide="search"
+            class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"
+          ></i>
+
+          <input
+            id="searchInput"
+            type="search"
+            autocomplete="off"
+            placeholder="Cari film, genre, tahun..."
+            class="w-full h-10 pl-10 pr-4 rounded-xl border border-white/10 bg-white/5 text-sm outline-none focus:border-brand/60 focus:ring-2 focus:ring-brand/10 placeholder:text-slate-500"
+          >
+        </div>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-1">
+
+          <!-- Theme -->
+          <button
+            id="themeBtn"
+            type="button"
+            aria-label="Ganti tema"
+            class="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/10 transition"
+          >
+            <i id="themeIcon" data-lucide="sun" class="w-5 h-5"></i>
+          </button>
+
+          <!-- Notification -->
+          <div class="relative">
+            <button
+              id="notificationBtn"
+              type="button"
+              aria-label="Notifikasi"
+              class="relative w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/10 transition"
+            >
+              <i data-lucide="bell" class="w-5 h-5"></i>
+              <span
+                id="notificationBadge"
+                class="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand ring-2 ring-[#0b0b0e]"
+              ></span>
+            </button>
+
+            <div
+              id="notificationPanel"
+              class="hidden absolute right-0 top-12 w-[300px] max-w-[90vw] rounded-2xl border border-white/10 bg-[#141419] shadow-2xl overflow-hidden"
+            >
+              <div class="p-4 border-b border-white/10 flex items-center justify-between">
+                <div>
+                  <p class="font-bold">Notifications</p>
+                  <p class="text-xs text-slate-400 mt-1">Aktivitas terbaru</p>
+                </div>
+
+                <button
+                  onclick="markNotificationsRead()"
+                  class="text-xs text-brand hover:underline"
+                >
+                  Tandai dibaca
+                </button>
+              </div>
+
+              <div class="max-h-80 overflow-y-auto custom-scroll">
+
+                <div class="p-4 flex gap-3 hover:bg-white/5 transition">
+                  <span class="w-9 h-9 rounded-full bg-brand/15 text-brand flex items-center justify-center shrink-0">
+                    <i data-lucide="film" class="w-4 h-4"></i>
+                  </span>
+
+                  <div>
+                    <p class="text-sm font-semibold">New movie released</p>
+                    <p class="text-xs text-slate-400 mt-1">The Last Horizon sudah tersedia.</p>
+                  </div>
+                </div>
+
+                <div class="p-4 flex gap-3 hover:bg-white/5 transition">
+                  <span class="w-9 h-9 rounded-full bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  </span>
+
+                  <div>
+                    <p class="text-sm font-semibold">New recommendation</p>
+                    <p class="text-xs text-slate-400 mt-1">Kami menemukan film yang mungkin Anda suka.</p>
+                  </div>
+                </div>
+
+                <div class="p-4 flex gap-3 hover:bg-white/5 transition">
+                  <span class="w-9 h-9 rounded-full bg-green-500/15 text-green-400 flex items-center justify-center shrink-0">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                  </span>
+
+                  <div>
+                    <p class="text-sm font-semibold">Watch List updated</p>
+                    <p class="text-xs text-slate-400 mt-1">Daftar tontonan Anda siap digunakan.</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <button
+            type="button"
+            onclick="showToast('Profile menu dibuka','user')"
+            class="ml-1 flex items-center gap-2 p-1 rounded-xl hover:bg-white/10 transition"
+          >
+            <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-red-900 flex items-center justify-center font-bold text-sm">
+              VF
+            </span>
+
+            <span class="hidden lg:block text-sm font-semibold pr-1">
+              User
+            </span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+
+    <!-- =======================================================
+         MOBILE SIDEBAR OVERLAY
+    ======================================================== -->
+
+    <div
+      id="mobileOverlay"
+      class="hidden fixed inset-0 z-40 bg-black/70 backdrop-blur-sm"
+    ></div>
+
+
+    <!-- =======================================================
+         SIDEBAR LEFT
+    ======================================================== -->
+
+    <aside
+      id="sidebar"
+      class="fixed z-50 top-16 bottom-0 left-0 w-64 border-r border-white/10 bg-[#0b0b0e] transition-transform duration-300 -translate-x-full md:translate-x-0"
+    >
+
+      <div class="h-full flex flex-col">
+
+        <nav class="p-4 space-y-1 overflow-y-auto custom-scroll">
+
+          <p class="px-3 pt-2 pb-3 text-[10px] uppercase tracking-[.2em] text-slate-500 font-bold">
+            Main Menu
+          </p>
+
+          <button class="side-link active" data-page="home">
+            <i data-lucide="house" class="w-5 h-5"></i>
+            <span>Home</span>
+          </button>
+
+          <button class="side-link" data-page="watchlist">
+            <i data-lucide="bookmark" class="w-5 h-5"></i>
+            <span>Watch List</span>
+            <span id="watchListCount" class="ml-auto text-xs text-slate-500">0</span>
+          </button>
+
+          <button class="side-link" data-page="coming">
+            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+            <span>Coming Soon</span>
+          </button>
+
+          <button class="side-link" data-page="discovery">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+            <span>Discovery</span>
+          </button>
+
+          <div class="pt-5 pb-3">
+            <p class="px-3 text-[10px] uppercase tracking-[.2em] text-slate-500 font-bold">
+              Community
+            </p>
+          </div>
+
+          <button class="side-link" data-page="friends">
+            <i data-lucide="users" class="w-5 h-5"></i>
+            <span>Friends</span>
+          </button>
+
+          <button class="side-link" data-page="parties">
+            <i data-lucide="radio" class="w-5 h-5"></i>
+            <span>Parties</span>
+          </button>
+
+          <button class="side-link" data-page="media">
+            <i data-lucide="library" class="w-5 h-5"></i>
+            <span>Media</span>
+          </button>
+
+          <div class="pt-5 pb-3">
+            <p class="px-3 text-[10px] uppercase tracking-[.2em] text-slate-500 font-bold">
+              System
+            </p>
+          </div>
+
+          <button class="side-link" data-page="setting">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+            <span>Setting</span>
+          </button>
+
+        </nav>
+
+        <div class="mt-auto p-4">
+
+          <div class="rounded-2xl border border-white/10 bg-white/[.03] p-4">
+
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-brand/15 text-brand flex items-center justify-center">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+              </span>
+
+              <div>
+                <p class="text-sm font-bold">VIRALFLIX</p>
+                <p class="text-[11px] text-slate-500">Premium Streaming</p>
+              </div>
+            </div>
+
+            <p class="mt-4 text-xs leading-5 text-slate-500">
+              Nikmati pengalaman streaming modern dalam satu tempat.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </aside>
+
+
+    <!-- =======================================================
+         MAIN
+    ======================================================== -->
+
+    <main
+      id="mainContent"
+      class="pt-16 md:pl-64 transition-all duration-300"
+    >
+
+      <!-- Dynamic content inserted here -->
+
+    </main>
+
+
+    <!-- =======================================================
+         MOBILE BOTTOM NAV
+    ======================================================== -->
+
+    <div
+      class="mobile-only fixed z-30 bottom-0 left-0 right-0 safe-bottom border-t border-white/10 bg-[#0b0b0e]/95 backdrop-blur-xl"
+    >
+      <div class="grid grid-cols-4 h-16">
+
+        <button
+          onclick="navigateTo('home')"
+          class="flex flex-col items-center justify-center gap-1 text-xs text-slate-400 hover:text-white"
+        >
+          <i data-lucide="house" class="w-5 h-5"></i>
+          Home
+        </button>
+
+        <button
+          onclick="navigateTo('discovery')"
+          class="flex flex-col items-center justify-center gap-1 text-xs text-slate-400 hover:text-white"
+        >
+          <i data-lucide="compass" class="w-5 h-5"></i>
+          Discover
+        </button>
+
+        <button
+          onclick="navigateTo('watchlist')"
+          class="flex flex-col items-center justify-center gap-1 text-xs text-slate-400 hover:text-white"
+        >
+          <i data-lucide="bookmark" class="w-5 h-5"></i>
+          List
+        </button>
+
+        <button
+          onclick="navigateTo('setting')"
+          class="flex flex-col items-center justify-center gap-1 text-xs text-slate-400 hover:text-white"
+        >
+          <i data-lucide="settings" class="w-5 h-5"></i>
+          Setting
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- =======================================================
+         VIDEO MODAL
+    ======================================================== -->
+
+    <div
+      id="videoModal"
+      class="hidden fixed inset-0 z-[100] modal-backdrop bg-black/90 p-3 sm:p-6 flex items-center justify-center"
+    >
+
+      <div
+        id="videoModalBox"
+        class="modal-box w-full max-w-5xl max-h-[95vh] overflow-y-auto custom-scroll rounded-2xl sm:rounded-3xl border border-white/10 bg-[#111116] shadow-2xl"
+      >
+
+        <div class="relative">
+
+          <video
+            id="videoPlayer"
+            class="w-full aspect-video bg-black object-contain rounded-t-2xl sm:rounded-t-3xl"
+            controls
+            playsinline
+            preload="metadata"
+          >
+            <source id="videoSource" src="" type="video/mp4">
+            Browser Anda tidak mendukung video HTML5.
+          </video>
+
+          <button
+            id="closeModalBtn"
+            type="button"
+            aria-label="Tutup pemutar"
+            class="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/70 hover:bg-brand flex items-center justify-center transition"
+          >
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+
+        </div>
+
+        <div class="p-5 sm:p-7">
+
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
+
+            <div class="min-w-0">
+
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-1 rounded-md bg-brand/15 text-brand text-[10px] font-bold uppercase">
+                  Now Playing
+                </span>
+
+                <span id="modalRating" class="text-xs text-yellow-400">
+                  ★ 8.5
+                </span>
+              </div>
+
+              <h2
+                id="modalTitle"
+                class="text-2xl sm:text-3xl font-black"
+              >
+                Movie
+              </h2>
+
+              <p
+                id="modalMeta"
+                class="mt-2 text-sm text-slate-400"
+              >
+                2026 • Action • 2h
+              </p>
+
+              <p
+                id="modalDescription"
+                class="mt-4 max-w-3xl text-sm leading-6 text-slate-400"
+              >
+                Movie description.
+              </p>
+
+            </div>
+
+            <div class="flex gap-2 shrink-0">
+
+              <button
+                id="modalWatchBtn"
+                type="button"
+                class="px-4 py-2.5 rounded-xl bg-brand hover:bg-red-700 font-bold text-sm transition flex items-center gap-2"
+              >
+                <i data-lucide="external-link" class="w-4 h-4"></i>
+                Watch Now
+              </button>
+
+              <button
+                id="modalListBtn"
+                type="button"
+                class="px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 font-semibold text-sm transition flex items-center gap-2"
+              >
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                Add
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- =======================================================
+         TOAST CONTAINER
+    ======================================================== -->
+
+    <div
+      id="toastContainer"
+      class="fixed z-[200] right-4 bottom-20 md:bottom-6 space-y-2 pointer-events-none"
+    ></div>
+
+  </div>
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+
+  <script>
+
+    /* =========================================================
+       KONFIGURASI IKLAN
+    ========================================================== */
+
+    const DIRECT_LINK = "https://www.contoh-direct-link-adsterra.com/xyz123";
+
+    const BANNER_KOTAK = `
+      <!-- Paste script iklan kotak 300x250 di sini -->
+    `;
+
+    const BANNER_HORIZONTAL = `
+      <!-- Tempel skrip iklan horizontal 728x90 di sini -->
+    `;
+
+
+    /* =========================================================
+       MOVIE DATABASE
+    ========================================================== */
+
+    const movies = [
+
+      {
+        id: 1,
+        title: "The Last Horizon",
+        genre: "Action",
+        year: 2026,
+        rating: 8.7,
+        duration: "2h 04m",
+        description: "Seorang mantan pilot kembali ke dunia yang ditinggalkannya untuk menyelamatkan kota terakhir di tengah kekacauan global.",
+        poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-a-woman-watching-a-movie-1577/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      },
+
+      {
+        id: 2,
+        title: "Midnight City",
+        genre: "Thriller",
+        year: 2026,
+        rating: 8.4,
+        duration: "1h 52m",
+        description: "Misteri dimulai setelah seorang jurnalis menemukan rekaman rahasia dari sebuah kota yang tidak pernah tidur.",
+        poster: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-night-city-1579/1080p.mp4",
+        category: "Trending",
+        status: "Available"
+      },
+
+      {
+        id: 3,
+        title: "Ocean Deep",
+        genre: "Adventure",
+        year: 2025,
+        rating: 8.1,
+        duration: "2h 11m",
+        description: "Ekspedisi menuju dasar laut berubah menjadi petualangan berbahaya ketika tim menemukan sesuatu yang seharusnya tidak ada.",
+        poster: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-ocean-waves-1570/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 4,
+        title: "Silent Witness",
+        genre: "Mystery",
+        year: 2025,
+        rating: 8.9,
+        duration: "1h 58m",
+        description: "Satu-satunya saksi sebuah kasus besar tiba-tiba menghilang, meninggalkan petunjuk yang harus dipecahkan.",
+        poster: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-man-looking-at-the-city-1573/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 5,
+        title: "Neon Dreams",
+        genre: "Sci-Fi",
+        year: 2026,
+        rating: 9.1,
+        duration: "2h 19m",
+        description: "Di masa depan, mimpi manusia dapat direkam dan dijual. Seorang hacker menemukan mimpi yang mengubah segalanya.",
+        poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-futuristic-city-1572/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      },
+
+      {
+        id: 6,
+        title: "The Forgotten Road",
+        genre: "Drama",
+        year: 2025,
+        rating: 7.9,
+        duration: "1h 45m",
+        description: "Perjalanan pulang membawa seorang pria menghadapi masa lalu yang selama bertahun-tahun ia coba lupakan.",
+        poster: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-road-in-the-mountains-1578/1080p.mp4",
+        category: "Drama",
+        status: "Available"
+      },
+
+      {
+        id: 7,
+        title: "Dark Signal",
+        genre: "Horror",
+        year: 2026,
+        rating: 8.3,
+        duration: "1h 39m",
+        description: "Sebuah sinyal misterius muncul setiap tengah malam dan membuat orang-orang di sekitarnya mengalami kejadian aneh.",
+        poster: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-dark-forest-1571/1080p.mp4",
+        category: "Trending",
+        status: "Available"
+      },
+
+      {
+        id: 8,
+        title: "Parallel",
+        genre: "Sci-Fi",
+        year: 2026,
+        rating: 8.6,
+        duration: "2h 08m",
+        description: "Seorang ilmuwan menemukan pintu menuju realitas paralel dan harus memilih dunia mana yang akan diselamatkan.",
+        poster: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-space-and-stars-1576/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      },
+
+      {
+        id: 9,
+        title: "Red Line",
+        genre: "Action",
+        year: 2025,
+        rating: 8.0,
+        duration: "1h 54m",
+        description: "Sebuah tim kecil berpacu dengan waktu untuk menghentikan rencana yang dapat mengubah dunia.",
+        poster: "https://images.unsplash.com/photo-1504457047772-27faf1c00561?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-driving-at-night-1580/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 10,
+        title: "Lost Memories",
+        genre: "Romance",
+        year: 2025,
+        rating: 8.2,
+        duration: "1h 47m",
+        description: "Dua orang asing bertemu kembali tanpa mengingat bahwa mereka pernah menjadi bagian penting dalam hidup satu sama lain.",
+        poster: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-couple-walking-1575/1080p.mp4",
+        category: "Drama",
+        status: "Available"
+      },
+
+      {
+        id: 11,
+        title: "Final Mission",
+        genre: "Action",
+        year: 2026,
+        rating: 8.8,
+        duration: "2h 16m",
+        description: "Misi terakhir seorang agen rahasia menjadi pertarungan pribadi setelah identitasnya terbongkar.",
+        poster: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-man-walking-in-city-1574/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      },
+
+      {
+        id: 12,
+        title: "Beyond Tomorrow",
+        genre: "Adventure",
+        year: 2026,
+        rating: 8.5,
+        duration: "2h 02m",
+        description: "Sekelompok penjelajah meninggalkan bumi untuk mencari tempat baru bagi generasi berikutnya.",
+        poster: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-clouds-from-above-1577/1080p.mp4",
+        category: "Trending",
+        status: "Available"
+      },
+
+      {
+        id: 13,
+        title: "Broken Code",
+        genre: "Thriller",
+        year: 2025,
+        rating: 8.1,
+        duration: "1h 51m",
+        description: "Sebuah kode rahasia ditemukan di dalam sistem perusahaan terbesar di dunia.",
+        poster: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-programming-on-a-laptop-1578/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 14,
+        title: "After Rain",
+        genre: "Drama",
+        year: 2024,
+        rating: 7.8,
+        duration: "1h 42m",
+        description: "Kehidupan sederhana berubah setelah sebuah pertemuan tidak terduga di tengah hujan.",
+        poster: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1501691223387-dd0500403074?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-rain-on-window-1579/1080p.mp4",
+        category: "Drama",
+        status: "Available"
+      },
+
+      {
+        id: 15,
+        title: "The Deep House",
+        genre: "Horror",
+        year: 2025,
+        rating: 8.0,
+        duration: "1h 38m",
+        description: "Sebuah rumah tua menyimpan rahasia yang tidak pernah ingin ditemukan oleh siapa pun.",
+        poster: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-house-in-the-forest-1570/1080p.mp4",
+        category: "Trending",
+        status: "Available"
+      },
+
+      {
+        id: 16,
+        title: "Sky Warriors",
+        genre: "Action",
+        year: 2026,
+        rating: 8.9,
+        duration: "2h 12m",
+        description: "Pilot elit menghadapi ancaman udara terbesar yang pernah dihadapi dunia.",
+        poster: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-airplane-flying-1571/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 17,
+        title: "Hidden Truth",
+        genre: "Mystery",
+        year: 2026,
+        rating: 8.7,
+        duration: "1h 59m",
+        description: "Semua orang menyimpan rahasia. Seorang detektif harus menemukan satu rahasia yang paling berbahaya.",
+        poster: "https://images.unsplash.com/photo-1453873531674-2151bcd01707?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-person-walking-in-the-dark-1572/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      },
+
+      {
+        id: 18,
+        title: "Digital Love",
+        genre: "Romance",
+        year: 2026,
+        rating: 8.3,
+        duration: "1h 49m",
+        description: "Sebuah hubungan yang dimulai secara digital perlahan berubah menjadi sesuatu yang jauh lebih nyata.",
+        poster: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-couple-having-fun-1573/1080p.mp4",
+        category: "Drama",
+        status: "Available"
+      },
+
+      {
+        id: 19,
+        title: "Last Survivor",
+        genre: "Adventure",
+        year: 2025,
+        rating: 8.6,
+        duration: "2h 07m",
+        description: "Sendirian di sebuah tempat terpencil, seorang penyintas harus bertahan hidup dengan sumber daya terbatas.",
+        poster: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-man-walking-in-forest-1574/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 20,
+        title: "Zero Hour",
+        genre: "Thriller",
+        year: 2026,
+        rating: 9.0,
+        duration: "2h 01m",
+        description: "Hanya tersisa satu jam sebelum sistem keamanan dunia runtuh total.",
+        poster: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-laptop-screen-1575/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      },
+
+      {
+        id: 21,
+        title: "Summer Story",
+        genre: "Romance",
+        year: 2025,
+        rating: 7.9,
+        duration: "1h 44m",
+        description: "Cerita cinta sederhana yang dimulai pada sebuah liburan musim panas.",
+        poster: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-beach-sunset-1576/1080p.mp4",
+        category: "Drama",
+        status: "Available"
+      },
+
+      {
+        id: 22,
+        title: "Night Runner",
+        genre: "Action",
+        year: 2026,
+        rating: 8.5,
+        duration: "1h 56m",
+        description: "Seorang kurir malam menemukan dirinya menjadi target kelompok misterius.",
+        poster: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-man-running-at-night-1577/1080p.mp4",
+        category: "Trending",
+        status: "Available"
+      },
+
+      {
+        id: 23,
+        title: "Wild Earth",
+        genre: "Adventure",
+        year: 2024,
+        rating: 8.4,
+        duration: "1h 50m",
+        description: "Perjalanan ke wilayah liar membawa penemuan yang mengubah pandangan manusia terhadap alam.",
+        poster: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-mountain-landscape-1578/1080p.mp4",
+        category: "Popular",
+        status: "Available"
+      },
+
+      {
+        id: 24,
+        title: "The Signal",
+        genre: "Mystery",
+        year: 2026,
+        rating: 8.8,
+        duration: "2h 05m",
+        description: "Sinyal radio misterius membawa sebuah tim menemukan rahasia yang terkubur puluhan tahun.",
+        poster: "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=600&q=85",
+        backdrop: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=1600&q=85",
+        video: "https://cdn.coverr.co/videos/coverr-radio-equipment-1579/1080p.mp4",
+        category: "New Release",
+        status: "Available"
+      }
+
+    ];
+
+
+    /* =========================================================
+       STATE
+    ========================================================== */
+
+    let currentPage = 'home';
+    let currentMovie = null;
+    let visibleMovies = 8;
+    let discoveryGenre = 'All';
+
+    let watchList = JSON.parse(
+      localStorage.getItem('viralflix_watchlist') || '[]'
+    );
+
+    let theme = localStorage.getItem('viralflix_theme') || 'dark';
+
+
+    /* =========================================================
+       ELEMENT HELPERS
+    ========================================================== */
+
+    const $ = (selector) => document.querySelector(selector);
+
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+
+    /* =========================================================
+       INITIALIZATION
+    ========================================================== */
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      applyTheme();
+      updateWatchListCount();
+      renderPage(currentPage);
+
+      setupEvents();
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    });
+
+
+    /* =========================================================
+       EVENT SETUP
+    ========================================================== */
+
+    function setupEvents() {
+
+      $$('.side-link').forEach(button => {
+
+        button.addEventListener('click', () => {
+
+          const page = button.dataset.page;
+
+          navigateTo(page);
+
+          closeMobileSidebar();
+
+        });
+
+      });
+
+
+      $('#mobileMenuBtn')?.addEventListener('click', openMobileSidebar);
+
+      $('#mobileOverlay')?.addEventListener('click', closeMobileSidebar);
+
+      $('#themeBtn')?.addEventListener('click', toggleTheme);
+
+      $('#notificationBtn')?.addEventListener(
+        'click',
+        toggleNotifications
+      );
+
+      $('#closeModalBtn')?.addEventListener(
+        'click',
+        closeVideoModal
+      );
+
+      $('#videoModal')?.addEventListener('click', (event) => {
+
+        if (event.target === $('#videoModal')) {
+          closeVideoModal();
+        }
+
+      });
+
+      $('#searchInput')?.addEventListener('input', handleSearch);
+
+      document.addEventListener('keydown', (event) => {
+
+        if (event.key === 'Escape') {
+
+          closeVideoModal();
+          closeMobileSidebar();
+
+          $('#notificationPanel')?.classList.add('hidden');
+
+        }
+
+      });
+
+      $('#modalWatchBtn')?.addEventListener('click', () => {
+
+        if (!currentMovie) return;
+
+        openDirectLink(currentMovie);
+
+      });
+
+      $('#modalListBtn')?.addEventListener('click', () => {
+
+        if (!currentMovie) return;
+
+        toggleWatchList(currentMovie.id);
+
+      });
+
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================== */
+
+    function navigateTo(page) {
+
+      currentPage = page;
+      visibleMovies = 8;
+
+      $$('.side-link').forEach(button => {
+
+        button.classList.toggle(
+          'active',
+          button.dataset.page === page
+        );
+
+      });
+
+      renderPage(page);
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+      if (window.lucide) {
+        setTimeout(() => lucide.createIcons(), 0);
+      }
+
+    }
+
+
+    /* =========================================================
+       PAGE RENDER
+    ========================================================== */
+
+    function renderPage(page) {
+
+      const container = $('#mainContent');
+
+      if (!container) return;
+
+      switch (page) {
+
+        case 'home':
+          container.innerHTML = renderHome();
+          break;
+
+        case 'watchlist':
+          container.innerHTML = renderWatchListPage();
+          break;
+
+        case 'coming':
+          container.innerHTML = renderComingSoon();
+          break;
+
+        case 'discovery':
+          container.innerHTML = renderDiscovery();
+          break;
+
+        case 'friends':
+          container.innerHTML = renderFriends();
+          break;
+
+        case 'parties':
+          container.innerHTML = renderParties();
+          break;
+
+        case 'media':
+          container.innerHTML = renderMedia();
+          break;
+
+        case 'setting':
+          container.innerHTML = renderSettings();
+          break;
+
+        default:
+          container.innerHTML = renderHome();
+
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    }
+
+
+    /* =========================================================
+       HOME
+    ========================================================== */
+
+    function renderHome() {
+
+      const featured = movies[0];
+
+      return `
+
+        <section class="relative min-h-[520px] lg:min-h-[600px] overflow-hidden">
+
+          <img
+            src="${featured.backdrop}"
+            alt="${escapeHTML(featured.title)}"
+            class="absolute inset-0 w-full h-full object-cover"
+          >
+
+          <div class="absolute inset-0 bg-gradient-to-r from-[#0b0b0e] via-[#0b0b0e]/75 to-transparent"></div>
+
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0e] via-transparent to-[#0b0b0e]/20"></div>
+
+          <div class="relative z-10 max-w-[1800px] mx-auto px-5 sm:px-8 lg:px-12 pt-20 pb-20 min-h-[520px] lg:min-h-[600px] flex items-end">
+
+            <div class="max-w-2xl">
+
+              <div class="flex items-center gap-2 mb-4">
+                <span class="px-2.5 py-1 rounded-md bg-brand text-white text-[10px] uppercase tracking-wider font-black">
+                  Featured
+                </span>
+
+                <span class="text-sm text-slate-300">
+                  #1 Today
+                </span>
+              </div>
+
+              <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[.95]">
+                ${escapeHTML(featured.title)}
+              </h1>
+
+              <div class="flex flex-wrap items-center gap-3 mt-5 text-sm">
+
+                <span class="flex items-center gap-1 text-yellow-400 font-bold">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  ${featured.rating}
+                </span>
+
+                <span class="text-slate-300">${featured.year}</span>
+
+                <span class="text-slate-300">${featured.genre}</span>
+
+                <span class="text-slate-300">${featured.duration}</span>
+
+                <span class="px-2 py-1 rounded-md border border-white/10 text-xs">
+                  HD
+                </span>
+
+              </div>
+
+              <p class="mt-5 text-sm sm:text-base leading-7 text-slate-300 max-w-xl line-clamp-3">
+                ${escapeHTML(featured.description)}
+              </p>
+
+              <div class="flex flex-wrap gap-3 mt-7">
+
+                <button
+                  onclick="openVideoModal(${featured.id})"
+                  class="px-5 py-3 rounded-xl bg-white text-black font-black text-sm hover:bg-slate-200 transition flex items-center gap-2"
+                >
+                  <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  Watch Now
+                </button>
+
+                <button
+                  onclick="toggleWatchList(${featured.id})"
+                  class="px-5 py-3 rounded-xl bg-white/10 border border-white/10 backdrop-blur-md font-bold text-sm hover:bg-white/15 transition flex items-center gap-2"
+                >
+                  <i data-lucide="plus" class="w-4 h-4"></i>
+                  My List
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 py-8">
+
+          <section>
+
+            <div class="flex items-end justify-between gap-4 mb-5">
+
+              <div>
+                <p class="text-brand text-xs font-black uppercase tracking-widest">
+                  Latest
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-black mt-1">
+                  New Release
+                </h2>
+              </div>
+
+              <button
+                onclick="showMoreMovies()"
+                class="text-sm font-bold text-slate-400 hover:text-brand transition flex items-center gap-1"
+              >
+                View More
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+
+            </div>
+
+            <div
+              id="newReleaseGrid"
+              class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
+            >
+              ${renderMovieCards(
+                movies.filter(movie => movie.category === 'New Release'),
+                6
+              )}
+            </div>
+
+          </section>
+
+
+          <!-- BANNER HORIZONTAL -->
+
+          <div class="w-full flex justify-center my-8">
+
+            <div
+              id="banner-horizontal"
+              class="w-full max-w-[728px] min-h-[90px] rounded-xl border border-white/10 bg-white/[.025] flex items-center justify-center overflow-hidden"
+            >
+              ${BANNER_HORIZONTAL}
+            </div>
+
+          </div>
+
+
+          <section class="mt-10">
+
+            <div class="flex items-end justify-between mb-5">
+
+              <div>
+                <p class="text-brand text-xs font-black uppercase tracking-widest">
+                  Trending
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-black mt-1">
+                  Trending Now
+                </h2>
+              </div>
+
+              <button
+                onclick="showMoreMovies()"
+                class="text-sm font-bold text-slate-400 hover:text-brand transition flex items-center gap-1"
+              >
+                View More
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+              ${renderMovieCards(
+                movies.filter(movie => movie.category === 'Trending'),
+                6
+              )}
+            </div>
+
+          </section>
+
+
+          <section class="mt-12">
+
+            <div class="flex items-end justify-between mb-5">
+
+              <div>
+                <p class="text-brand text-xs font-black uppercase tracking-widest">
+                  Popular
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-black mt-1">
+                  Film Populer
+                </h2>
+              </div>
+
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+              ${renderMovieCards(
+                movies.filter(movie => movie.category === 'Popular'),
+                6
+              )}
+            </div>
+
+          </section>
+
+          <footer class="mt-16 pt-8 pb-28 md:pb-8 border-t border-white/10">
+
+            <div class="flex flex-col md:flex-row justify-between gap-6">
+
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center">
+                    <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                  </span>
+                  <span class="font-black">VIRALFLIX</span>
+                </div>
+
+                <p class="mt-3 text-xs text-slate-500 max-w-sm">
+                  Platform streaming modern dengan tampilan premium dan pengalaman menonton yang nyaman.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-5 text-xs text-slate-500">
+                <button onclick="showToast('Halaman Privacy dibuka','shield')">Privacy</button>
+                <button onclick="showToast('Halaman Terms dibuka','file-text')">Terms</button>
+                <button onclick="showToast('Halaman Contact dibuka','mail')">Contact</button>
+                <button onclick="showToast('About VIRALFLIX','info')">About</button>
+              </div>
+
+            </div>
+
+            <p class="mt-8 text-xs text-slate-600">
+              © 2026 VIRALFLIX. All rights reserved.
+            </p>
+
+          </footer>
+
+        </div>
+      `;
+
+    }
+
+
+    /* =========================================================
+       MOVIE CARD
+    ========================================================== */
+
+    function renderMovieCards(list, limit = 8) {
+
+      const items = list.slice(0, limit);
+
+      if (!items.length) {
+
+        return `
+          <div class="col-span-full py-14 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-white/5 flex items-center justify-center">
+              <i data-lucide="film" class="w-6 h-6 text-slate-500"></i>
+            </div>
+            <p class="mt-4 font-bold">No movies found</p>
+            <p class="text-sm text-slate-500 mt-1">Belum ada film di bagian ini.</p>
+          </div>
+        `;
+
+      }
+
+      return items.map(movie => movieCard(movie)).join('');
+
+    }
+
+
+    function movieCard(movie) {
+
+      const saved = watchList.includes(movie.id);
+
+      return `
+        <article
+          class="movie-card group rounded-2xl overflow-hidden border border-white/10 bg-white/[.025]"
+        >
+
+          <div
+            class="relative aspect-[2/3] overflow-hidden bg-slate-900 cursor-pointer"
+            onclick="openVideoModal(${movie.id})"
+          >
+
+            <img
+              src="${movie.poster}"
+              alt="${escapeHTML(movie.title)}"
+              loading="lazy"
+              class="movie-poster w-full h-full object-cover"
+            >
+
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent"></div>
+
+            <div class="poster-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
+
+              <span class="w-12 h-12 rounded-full bg-brand text-white flex items-center justify-center shadow-glow">
+                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+              </span>
+
+            </div>
+
+            <div class="absolute top-2 left-2 flex gap-1">
+
+              <span class="px-2 py-1 rounded-md bg-black/60 backdrop-blur text-[10px] font-bold">
+                HD
+              </span>
+
+              ${
+                movie.category === 'New Release'
+                ? `
+                  <span class="px-2 py-1 rounded-md bg-brand text-[10px] font-bold">
+                    NEW
+                  </span>
+                `
+                : ''
+              }
+
+            </div>
+
+            <button
+              type="button"
+              onclick="event.stopPropagation(); toggleWatchList(${movie.id})"
+              aria-label="Tambah ${escapeHTML(movie.title)}"
+              class="absolute top-2 right-2 w-8 h-8 rounded-lg bg-black/60 backdrop-blur flex items-center justify-center hover:bg-brand transition"
+            >
+              <i
+                data-lucide="${saved ? 'check' : 'plus'}"
+                class="w-4 h-4"
+              ></i>
+            </button>
+
+            <div class="absolute bottom-3 left-3 right-3">
+
+              <div class="flex items-center justify-between text-xs">
+
+                <span class="flex items-center gap-1 text-yellow-400 font-bold">
+                  <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                  ${movie.rating}
+                </span>
+
+                <span class="text-slate-300">
+                  ${movie.duration}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="p-3.5">
+
+            <h3 class="font-bold text-sm truncate">
+              ${escapeHTML(movie.title)}
+            </h3>
+
+            <div class="flex items-center justify-between mt-1.5 gap-2">
+
+              <span class="text-xs text-slate-500 truncate">
+                ${escapeHTML(movie.genre)} • ${movie.year}
+              </span>
+
+              <button
+                type="button"
+                onclick="openVideoModal(${movie.id})"
+                class="shrink-0 text-brand hover:text-red-400"
+                aria-label="Watch ${escapeHTML(movie.title)}"
+              >
+                <i data-lucide="play-circle" class="w-5 h-5"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+    }
+
+
+    /* =========================================================
+       WATCH LIST
+    ========================================================== */
+
+    function renderWatchListPage() {
+
+      const savedMovies = movies.filter(movie =>
+        watchList.includes(movie.id)
+      );
+
+      return pageShell(
+        'Watch List',
+        'Film yang Anda simpan untuk ditonton nanti.',
+        `
+          ${
+            savedMovies.length
+            ? `
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+                ${savedMovies.map(movie => movieCard(movie)).join('')}
+              </div>
+            `
+            : `
+              <div class="py-20 text-center rounded-3xl border border-dashed border-white/10 bg-white/[.02]">
+
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-brand/10 text-brand flex items-center justify-center">
+                  <i data-lucide="bookmark" class="w-7 h-7"></i>
+                </div>
+
+                <h3 class="mt-5 text-xl font-black">
+                  Watch List masih kosong
+                </h3>
+
+                <p class="mt-2 text-sm text-slate-500">
+                  Tambahkan film dengan tombol + pada poster.
+                </p>
+
+                <button
+                  onclick="navigateTo('home')"
+                  class="mt-6 px-5 py-3 rounded-xl bg-brand text-white font-bold text-sm"
+                >
+                  Jelajahi Film
+                </button>
+
+              </div>
+            `
+          }
+        `
+      );
+
+    }
+
+
+    /* =========================================================
+       COMING SOON
+    ========================================================== */
+
+    function renderComingSoon() {
+
+      const coming = movies.slice(8, 16);
+
+      return pageShell(
+        'Coming Soon',
+        'Film pilihan yang segera hadir di VIRALFLIX.',
+        `
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+
+            ${coming.map(movie => `
+
+              <article class="movie-card rounded-2xl overflow-hidden border border-white/10 bg-white/[.025]">
+
+                <div class="relative aspect-[2/3] overflow-hidden">
+
+                  <img
+                    src="${movie.poster}"
+                    alt="${escapeHTML(movie.title)}"
+                    loading="lazy"
+                    class="movie-poster w-full h-full object-cover"
+                  >
+
+                  <div class="absolute inset-0 bg-black/30"></div>
+
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur text-[10px] font-black">
+                    COMING SOON
+                  </span>
+
+                </div>
+
+                <div class="p-4">
+
+                  <h3 class="font-bold text-sm">
+                    ${escapeHTML(movie.title)}
+                  </h3>
+
+                  <p class="text-xs text-slate-500 mt-1">
+                    Expected ${movie.year}
+                  </p>
+
+                  <button
+                    onclick="showToast('${escapeHTML(movie.title)} akan segera hadir','calendar-days')"
+                    class="mt-3 w-full py-2 rounded-lg bg-white/5 hover:bg-brand/15 hover:text-brand text-xs font-bold transition"
+                  >
+                    Remind Me
+                  </button>
+
+                </div>
+
+              </article>
+
+            `).join('')}
+
+          </div>
+        `
+      );
+
+    }
+
+
+    /* =========================================================
+       DISCOVERY
+    ========================================================== */
+
+    function renderDiscovery() {
+
+      const genres = [
+        'All',
+        'Action',
+        'Adventure',
+        'Drama',
+        'Horror',
+        'Mystery',
+        'Romance',
+        'Sci-Fi',
+        'Thriller'
+      ];
+
+      const filtered = discoveryGenre === 'All'
+        ? movies
+        : movies.filter(movie => movie.genre === discoveryGenre);
+
+      return pageShell(
+        'Discovery',
+        'Temukan film berdasarkan genre dan rekomendasi.',
+        `
+
+          <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-7">
+
+            ${genres.map(genre => `
+
+              <button
+                onclick="setDiscoveryGenre('${genre}')"
+                class="shrink-0 px-4 py-2 rounded-xl border text-sm font-bold transition ${
+                  discoveryGenre === genre
+                  ? 'bg-brand border-brand text-white'
+                  : 'border-white/10 bg-white/5 text-slate-400 hover:bg-white/10'
+                }"
+              >
+                ${genre}
+              </button>
+
+            `).join('')}
+
+          </div>
+
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+
+            ${renderMovieCards(filtered, filtered.length)}
+
+          </div>
+
+        `
+      );
+
+    }
+
+
+    function setDiscoveryGenre(genre) {
+
+      discoveryGenre = genre;
+
+      renderPage('discovery');
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    }
+
+
+    /* =========================================================
+       FRIENDS
+    ========================================================== */
+
+    function renderFriends() {
+
+      const friends = [
+        {
+          name: 'Alex',
+          status: 'Online',
+          movie: 'Neon Dreams',
+          avatar: 'A'
+        },
+        {
+          name: 'Dina',
+          status: 'Watching',
+          movie: 'The Last Horizon',
+          avatar: 'D'
+        },
+        {
+          name: 'Raka',
+          status: 'Online',
+          movie: 'Midnight City',
+          avatar: 'R'
+        },
+        {
+          name: 'Maya',
+          status: 'Offline',
+          movie: 'Ocean Deep',
+          avatar: 'M'
+        }
+      ];
+
+      return pageShell(
+        'Friends',
+        'Lihat aktivitas teman dan bagikan tontonan.',
+        `
+
+          <div class="grid md:grid-cols-2 gap-4">
+
+            ${friends.map(friend => `
+
+              <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="relative">
+
+                    <span class="w-12 h-12 rounded-full bg-gradient-to-br from-brand/80 to-purple-700 flex items-center justify-center font-black">
+                      ${friend.avatar}
+                    </span>
+
+                    <span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#0b0b0e] ${
+                      friend.status === 'Offline'
+                      ? 'bg-slate-600'
+                      : 'bg-green-500'
+                    }"></span>
+
+                  </div>
+
+                  <div class="flex-1 min-w-0">
+
+                    <h3 class="font-bold">
+                      ${friend.name}
+                    </h3>
+
+                    <p class="text-xs text-slate-500 mt-1">
+                      ${friend.status} • ${friend.movie}
+                    </p>
+
+                  </div>
+
+                  <button
+                    onclick="showToast('Berhasil mengikuti ${friend.name}','user-plus')"
+                    class="px-3 py-2 rounded-lg bg-white/5 hover:bg-brand hover:text-white text-xs font-bold transition"
+                  >
+                    Follow
+                  </button>
+
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+
+                  <span class="text-xs text-slate-500">
+                    Recently watched
+                  </span>
+
+                  <button
+                    onclick="showToast('Activity ${friend.name} dibuka','activity')"
+                    class="text-xs text-brand font-bold"
+                  >
+                    View Activity
+                  </button>
+
+                </div>
+
+              </div>
+
+            `).join('')}
+
+          </div>
+
+        `
+      );
+
+    }
+
+
+    /* =========================================================
+       PARTIES
+    ========================================================== */
+
+    function renderParties() {
+
+      return pageShell(
+        'Watch Parties',
+        'Nonton bersama teman dalam room virtual.',
+        `
+
+          <div class="flex flex-col sm:flex-row gap-3 mb-7">
+
+            <button
+              onclick="createParty()"
+              class="px-5 py-3 rounded-xl bg-brand text-white font-black text-sm flex items-center justify-center gap-2 hover:bg-red-700 transition"
+            >
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              Create Party
+            </button>
+
+            <button
+              onclick="joinParty()"
+              class="px-5 py-3 rounded-xl border border-white/10 bg-white/5 font-bold text-sm flex items-center justify-center gap-2 hover:bg-white/10 transition"
+            >
+              <i data-lucide="log-in" class="w-4 h-4"></i>
+              Join Party
+            </button>
+
+          </div>
+
+
+          <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+            ${[
+              ['Friday Movie Night', '12', 'The Last Horizon'],
+              ['Weekend Chill', '8', 'Ocean Deep'],
+              ['Late Night Club', '17', 'Midnight City']
+            ].map(party => `
+
+              <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+
+                <div class="flex items-start justify-between">
+
+                  <span class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+                    <i data-lucide="radio" class="w-5 h-5"></i>
+                  </span>
+
+                  <span class="text-xs text-green-400 font-bold">
+                    LIVE
+                  </span>
+
+                </div>
+
+                <h3 class="mt-5 font-black">
+                  ${party[0]}
+                </h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                  Watching ${party[2]}
+                </p>
+
+                <div class="mt-5 flex items-center justify-between">
+
+                  <span class="text-xs text-slate-500 flex items-center gap-1">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                    ${party[1]} participants
+                  </span>
+
+                  <button
+                    onclick="joinParty('${party[0]}')"
+                    class="px-3 py-2 rounded-lg bg-white/5 hover:bg-brand text-xs font-bold transition"
+                  >
+                    Join
+                  </button>
+
+                </div>
+
+              </div>
+
+            `).join('')}
+
+          </div>
+
+        `
+      );
+
+    }
+
+
+    function createParty() {
+
+      const name = prompt('Nama Watch Party:');
+
+      if (!name) return;
+
+      showToast(`Party "${name}" berhasil dibuat`, 'radio');
+
+    }
+
+
+    function joinParty(name = 'Watch Party') {
+
+      showToast(`Bergabung ke ${name}`, 'log-in');
+
+    }
+
+
+    /* =========================================================
+       MEDIA
+    ========================================================== */
+
+    function renderMedia() {
+
+      const recentlyWatched = movies.slice(0, 6);
+
+      return pageShell(
+        'Media',
+        'Kelola riwayat dan koleksi tontonan Anda.',
+        `
+
+          <div class="grid md:grid-cols-3 gap-4 mb-8">
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+              <span class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+                <i data-lucide="history" class="w-5 h-5"></i>
+              </span>
+              <p class="mt-4 text-2xl font-black">${recentlyWatched.length}</p>
+              <p class="text-sm text-slate-500">Recently Watched</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+              <span class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                <i data-lucide="bookmark" class="w-5 h-5"></i>
+              </span>
+              <p class="mt-4 text-2xl font-black">${watchList.length}</p>
+              <p class="text-sm text-slate-500">Watch List</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+              <span class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center">
+                <i data-lucide="star" class="w-5 h-5"></i>
+              </span>
+              <p class="mt-4 text-2xl font-black">${movies.filter(m => m.rating >= 8.5).length}</p>
+              <p class="text-sm text-slate-500">Highly Rated</p>
+            </div>
+
+          </div>
+
+
+          <section>
+
+            <h2 class="text-xl font-black mb-5">
+              Recently Watched
+            </h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+
+              ${recentlyWatched.map(movie => movieCard(movie)).join('')}
+
+            </div>
+
+          </section>
+
+        `
+      );
+
+    }
+
+
+    /* =========================================================
+       SETTINGS
+    ========================================================== */
+
+    function renderSettings() {
+
+      return pageShell(
+        'Settings',
+        'Atur preferensi pengalaman VIRALFLIX Anda.',
+        `
+
+          <div class="max-w-3xl space-y-4">
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+
+              <div class="flex items-center gap-3 mb-5">
+
+                <span class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+                  <i data-lucide="user" class="w-5 h-5"></i>
+                </span>
+
+                <div>
+                  <h3 class="font-black">Account</h3>
+                  <p class="text-xs text-slate-500">Informasi akun</p>
+                </div>
+
+              </div>
+
+              <label class="block text-sm font-semibold mb-2">
+                Display Name
+              </label>
+
+              <input
+                id="displayName"
+                value="VIRALFLIX User"
+                class="w-full h-11 px-4 rounded-xl border border-white/10 bg-white/5 outline-none focus:border-brand"
+              >
+
+              <button
+                onclick="saveSettings()"
+                class="mt-4 px-4 py-2.5 rounded-xl bg-brand text-sm font-bold"
+              >
+                Save Changes
+              </button>
+
+            </div>
+
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+
+              <div class="flex items-center gap-3 mb-5">
+
+                <span class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                  <i data-lucide="palette" class="w-5 h-5"></i>
+                </span>
+
+                <div>
+                  <h3 class="font-black">Appearance</h3>
+                  <p class="text-xs text-slate-500">Tema website</p>
+                </div>
+
+              </div>
+
+              <div class="flex items-center justify-between">
+
+                <div>
+                  <p class="text-sm font-bold">Dark / Light Mode</p>
+                  <p class="text-xs text-slate-500 mt-1">
+                    Simpan otomatis di perangkat Anda.
+                  </p>
+                </div>
+
+                <button
+                  onclick="toggleTheme()"
+                  class="px-4 py-2 rounded-xl bg-white/10 text-sm font-bold"
+                >
+                  Change Theme
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+
+              <div class="flex items-center gap-3 mb-5">
+
+                <span class="w-10 h-10 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center">
+                  <i data-lucide="bell" class="w-5 h-5"></i>
+                </span>
+
+                <div>
+                  <h3 class="font-black">Notifications</h3>
+                  <p class="text-xs text-slate-500">Kontrol notifikasi</p>
+                </div>
+
+              </div>
+
+              <label class="flex items-center justify-between cursor-pointer">
+
+                <div>
+                  <p class="text-sm font-bold">Push Notifications</p>
+                  <p class="text-xs text-slate-500 mt-1">
+                    Aktifkan notifikasi film baru.
+                  </p>
+                </div>
+
+                <input
+                  id="notificationToggle"
+                  type="checkbox"
+                  checked
+                  onchange="showToast('Notification setting diperbarui','bell')"
+                  class="w-5 h-5 accent-red-600"
+                >
+
+              </label>
+
+            </div>
+
+
+            <div class="rounded-2xl border border-white/10 bg-white/[.025] p-5">
+
+              <div class="flex items-center gap-3 mb-5">
+
+                <span class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                  <i data-lucide="play-circle" class="w-5 h-5"></i>
+                </span>
+
+                <div>
+                  <h3 class="font-black">Playback</h3>
+                  <p class="text-xs text-slate-500">Pengaturan pemutaran</p>
+                </div>
+
+              </div>
+
+              <label class="flex items-center justify-between">
+
+                <div>
+                  <p class="text-sm font-bold">Autoplay Preview</p>
+                  <p class="text-xs text-slate-500 mt-1">
+                    Preview trailer saat tersedia.
+                  </p>
+                </div>
+
+                <input
+                  type="checkbox"
+                  checked
+                  onchange="showToast('Playback setting diperbarui','play-circle')"
+                  class="w-5 h-5 accent-red-600"
+                >
+
+              </label>
+
+            </div>
+
+          </div>
+
+        `
+      );
+
+    }
+
+
+    function saveSettings() {
+
+      const name = $('#displayName')?.value || 'User';
+
+      localStorage.setItem(
+        'viralflix_display_name',
+        name
+      );
+
+      showToast('Settings berhasil disimpan', 'check');
+
+    }
+
+
+    /* =========================================================
+       PAGE SHELL
+    ========================================================== */
+
+    function pageShell(title, description, content) {
+
+      return `
+
+        <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 py-8 pb-28 md:pb-10">
+
+          <div class="mb-8">
+
+            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+              <span>VIRALFLIX</span>
+              <i data-lucide="chevron-right" class="w-3 h-3"></i>
+              <span class="text-brand">${title}</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl font-black">
+              ${title}
+            </h1>
+
+            <p class="text-sm text-slate-500 mt-2">
+              ${description}
+            </p>
+
+          </div>
+
+          ${content}
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       SEARCH
+    ========================================================== */
+
+    function handleSearch(event) {
+
+      const query = event.target.value.trim().toLowerCase();
+
+      if (!query) {
+
+        if (currentPage === 'home') {
+          renderPage('home');
+        } else {
+          renderPage(currentPage);
+        }
+
+        return;
+
+      }
+
+      const results = movies.filter(movie => {
+
+        return (
+          movie.title.toLowerCase().includes(query) ||
+          movie.genre.toLowerCase().includes(query) ||
+          String(movie.year).includes(query) ||
+          movie.description.toLowerCase().includes(query)
+        );
+
+      });
+
+      $('#mainContent').innerHTML = `
+
+        <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 py-8 pb-28 md:pb-10">
+
+          <div class="mb-8">
+
+            <p class="text-brand text-xs font-black uppercase tracking-widest">
+              Search Results
+            </p>
+
+            <h1 class="text-3xl sm:text-4xl font-black mt-1">
+              Hasil pencarian
+            </h1>
+
+            <p class="text-sm text-slate-500 mt-2">
+              Menampilkan hasil untuk "<span class="text-slate-300">${escapeHTML(query)}</span>"
+            </p>
+
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+
+            ${
+              results.length
+              ? results.map(movie => movieCard(movie)).join('')
+              : `
+                <div class="col-span-full py-20 text-center">
+
+                  <div class="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center">
+                    <i data-lucide="search-x" class="w-7 h-7 text-slate-500"></i>
+                  </div>
+
+                  <h2 class="mt-5 text-xl font-black">
+                    No movies found
+                  </h2>
+
+                  <p class="mt-2 text-sm text-slate-500">
+                    Coba gunakan kata kunci atau genre lain.
+                  </p>
+
+                </div>
+              `
+            }
+
+          </div>
+
+        </div>
+
+      `;
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    }
+
+
+    /* =========================================================
+       VIDEO MODAL
+    ========================================================== */
+
+    function openVideoModal(movieId) {
+
+      const movie = movies.find(item => item.id === movieId);
+
+      if (!movie) return;
+
+      currentMovie = movie;
+
+      $('#modalTitle').textContent = movie.title;
+
+      $('#modalRating').textContent = `★ ${movie.rating}`;
+
+      $('#modalMeta').textContent =
+        `${movie.year} • ${movie.genre} • ${movie.duration}`;
+
+      $('#modalDescription').textContent =
+        movie.description;
+
+      const video = $('#videoPlayer');
+      const source = $('#videoSource');
+
+      source.src = movie.video;
+
+      video.load();
+
+      $('#videoModal').classList.remove('hidden');
+
+      document.body.style.overflow = 'hidden';
+
+      updateModalListButton();
+
+      showToast(`Membuka ${movie.title}`, 'play');
+
+      setTimeout(() => {
+
+        video.play().catch(() => {});
+
+      }, 250);
+
+    }
+
+
+    function closeVideoModal() {
+
+      const modal = $('#videoModal');
+
+      if (!modal) return;
+
+      modal.classList.add('hidden');
+
+      const video = $('#videoPlayer');
+
+      video.pause();
+
+      video.currentTime = 0;
+
+      document.body.style.overflow = '';
+
+      currentMovie = null;
+
+    }
+
+
+    function updateModalListButton() {
+
+      if (!currentMovie) return;
+
+      const saved = watchList.includes(currentMovie.id);
+
+      $('#modalListBtn').innerHTML = `
+
+        <i data-lucide="${saved ? 'check' : 'plus'}" class="w-4 h-4"></i>
+
+        ${saved ? 'Saved' : 'Add'}
+
+      `;
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    }
+
+
+    /* =========================================================
+       DIRECT LINK
+    ========================================================== */
+
+    function openDirectLink(movie = null) {
+
+      try {
+
+        const popup = window.open(
+          DIRECT_LINK,
+          '_blank',
+          'noopener,noreferrer'
+        );
+
+        if (!popup) {
+
+          showToast(
+            'Popup diblokir browser. Izinkan pop-up untuk melanjutkan.',
+            'shield-alert'
+          );
+
+          return;
+
+        }
+
+        showToast(
+          movie
+            ? `Membuka link untuk ${movie.title}`
+            : 'Membuka direct link',
+          'external-link'
+        );
+
+      } catch (error) {
+
+        showToast(
+          'Direct link tidak dapat dibuka.',
+          'triangle-alert'
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       WATCH LIST
+    ========================================================== */
+
+    function toggleWatchList(movieId) {
+
+      const movie = movies.find(item => item.id === movieId);
+
+      if (!movie) return;
+
+      const index = watchList.indexOf(movieId);
+
+      if (index === -1) {
+
+        watchList.push(movieId);
+
+        showToast(
+          `${movie.title} ditambahkan ke Watch List`,
+          'bookmark-plus'
+        );
+
+      } else {
+
+        watchList.splice(index, 1);
+
+        showToast(
+          `${movie.title} dihapus dari Watch List`,
+          'bookmark-minus'
+        );
+
+      }
+
+      localStorage.setItem(
+        'viralflix_watchlist',
+        JSON.stringify(watchList)
+      );
+
+      updateWatchListCount();
+
+      updateModalListButton();
+
+      if (
+        currentPage === 'watchlist'
+      ) {
+        renderPage('watchlist');
+      }
+
+    }
+
+
+    function updateWatchListCount() {
+
+      const count = $('#watchListCount');
+
+      if (!count) return;
+
+      count.textContent = watchList.length;
+
+    }
+
+
+    /* =========================================================
+       VIEW MORE
+    ========================================================== */
+
+    function showMoreMovies() {
+
+      visibleMovies += 6;
+
+      const newGrid = $('#newReleaseGrid');
+
+      if (newGrid) {
+
+        const list = movies.filter(
+          movie => movie.category === 'New Release'
+        );
+
+        newGrid.innerHTML =
+          renderMovieCards(list, visibleMovies);
+
+        if (window.lucide) {
+          lucide.createIcons();
+        }
+
+      }
+
+      showToast(
+        'Film tambahan ditampilkan',
+        'plus-circle'
+      );
+
+    }
+
+
+    /* =========================================================
+       THEME
+    ========================================================== */
+
+    function applyTheme() {
+
+      const isLight = theme === 'light';
+
+      document.documentElement.classList.toggle(
+        'dark',
+        !isLight
+      );
+
+      document.body.classList.toggle(
+        'light-mode',
+        isLight
+      );
+
+      const navbar = $('#topNavbar');
+      const sidebar = $('#sidebar');
+
+      if (isLight) {
+
+        document.body.style.backgroundColor = '#f8fafc';
+
+        if (navbar) {
+
+          navbar.className =
+            'fixed top-0 left-0 right-0 z-40 h-16 border-b border-slate-200 bg-white/90 backdrop-blur-xl';
+
+        }
+
+        if (sidebar) {
+
+          sidebar.className =
+            'fixed z-50 top-16 bottom-0 left-0 w-64 border-r border-slate-200 bg-white transition-transform duration-300 -translate-x-full md:translate-x-0';
+
+        }
+
+        if ($('#themeIcon')) {
+          $('#themeIcon').setAttribute('data-lucide', 'moon');
+        }
+
+      } else {
+
+        document.body.style.backgroundColor = '#0b0b0e';
+
+        if (navbar) {
+
+          navbar.className =
+            'fixed top-0 left-0 right-0 z-40 h-16 border-b border-white/10 bg-[#0b0b0e]/90 backdrop-blur-xl';
+
+        }
+
+        if (sidebar) {
+
+          sidebar.className =
+            'fixed z-50 top-16 bottom-0 left-0 w-64 border-r border-white/10 bg-[#0b0b0e] transition-transform duration-300 -translate-x-full md:translate-x-0';
+
+        }
+
+        if ($('#themeIcon')) {
+          $('#themeIcon').setAttribute('data-lucide', 'sun');
+        }
+
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    }
+
+
+    function toggleTheme() {
+
+      theme = theme === 'dark'
+        ? 'light'
+        : 'dark';
+
+      localStorage.setItem(
+        'viralflix_theme',
+        theme
+      );
+
+      applyTheme();
+
+      showToast(
+        theme === 'light'
+          ? 'Light Mode aktif'
+          : 'Night Mode aktif',
+        theme === 'light'
+          ? 'sun'
+          : 'moon'
+      );
+
+    }
+
+
+    /* =========================================================
+       NOTIFICATIONS
+    ========================================================== */
+
+    function toggleNotifications() {
+
+      const panel = $('#notificationPanel');
+
+      if (!panel) return;
+
+      panel.classList.toggle('hidden');
+
+    }
+
+
+    function markNotificationsRead() {
+
+      $('#notificationBadge')?.classList.add('hidden');
+
+      showToast(
+        'Semua notifikasi ditandai sudah dibaca',
+        'check'
+      );
+
+    }
+
+
+    /* =========================================================
+       MOBILE SIDEBAR
+    ========================================================== */
+
+    function openMobileSidebar() {
+
+      const sidebar = $('#sidebar');
+      const overlay = $('#mobileOverlay');
+
+      sidebar.classList.remove('-translate-x-full');
+
+      overlay.classList.remove('hidden');
+
+      document.body.style.overflow = 'hidden';
+
+    }
+
+
+    function closeMobileSidebar() {
+
+      const sidebar = $('#sidebar');
+      const overlay = $('#mobileOverlay');
+
+      if (!sidebar || !overlay) return;
+
+      if (window.innerWidth < 768) {
+
+        sidebar.classList.add('-translate-x-full');
+
+      }
+
+      overlay.classList.add('hidden');
+
+      document.body.style.overflow = '';
+
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================== */
+
+    function showToast(message, icon = 'check') {
+
+      const container = $('#toastContainer');
+
+      if (!container) return;
+
+      const toast = document.createElement('div');
+
+      toast.className =
+        'toast pointer-events-auto min-w-[250px] max-w-[340px] rounded-xl border border-white/10 bg-[#17171d] shadow-2xl px-4 py-3 flex items-center gap-3';
+
+      toast.innerHTML = `
+
+        <span class="w-9 h-9 rounded-lg bg-brand/15 text-brand flex items-center justify-center shrink-0">
+
+          <i data-lucide="${icon}" class="w-4 h-4"></i>
+
+        </span>
+
+        <span class="text-sm font-semibold leading-5">
+          ${escapeHTML(message)}
+        </span>
+
+      `;
+
+      container.appendChild(toast);
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      setTimeout(() => {
+
+        toast.classList.add('hide');
+
+        setTimeout(() => {
+
+          toast.remove();
+
+        }, 300);
+
+      }, 2800);
+
+    }
+
+
+    /* =========================================================
+       UTILITY
+    ========================================================== */
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+    }
+
+
+    /* =========================================================
+       SIDEBAR STYLE
+    ========================================================== */
+
+    const sideStyle = document.createElement('style');
+
+    sideStyle.textContent = `
+
+      .side-link {
+        width: 100%;
+        min-height: 46px;
+        padding: 0 12px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #94a3b8;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all .2s ease;
+        text-align: left;
+      }
+
+      .side-link:hover {
+        background: rgba(255,255,255,.06);
+        color: white;
+      }
+
+      .side-link.active {
+        background: rgba(229,9,20,.12);
+        color: #fff;
+      }
+
+      .side-link.active svg {
+        color: #e50914;
+      }
+
+      .light-mode .side-link {
+        color: #64748b;
+      }
+
+      .light-mode .side-link:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+
+      .light-mode .side-link.active {
+        background: #fee2e2;
+        color: #0f172a;
+      }
+
+    `;
+
+    document.head.appendChild(sideStyle);
+
+
+    /* =========================================================
+       FIX MOBILE SIDEBAR
+    ========================================================== */
+
+    window.addEventListener('resize', () => {
+
+      if (window.innerWidth >= 768) {
+
+        $('#sidebar')?.classList.remove('-translate-x-full');
+
+        $('#mobileOverlay')?.classList.add('hidden');
+
+        document.body.style.overflow = '';
+
+      } else {
+
+        $('#sidebar')?.classList.add('-translate-x-full');
+
+      }
+
+    });
+
+
+    /* =========================================================
+       CLICK OUTSIDE NOTIFICATION
+    ========================================================== */
+
+    document.addEventListener('click', (event) => {
+
+      const panel = $('#notificationPanel');
+      const button = $('#notificationBtn');
+
+      if (!panel || !button) return;
+
+      if (
+        !panel.contains(event.target) &&
+        !button.contains(event.target)
+      ) {
+
+        panel.classList.add('hidden');
+
+      }
+
+    });
+
+
+    /* =========================================================
+       PREVENT MODAL SCROLL LEAK
+    ========================================================== */
+
+    $('#videoModalBox')?.addEventListener(
+      'click',
+      event => event.stopPropagation()
+    );
+
+
+    /* =========================================================
+       INITIAL LUCIDE REFRESH
+    ========================================================== */
+
+    setTimeout(() => {
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    }, 100);
+
+
+  </script>
+
+</body>
+</html>
