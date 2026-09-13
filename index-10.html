@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="description" content="VIRALFLIX — Kumpulan Video Viral Terbaru">
+  <title>VIRALFLIX — Kumpulan Video Viral</title>
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#090909;color:#fff;min-height:100vh
+    }
+    a{text-decoration:none;color:inherit}
+    .header{
+      position:sticky;top:0;z-index:20;
+      background:rgba(9,9,9,.96);border-bottom:1px solid #252525;
+      padding:14px 18px;display:flex;align-items:center;gap:14px
+    }
+    .logo{font-size:23px;font-weight:900;letter-spacing:-.5px}
+    .logo span{color:#e50914}
+    .search{
+      margin-left:auto;width:min(360px,55vw);
+      background:#171717;border:1px solid #303030;color:#fff;
+      border-radius:9px;padding:10px 13px;outline:none
+    }
+    .hero{padding:28px 18px 10px;max-width:1200px;margin:auto}
+    .hero h1{font-size:28px;margin-bottom:8px}
+    .hero p{color:#aaa;font-size:14px}
+    .wrap{max-width:1200px;margin:auto;padding:18px}
+    .grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:16px
+    }
+    .card{
+      background:#151515;border:1px solid #242424;border-radius:10px;
+      overflow:hidden;cursor:pointer;transition:.2s
+    }
+    .card:hover{transform:translateY(-3px);border-color:#444}
+    .thumb{
+      position:relative;aspect-ratio:16/9;background:#111;overflow:hidden
+    }
+    .thumb video{width:100%;height:100%;object-fit:cover;display:block}
+    .play{
+      position:absolute;inset:0;display:grid;place-items:center;
+      background:linear-gradient(transparent,rgba(0,0,0,.35))
+    }
+    .play i{
+      width:48px;height:48px;border-radius:50%;background:#e50914;
+      display:grid;place-items:center;font-style:normal;font-size:20px;
+      padding-left:3px;box-shadow:0 5px 20px #000
+    }
+    .info{padding:11px 12px}
+    .title{
+      font-size:15px;font-weight:700;line-height:1.35;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+    .meta{color:#888;font-size:12px;margin-top:7px}
+    .empty{
+      display:none;text-align:center;color:#888;padding:50px 10px
+    }
+    .modal{
+      display:none;position:fixed;inset:0;z-index:50;
+      background:rgba(0,0,0,.92);padding:20px;
+      align-items:center;justify-content:center
+    }
+    .modal.show{display:flex}
+    .player{
+      width:min(1000px,100%);background:#111;border-radius:10px;
+      overflow:hidden;border:1px solid #292929
+    }
+    .player video{display:block;width:100%;max-height:75vh;background:#000}
+    .close{
+      position:absolute;right:18px;top:14px;border:0;
+      background:#fff;color:#111;border-radius:50%;
+      width:40px;height:40px;font-size:24px;cursor:pointer
+    }
+    .player-info{padding:14px 16px}
+    .player-info h2{font-size:18px}
+    footer{
+      text-align:center;color:#666;font-size:12px;padding:35px 15px
+    }
+    @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:650px){
+      .header{padding:12px}
+      .logo{font-size:20px}
+      .search{width:48%;font-size:12px}
+      .hero{padding:22px 12px 8px}
+      .hero h1{font-size:23px}
+      .wrap{padding:12px}
+      .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+      .info{padding:9px}
+      .title{font-size:13px}
+      .meta{font-size:11px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">VIRAL<span>FLIX</span></div>
+    <input id="search" class="search" type="search" placeholder="Cari video...">
+  </header>
+
+  <section class="hero">
+    <h1>Kumpulan Video Viral</h1>
+    <p>Video terbaru dan populer, siap ditonton.</p>
+  </section>
+
+  <main class="wrap">
+    <div id="grid" class="grid"></div>
+    <div id="empty" class="empty">Video tidak ditemukan.</div>
+  </main>
+
+  <footer>© 2026 VIRALFLIX — Kumpulan Video Viral</footer>
+
+  <div id="modal" class="modal">
+    <button class="close" id="close" aria-label="Tutup">×</button>
+    <div class="player">
+      <video id="mainVideo" controls playsinline></video>
+      <div class="player-info"><h2 id="mainTitle"></h2></div>
+    </div>
+  </div>
+
+  <script>
+    /*
+      GANTI URL DI BAGIAN "videos" DENGAN URL VIDEO MILIK KAMU.
+      File ini sengaja memakai data lokal agar langsung jalan di GitHub Pages.
+    */
+    const videos = [
+      {
+        title: "Video Viral Terbaru #01",
+        url: "https://cdn.coverr.co/videos/coverr-a-man-walking-in-the-city-1577/1080p.mp4"
+      },
+      {
+        title: "Video Viral Terbaru #02",
+        url: "https://cdn.coverr.co/videos/coverr-a-woman-walking-on-the-street-1578/1080p.mp4"
+      },
+      {
+        title: "Video Viral Terbaru #03",
+        url: "https://cdn.coverr.co/videos/coverr-city-street-at-night-1579/1080p.mp4"
+      },
+      {
+        title: "Video Viral Terbaru #04",
+        url: "https://cdn.coverr.co/videos/coverr-driving-through-the-city-1580/1080p.mp4"
+      },
+      {
+        title: "Video Viral Terbaru #05",
+        url: "https://cdn.coverr.co/videos/coverr-sunset-over-the-city-1581/1080p.mp4"
+      },
+      {
+        title: "Video Viral Terbaru #06",
+        url: "https://cdn.coverr.co/videos/coverr-people-walking-in-the-city-1582/1080p.mp4"
+      }
+    ];
+
+    const grid = document.getElementById("grid");
+    const empty = document.getElementById("empty");
+    const search = document.getElementById("search");
+    const modal = document.getElementById("modal");
+    const mainVideo = document.getElementById("mainVideo");
+    const mainTitle = document.getElementById("mainTitle");
+
+    function render(list){
+      grid.innerHTML = "";
+      empty.style.display = list.length ? "none" : "block";
+
+      list.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="thumb">
+            <video src="${item.url}" muted playsinline preload="metadata"></video>
+            <div class="play"><i>▶</i></div>
+          </div>
+          <div class="info">
+            <div class="title">${item.title}</div>
+            <div class="meta">HD • Video ${String(index + 1).padStart(2,"0")}</div>
+          </div>
+        `;
+        card.addEventListener("click", () => openVideo(item));
+        grid.appendChild(card);
+      });
+    }
+
+    function openVideo(item){
+      mainTitle.textContent = item.title;
+      mainVideo.src = item.url;
+      modal.classList.add("show");
+      mainVideo.play().catch(()=>{});
+    }
+
+    function closeVideo(){
+      mainVideo.pause();
+      mainVideo.removeAttribute("src");
+      mainVideo.load();
+      modal.classList.remove("show");
+    }
+
+    document.getElementById("close").addEventListener("click", closeVideo);
+
+    modal.addEventListener("click", e => {
+      if(e.target === modal) closeVideo();
+    });
+
+    document.addEventListener("keydown", e => {
+      if(e.key === "Escape") closeVideo();
+    });
+
+    search.addEventListener("input", () => {
+      const q = search.value.toLowerCase().trim();
+      render(videos.filter(v => v.title.toLowerCase().includes(q)));
+    });
+
+    render(videos);
+  </script>
+</body>
+</html>
