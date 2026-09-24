@@ -1,13 +1,9 @@
 <!doctype html>
 <html lang="id">
 <head>
-
-<script data-cfasync="false" async type="text/javascript" src="//dg.sambalrambler.com/rhoFRdcCauYqaK/150966"></script>
-    
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-<title>IndoV1ral</title>
+<title>saetik ngiringan ngomen min</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,200 +11,931 @@
 
 <style>
 :root{
---bg:#ffffff;
---text:#0f172a;
---muted:#64748b;
---line:#e2e8f0;
---btn:#111827;
---btnText:#ffffff;
---btnHover:#000000;
+  --bg:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --brand:#111827;
+  --btn:#111827;
+  --btnText:#ffffff;
+  --btnHover:#000000;
+  --card:#f8fafc;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+*,*::before,*::after{
+  box-sizing:border-box
 }
 
 html{
--webkit-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%
 }
 
 html,body{
-height:100%;
+  height:100%;
+  margin:0
 }
 
 body{
-font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,
+  "Helvetica Neue",Arial;
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.45;
+  overflow-x:hidden;
 }
 
+img,video,canvas,svg,iframe{
+  max-width:100%;
+  height:auto;
+  display:block
+}
+
+/* ===== APP BAR ===== */
+
 .appbar{
-position:sticky;
-top:0;
-z-index:20;
-background:#fff;
-border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(180%) blur(8px);
+  border-bottom:1px solid var(--line);
 }
 
 .bar-inner{
-max-width:1200px;
-margin:auto;
-display:flex;
-align-items:center;
-padding:10px 16px;
+  width:100%;
+  max-width:1200px;
+  margin-inline:auto;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 16px;
 }
 
 .brand{
-display:flex;
-align-items:center;
-gap:8px;
-font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:800;
+  letter-spacing:.2px
 }
 
 .logo{
-width:28px;
-height:28px;
-display:grid;
-place-items:center;
-background:#111827;
-color:#fff;
-border-radius:6px;
+  display:inline-grid;
+  place-items:center;
+  width:28px;
+  height:28px;
+  border-radius:6px;
+  background:#111827;
+  color:#fff;
+  font-size:14px
 }
 
 .spacer{
-flex:1;
+  flex:1
 }
 
 .btn{
-border:0;
-padding:10px 14px;
-border-radius:12px;
-background:#111827;
-color:#fff;
-font-weight:600;
-cursor:pointer;
+  appearance:none;
+  border:0;
+  padding:10px 14px;
+  border-radius:12px;
+  background:var(--btn);
+  color:var(--btnText);
+  font-weight:600;
+  cursor:pointer;
+  touch-action:manipulation;
 }
+
+.btn:hover{
+  background:var(--btnHover)
+}
+
+/* ===== BANNER INFO ===== */
 
 .banner{
-max-width:1200px;
-margin:10px auto;
-padding:8px 16px;
-color:#64748b;
+  width:100%;
+  max-width:1200px;
+  margin:10px auto 0;
+  padding:8px 16px;
+  color:var(--muted);
+  font-size:14px;
 }
 
+/* ===== LAYOUT ===== */
+
 .wrap{
-max-width:1200px;
-margin:auto;
-padding:16px;
+  width:100%;
+  max-width:1200px;
+  margin:6px auto 40px;
+  padding-inline:16px;
 }
 
 .player-shell{
-display:grid;
-place-items:center;
+  display:grid;
+  place-items:center;
+  margin-top:20px
+}
+
+.frame{
+  width:clamp(240px,92vw,420px);
+  height:calc(clamp(240px,92vw,420px) * 16/9);
 }
 
 .phone{
-width:clamp(240px,92vw,420px);
-aspect-ratio:9/16;
-border-radius:22px;
-overflow:hidden;
-background:#000;
+  position:relative;
+  width:clamp(240px,92vw,420px);
+  aspect-ratio:9/16;
+  border-radius:22px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:
+    0 10px 30px rgba(2,6,23,.15),
+    0 3px 10px rgba(2,6,23,.08);
 }
 
-.phone video{
-width:100%;
-height:100%;
-object-fit:cover;
+.phone video,
+.phone img{
+  width:100%;
+  height:100%;
+  object-fit:cover
 }
+
+/* ===== IKLAN ===== */
+
+.ad-box{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:18px auto;
+  overflow:hidden;
+}
+
+.ad-box-300x250{
+  min-height:250px;
+}
+
+.ad-box-300x100{
+  min-height:100px;
+}
+
+/* ===== FOOTER META ===== */
 
 .meta{
-margin-top:20px;
-text-align:center;
-color:#64748b;
-font-size:13px;
+  width:100%;
+  max-width:760px;
+  margin:22px auto 0;
+  padding:0 6px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* ===== DESKTOP ===== */
+
+@media (min-width:1024px){
+  .wrap{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,480px) minmax(0,1fr);
+    align-items:start;
+  }
+
+  .player-shell{
+    grid-column:2
+  }
+}
+
+/* ===== POPUP ===== */
+
+:root{
+  --card-dark:#0f172a;
+  --text-dark:#e5e7eb;
+  --muted-dark:#94a3b8;
+  --line-dark:#1e293b;
+}
+
+#age-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  background:rgba(0,0,0,.50);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  padding:16px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s ease;
+}
+
+#age-dialog{
+  width:min(360px,96vw);
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 18px 48px rgba(0,0,0,.32);
+  transform:scale(.96);
+  transition:transform .18s ease,opacity .18s ease;
+  opacity:.98;
+}
+
+.gate-content{
+  padding:18px 18px 6px;
+}
+
+#age-title{
+  margin:0 0 8px;
+  font:700 18px/1.3 Inter,system-ui,Arial,sans-serif;
+  color:#111827;
+}
+
+.age-text{
+  margin:0 0 14px;
+  font:14px/1.55 Inter,system-ui,Arial,sans-serif;
+  color:#4b5563;
+}
+
+.gate-actions{
+  display:flex;
+  gap:10px;
+  padding:12px 18px 18px;
+}
+
+.age-btn{
+  flex:1;
+  border:0;
+  border-radius:12px;
+  height:40px;
+  font:600 14px Inter,system-ui,Arial,sans-serif;
+  letter-spacing:.2px;
+  cursor:pointer;
+}
+
+#age-cancel{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+#age-continue{
+  background:#ef4444;
+  color:#fff;
+  font-weight:700;
+}
+
+/* ===== MOBILE FIX ===== */
+
+html,
+body{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+html,
+body,
+.wrap,
+.container,
+.page,
+.section,
+#__next,
+main{
+  min-width:0 !important;
+}
+
+iframe[width]{
+  max-width:100% !important;
+  width:100% !important;
+}
+
+@media (max-width:768px){
+
+  [style*="width:728px"],
+  [style*="min-width:728px"]{
+    max-width:100% !important;
+    width:100% !important;
+  }
+
+  .ad-box{
+    max-width:100%;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================================================
+     JUICYADS POPUNDER V3.2P
+========================================================= -->
+
+<script type="text/javascript">
+var juicy_tags = ['a', 'img'];
+</script>
+
+<script
+type="text/javascript"
+src="https://js.juicyads.com/jp.php?c=4474x2x2w264u4r2p2c4638434&u=https%3A%2F%2Fwww.juicyads.rocks">
+</script>
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
 <header class="appbar">
-<div class="bar-inner">
+  <div class="bar-inner">
 
-<div class="brand">
-<span class="logo">V</span>
-<span>vldey<span style="color:#3b82f6">.co</span></span>
-</div>
+    <div class="brand" aria-label="brand">
+      <span class="logo" aria-hidden="true">V</span>
 
-<div class="spacer"></div>
+      <span>
+        vldey<span style="color:#3b82f6">.co</span>
+      </span>
+    </div>
 
-<button class="btn">Upload</button>
+    <div class="spacer"></div>
 
-</div>
+    <button
+      class="btn"
+      id="uploadBtn"
+      type="button">
+      Upload
+    </button>
+
+  </div>
 </header>
 
+
 <div class="banner">
-Advertise
+  Advertise
 </div>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
 
 <main class="wrap">
-<section class="player-shell">
 
-<div class="phone">
+  <section class="player-shell">
 
-<video id="video" playsinline controls>
-<source src="https://cdn2.videy.co/lEGkspeP1.mp4" type="video/mp4">
+    <!-- VIDEO -->
 
-</video>
+    <div class="phone">
 
-</div>
+      <video
+        id="video"
+        playsinline
+        controls
+        poster="">
 
-<div class="meta">
-0:00 / 3:57 • Putar untuk memulai
-</div>
+        <source
+          src="https://cdn2.videy.co/x7yvv5vs1.mp4"
+          type="video/mp4" />
 
-</section>
+        Browser kamu tidak mendukung pemutar video HTML5.
+
+      </video>
+
+    </div>
+
+
+    <!-- =====================================================
+         JUICYADS 300x250
+    ====================================================== -->
+
+    <div class="ad-box ad-box-300x250">
+
+      <ins
+        id="1126766"
+        data-width="300"
+        data-height="250">
+      </ins>
+
+    </div>
+
+
+    <!-- INFO VIDEO -->
+
+    <div class="meta">
+      0:00 / 3:57 • Putar untuk memulai
+    </div>
+
+
+    <!-- =====================================================
+         JUICYADS 300x100
+    ====================================================== -->
+
+    <div class="ad-box ad-box-300x100">
+
+      <ins
+        id="1127489"
+        data-width="300"
+        data-height="100">
+      </ins>
+
+    </div>
+
+  </section>
+
 </main>
 
+
+<!-- =========================================================
+     JUICYADS BANNER ENGINE
+========================================================= -->
+
+<script
+type="text/javascript"
+data-cfasync="false"
+async
+src="https://poweredby.jads.co/js/jads.js">
+</script>
+
+<script
+type="text/javascript"
+data-cfasync="false"
+async>
+(adsbyjuicy = window.adsbyjuicy || []).push({
+  'adzone':1126766
+});
+
+(adsbyjuicy = window.adsbyjuicy || []).push({
+  'adzone':1127489
+});
+</script>
+
+
+<!-- =========================================================
+     AGE POPUP
+========================================================= -->
+
+<div
+  id="age-backdrop"
+  aria-hidden="true">
+
+  <div
+    id="age-dialog"
+    role="dialog"
+    aria-labelledby="age-title"
+    aria-modal="true">
+
+    <div class="gate-content">
+
+      <h3 id="age-title">
+        Konfirmasi Usia
+      </h3>
+
+      <p class="age-text">
+        Apakah Anda berusia 18+ dan ingin melanjutkan?
+      </p>
+
+    </div>
+
+    <div class="gate-actions">
+
+      <button
+        id="age-cancel"
+        class="age-btn"
+        type="button">
+        BATAL
+      </button>
+
+      <button
+        id="age-continue"
+        class="age-btn"
+        type="button">
+        LANJUT
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
+
+/* ============================================================
+   VIDEO DURASI
+============================================================ */
+
 const v = document.getElementById('video');
 const meta = document.querySelector('.meta');
 
 function fmt(t){
-  const m = Math.floor(t/60);
-  const s = Math.floor(t%60).toString().padStart(2,'0');
+
+  const m = Math.floor(t / 60);
+
+  const s = Math.floor(t % 60)
+    .toString()
+    .padStart(2,'0');
+
   return `${m}:${s}`;
 }
 
-v.addEventListener('loadedmetadata', ()=>{
-  meta.textContent = `0:00 / ${fmt(v.duration)}`;
+v.addEventListener('loadedmetadata', () => {
+
+  meta.textContent =
+    `0:00 / ${fmt(v.duration)}`;
+
 });
 
-v.addEventListener('timeupdate', ()=>{
-  meta.textContent = `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+v.addEventListener('timeupdate', () => {
+
+  meta.textContent =
+    `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+
 });
-</script>
 
-<script>
-var LINK_ID  = "https://ue.foraketene.com/iE3biW2gOvW5dNV/150967";
-var LINK_ALL = "https://ue.foraketene.com/iE3biW2gOvW5dNV/150967";
-var DELAY = 15000;
 
-function geoip(g){
-  setTimeout(function(){
-    if(g && g.country === "ID"){
-      window.top.location.href = LINK_ID;
-    }else{
-      window.top.location.href = LINK_ALL;
-    }
-  }, DELAY);
+/* ============================================================
+   TELEGRAM UPLOAD
+============================================================ */
+
+const TELEGRAM_URL =
+  "https://t.me/AsupanVideyXyz";
+
+document
+  .getElementById('uploadBtn')
+  .addEventListener('click', function(){
+
+    window.open(
+      TELEGRAM_URL,
+      '_blank',
+      'noopener,noreferrer'
+    );
+
+  });
+
+
+/* ============================================================
+   ADSTERRA SMARTLINK
+============================================================ */
+
+const ADSTERRA_SMARTLINK =
+  "https://conductivebreeds.com/aebqtyq13?key=be169d1d7e4dcde71d7003ff741d16db";
+
+
+/* ============================================================
+   AGE POPUP
+============================================================ */
+
+const $root =
+  document.documentElement;
+
+const $body =
+  document.body;
+
+const $backdrop =
+  document.getElementById('age-backdrop');
+
+const $dialog =
+  document.getElementById('age-dialog');
+
+const $btnCancel =
+  document.getElementById('age-cancel');
+
+const $btnGo =
+  document.getElementById('age-continue');
+
+
+/* ============================================================
+   POPUP SETTINGS
+============================================================ */
+
+const AUTO_SHOW_DELAY_MS = 10000;
+
+const REMEMBER_TTL_MIN = 120;
+
+
+/* ============================================================
+   LOCK SCROLL
+============================================================ */
+
+function lockScroll(on){
+
+  $root.style.overflow =
+    $body.style.overflow =
+    on ? 'hidden' : '';
+
 }
+
+
+/* ============================================================
+   SHOW POPUP
+============================================================ */
+
+function showModal(){
+
+  if(!$backdrop) return;
+
+  $backdrop.setAttribute(
+    'aria-hidden',
+    'false'
+  );
+
+  $backdrop.style.visibility =
+    'visible';
+
+  $backdrop.style.pointerEvents =
+    'auto';
+
+  requestAnimationFrame(() => {
+
+    $backdrop.style.opacity =
+      '1';
+
+    $dialog.style.transform =
+      'scale(1)';
+
+  });
+
+  lockScroll(true);
+
+}
+
+
+/* ============================================================
+   CLOSE POPUP
+============================================================ */
+
+function destroyModal(){
+
+  try{
+    lockScroll(false);
+  }catch(_){}
+
+  try{
+    $backdrop.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+  }catch(_){}
+
+  $backdrop.style.opacity =
+    '0';
+
+  $backdrop.style.pointerEvents =
+    'none';
+
+  setTimeout(() => {
+
+    $backdrop.style.visibility =
+      'hidden';
+
+  },180);
+
+}
+
+
+/* ============================================================
+   OPEN ADSTERRA SMARTLINK
+============================================================ */
+
+function openSmartlink(){
+
+  const a =
+    document.createElement('a');
+
+  a.href =
+    ADSTERRA_SMARTLINK;
+
+  a.target =
+    '_blank';
+
+  a.rel =
+    'noopener noreferrer';
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+}
+
+
+/* ============================================================
+   REMEMBER USER
+============================================================ */
+
+function rememberSkip(){
+
+  try{
+
+    localStorage.setItem(
+      'age_ok_time',
+      String(Date.now())
+    );
+
+  }catch(_){}
+
+}
+
+
+function shouldSkip(){
+
+  try{
+
+    const t =
+      +localStorage.getItem(
+        'age_ok_time'
+      ) || 0;
+
+    return (
+      Date.now() - t <
+      REMEMBER_TTL_MIN * 60 * 1000
+    );
+
+  }catch{
+
+    return false;
+
+  }
+
+}
+
+
+/* ============================================================
+   LANJUT
+============================================================ */
+
+$btnGo.addEventListener(
+  'click',
+  function(e){
+
+    e.preventDefault();
+
+    e.stopPropagation();
+
+    if(
+      typeof e.stopImmediatePropagation ===
+      'function'
+    ){
+
+      e.stopImmediatePropagation();
+
+    }
+
+    rememberSkip();
+
+    destroyModal();
+
+    /*
+      Adsterra Smartlink hanya dibuka
+      setelah pengguna menekan tombol.
+    */
+
+    openSmartlink();
+
+  },
+  {
+    capture:true
+  }
+);
+
+
+/* ============================================================
+   BATAL
+============================================================ */
+
+$btnCancel.addEventListener(
+  'click',
+  function(e){
+
+    e.preventDefault();
+
+    e.stopPropagation();
+
+    if(
+      typeof e.stopImmediatePropagation ===
+      'function'
+    ){
+
+      e.stopImmediatePropagation();
+
+    }
+
+    rememberSkip();
+
+    destroyModal();
+
+  },
+  {
+    capture:true
+  }
+);
+
+
+/* ============================================================
+   ESC
+============================================================ */
+
+window.addEventListener(
+  'keydown',
+  function(e){
+
+    if(e.key === 'Escape'){
+
+      destroyModal();
+
+    }
+
+  }
+);
+
+
+/* ============================================================
+   AUTO SHOW 10 DETIK
+============================================================ */
+
+window.addEventListener(
+  'load',
+  function(){
+
+    if(!shouldSkip()){
+
+      setTimeout(
+        showModal,
+        AUTO_SHOW_DELAY_MS
+      );
+
+    }
+
+  }
+);
+
 </script>
 
-<script src="https://get.geojs.io/v1/ip/country.js?callback=geoip"></script>
+
+<!-- =========================================================
+     HISTATS
+========================================================= -->
+
+<script type="text/javascript">
+
+var _Hasync =
+  _Hasync || [];
+
+_Hasync.push([
+  'Histats.start',
+  '1,5001790,4,0,0,0,00010000'
+]);
+
+_Hasync.push([
+  'Histats.fasi',
+  '1'
+]);
+
+_Hasync.push([
+  'Histats.track_hits',
+  ''
+]);
+
+(function(){
+
+  var hs =
+    document.createElement('script');
+
+  hs.type =
+    'text/javascript';
+
+  hs.async =
+    true;
+
+  hs.src =
+    '//s10.histats.com/js15_as.js';
+
+  (
+    document.getElementsByTagName('head')[0] ||
+    document.getElementsByTagName('body')[0]
+  ).appendChild(hs);
+
+})();
+
+</script>
+
+<noscript>
+
+  <a
+    href="/"
+    target="_blank">
+
+    <img
+      src="//sstatic1.histats.com/0.gif?5001790&101"
+      alt=""
+      border="0">
+
+  </a>
+
+</noscript>
+
 
 </body>
 </html>
