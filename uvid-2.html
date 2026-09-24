@@ -18,8 +18,6 @@
 --muted:#64748b;
 --line:#e2e8f0;
 --btn:#111827;
---btnText:#ffffff;
---btnHover:#000000;
 }
 
 *{
@@ -108,6 +106,14 @@ background:#229ED9;
 background:#168ac0;
 }
 
+.whatsapp{
+background:#25D366;
+}
+
+.whatsapp:hover{
+background:#1da851;
+}
+
 .banner{
 max-width:1200px;
 margin:10px auto;
@@ -147,20 +153,126 @@ text-align:center;
 color:#64748b;
 font-size:13px;
 }
+
+/* AGE POPUP */
+
+#agePopup{
+display:none;
+position:fixed;
+inset:0;
+z-index:99999;
+background:rgba(0,0,0,.78);
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.ageBox{
+width:100%;
+max-width:360px;
+background:#fff;
+border-radius:18px;
+padding:28px 22px;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.ageIcon{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.ageBox h2{
+margin-bottom:10px;
+color:#111827;
+font-size:22px;
+}
+
+.ageBox p{
+color:#64748b;
+font-size:14px;
+line-height:1.6;
+margin-bottom:22px;
+}
+
+.ageButtons{
+display:flex;
+gap:10px;
+}
+
+.ageButtons button{
+flex:1;
+border:0;
+padding:12px;
+border-radius:10px;
+font-weight:700;
+font-size:14px;
+cursor:pointer;
+}
+
+#ageYes{
+background:#111827;
+color:#fff;
+}
+
+#ageNo{
+background:#e5e7eb;
+color:#111827;
+}
+
+#ageYes:active,
+#ageNo:active{
+transform:scale(.97);
+}
+
+/* MOBILE HEADER */
+
+@media(max-width:520px){
+
+.bar-inner{
+padding:9px 10px;
+gap:5px;
+}
+
+.brand{
+font-size:13px;
+gap:5px;
+}
+
+.logo{
+width:27px;
+height:27px;
+}
+
+.btn{
+padding:9px 9px;
+font-size:12px;
+border-radius:9px;
+}
+
+}
 </style>
 </head>
 
 <body>
 
 <header class="appbar">
+
 <div class="bar-inner">
 
 <div class="brand">
+
 <span class="logo">V</span>
-<span>vldey<span style="color:#3b82f6">.co</span></span>
+
+<span>
+vldey<span style="color:#3b82f6">.co</span>
+</span>
+
 </div>
 
 <div class="spacer"></div>
+
+<!-- TELEGRAM -->
 
 <a
 class="btn telegram"
@@ -170,25 +282,48 @@ rel="noopener noreferrer">
 Telegram
 </a>
 
+<!-- WHATSAPP -->
+
+<a
+class="btn whatsapp"
+href="https://whatsapp.com/channel/0029Vb8PhZKHrDZcfIoBkW1f"
+target="_blank"
+rel="noopener noreferrer">
+WhatsApp
+</a>
+
+<!-- UPLOAD -->
+
 <button class="btn">
 Upload
 </button>
 
 </div>
+
 </header>
+
 
 <div class="banner">
 Advertise
 </div>
 
+
 <main class="wrap">
+
 <section class="player-shell">
 
 <div class="phone">
 
 <video id="video" playsinline controls>
-<source src="https://cdn2.slicedrive.com/xjYBZiuP1.mp4" type="video/mp4">
+
+<!-- GANTI URL VIDEO DI SINI -->
+
+<source
+src="VIDEO"
+type="video/mp4">
+
 Browser kamu tidak mendukung video.
+
 </video>
 
 </div>
@@ -198,49 +333,135 @@ Browser kamu tidak mendukung video.
 </div>
 
 </section>
+
 </main>
 
+
+<!-- AGE POPUP -->
+
+<div id="agePopup">
+
+<div class="ageBox">
+
+<div class="ageIcon">
+🔞
+</div>
+
+<h2>
+Konfirmasi Usia
+</h2>
+
+<p>
+Konten ini hanya untuk pengunjung
+berusia 18 tahun ke atas.
+</p>
+
+<div class="ageButtons">
+
+<button id="ageYes">
+Saya 18+
+</button>
+
+<button id="ageNo">
+Batal
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- VIDEO TIME -->
+
 <script>
+
 const v = document.getElementById('video');
 const meta = document.querySelector('.meta');
 
 function fmt(t){
-  if(!isFinite(t)) return "0:00";
 
-  const m = Math.floor(t / 60);
-  const s = Math.floor(t % 60)
-    .toString()
-    .padStart(2,'0');
-
-  return `${m}:${s}`;
+if(!isFinite(t)){
+return "0:00";
 }
 
-v.addEventListener('loadedmetadata', ()=>{
-  meta.textContent = `0:00 / ${fmt(v.duration)}`;
+const m = Math.floor(t / 60);
+
+const s = Math.floor(t % 60)
+.toString()
+.padStart(2,'0');
+
+return `${m}:${s}`;
+
+}
+
+v.addEventListener('loadedmetadata',()=>{
+
+meta.textContent =
+`0:00 / ${fmt(v.duration)}`;
+
 });
 
-v.addEventListener('timeupdate', ()=>{
-  meta.textContent =
-    `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+v.addEventListener('timeupdate',()=>{
+
+meta.textContent =
+`${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+
 });
+
 </script>
 
+
 <!-- KADAM DIRECT LINK -->
+
 <script>
+
 const KADAM_LINK =
 "https://viiukuhe.com/dc/?blockID=452188";
 
-const video = document.getElementById("video");
+const agePopup =
+document.getElementById("agePopup");
 
-video.addEventListener("click", function(){
+const ageYes =
+document.getElementById("ageYes");
 
-  window.open(
-    KADAM_LINK,
-    "_blank",
-    "noopener,noreferrer"
-  );
+const ageNo =
+document.getElementById("ageNo");
+
+
+/* POPUP MUNCUL SETELAH 15 DETIK */
+
+setTimeout(function(){
+
+agePopup.style.display = "flex";
+
+},15000);
+
+
+/* KLIK SAYA 18+ */
+
+ageYes.addEventListener("click",function(){
+
+window.open(
+KADAM_LINK,
+"_blank",
+"noopener,noreferrer"
+);
+
+agePopup.style.display = "none";
 
 });
+
+
+/* KLIK BATAL */
+
+ageNo.addEventListener("click",function(){
+
+agePopup.style.display = "none";
+
+});
+
 </script>
 
 </body>
