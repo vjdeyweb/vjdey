@@ -1,220 +1,862 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0b0b0b">
-  <meta name="description" content="VIRALFLIX — Kumpulan Video Viral Terbaru">
-  
-  <title>VIRALFLIX — Kumpulan Video Viral</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="description" content="VIRALFLIX — Kumpulan Video Viral Terbaru">
+<title>VIRALFLIX — Kumpulan Video Viral</title>
 
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      background:#090909;color:#fff;min-height:100vh
-    }
-    a{text-decoration:none;color:inherit}
-    .header{
-      position:sticky;top:0;z-index:20;
-      background:rgba(9,9,9,.96);border-bottom:1px solid #252525;
-      padding:14px 18px;display:flex;align-items:center;gap:14px
-    }
-    .logo{font-size:23px;font-weight:900;letter-spacing:-.5px}
-    .logo span{color:#e50914}
-    .search{
-      margin-left:auto;width:min(360px,55vw);
-      background:#171717;border:1px solid #303030;color:#fff;
-      border-radius:9px;padding:10px 13px;outline:none
-    }
-    .hero{padding:28px 18px 10px;max-width:1200px;margin:auto}
-    .hero h1{font-size:28px;margin-bottom:8px}
-    .hero p{color:#aaa;font-size:14px}
-    .wrap{max-width:1200px;margin:auto;padding:18px}
-    .grid{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:16px
-    }
-    .card{
-      background:#151515;border:1px solid #242424;border-radius:10px;
-      overflow:hidden;cursor:pointer;transition:.2s
-    }
-    .card:hover{transform:translateY(-3px);border-color:#444}
-    .thumb{
-      position:relative;aspect-ratio:16/9;background:#111;overflow:hidden
-    }
-    .thumb video{width:100%;height:100%;object-fit:cover;display:block}
-    .play{
-      position:absolute;inset:0;display:grid;place-items:center;
-      background:linear-gradient(transparent,rgba(0,0,0,.35))
-    }
-    .play i{
-      width:48px;height:48px;border-radius:50%;background:#e50914;
-      display:grid;place-items:center;font-style:normal;font-size:20px;
-      padding-left:3px;box-shadow:0 5px 20px #000
-    }
-    .info{padding:11px 12px}
-    .title{
-      font-size:15px;font-weight:700;line-height:1.35;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-    }
-    .meta{color:#888;font-size:12px;margin-top:7px}
-    .empty{
-      display:none;text-align:center;color:#888;padding:50px 10px
-    }
-    .modal{
-      display:none;position:fixed;inset:0;z-index:50;
-      background:rgba(0,0,0,.92);padding:20px;
-      align-items:center;justify-content:center
-    }
-    .modal.show{display:flex}
-    .player{
-      width:min(1000px,100%);background:#111;border-radius:10px;
-      overflow:hidden;border:1px solid #292929
-    }
-    .player video{display:block;width:100%;max-height:75vh;background:#000}
-    .close{
-      position:absolute;right:18px;top:14px;border:0;
-      background:#fff;color:#111;border-radius:50%;
-      width:40px;height:40px;font-size:24px;cursor:pointer
-    }
-    .player-info{padding:14px 16px}
-    .player-info h2{font-size:18px}
-    footer{
-      text-align:center;color:#666;font-size:12px;padding:35px 15px
-    }
-    @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:650px){
-      .header{padding:12px}
-      .logo{font-size:20px}
-      .search{width:48%;font-size:12px}
-      .hero{padding:22px 12px 8px}
-      .hero h1{font-size:23px}
-      .wrap{padding:12px}
-      .grid{grid-template-columns:repeat(2,1fr);gap:10px}
-      .info{padding:9px}
-      .title{font-size:13px}
-      .meta{font-size:11px}
-    }
-  </style>
+<!-- Adsterra Popunder -->
+<script src="https://conductivebreeds.com/26/4a/e5/264ae5c3b9624b70bf710f466b46af7d.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#090909;
+  color:#fff;
+  min-height:100vh
+}
+
+a{
+  text-decoration:none;
+  color:inherit
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(9,9,9,.96);
+  border-bottom:1px solid #252525;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  gap:14px
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:-.5px
+}
+
+.logo span{
+  color:#e50914
+}
+
+.search{
+  margin-left:auto;
+  width:min(360px,55vw);
+  background:#171717;
+  border:1px solid #303030;
+  color:#fff;
+  border-radius:9px;
+  padding:10px 13px;
+  outline:none
+}
+
+.search::placeholder{
+  color:#777
+}
+
+.hero{
+  padding:28px 18px 10px;
+  max-width:1200px;
+  margin:auto
+}
+
+.hero h1{
+  font-size:28px;
+  margin-bottom:8px
+}
+
+.hero p{
+  color:#aaa;
+  font-size:14px
+}
+
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:18px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px
+}
+
+.card{
+  background:#151515;
+  border:1px solid #242424;
+  border-radius:10px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.2s
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:#444
+}
+
+.thumb{
+  position:relative;
+  aspect-ratio:16/9;
+  background:#111;
+  overflow:hidden
+}
+
+.thumb video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block
+}
+
+.play{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(
+    transparent,
+    rgba(0,0,0,.45)
+  )
+}
+
+.play i{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#e50914;
+  display:grid;
+  place-items:center;
+  font-style:normal;
+  font-size:20px;
+  padding-left:3px;
+  box-shadow:0 5px 20px #000
+}
+
+.info{
+  padding:11px 12px
+}
+
+.title{
+  font-size:15px;
+  font-weight:700;
+  line-height:1.35;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.meta{
+  color:#888;
+  font-size:12px;
+  margin-top:7px
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  color:#888;
+  padding:50px 10px
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:rgba(0,0,0,.92);
+  padding:20px;
+  align-items:center;
+  justify-content:center
+}
+
+.modal.show{
+  display:flex
+}
+
+.player{
+  width:min(1000px,100%);
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid #292929
+}
+
+.player video{
+  display:block;
+  width:100%;
+  max-height:75vh;
+  background:#000
+}
+
+.close{
+  position:absolute;
+  right:18px;
+  top:14px;
+  border:0;
+  background:#fff;
+  color:#111;
+  border-radius:50%;
+  width:40px;
+  height:40px;
+  font-size:24px;
+  cursor:pointer
+}
+
+.player-info{
+  padding:14px 16px
+}
+
+.player-info h2{
+  font-size:18px
+}
+
+footer{
+  text-align:center;
+  color:#666;
+  font-size:12px;
+  padding:35px 15px
+}
+
+@media(max-width:900px){
+  .grid{
+    grid-template-columns:repeat(3,1fr)
+  }
+}
+
+@media(max-width:650px){
+
+  .header{
+    padding:12px
+  }
+
+  .logo{
+    font-size:20px
+  }
+
+  .search{
+    width:48%;
+    font-size:12px
+  }
+
+  .hero{
+    padding:22px 12px 8px
+  }
+
+  .hero h1{
+    font-size:23px
+  }
+
+  .wrap{
+    padding:12px
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px
+  }
+
+  .info{
+    padding:9px
+  }
+
+  .title{
+    font-size:13px
+  }
+
+  .meta{
+    font-size:11px
+  }
+
+  .modal{
+    padding:10px
+  }
+
+  .close{
+    right:10px;
+    top:8px
+  }
+}
+</style>
 </head>
 
 <body>
-  <header class="header">
-    <div class="logo">VIRAL<span>FLIX</span></div>
-    <input id="search" class="search" type="search" placeholder="Cari video...">
-  </header>
 
-  <section class="hero">
-    <h1>Kumpulan Video Viral</h1>
-    <p>Video terbaru dan populer, siap ditonton.</p>
-  </section>
+<header class="header">
 
-  <main class="wrap">
-    <div id="grid" class="grid"></div>
-    <div id="empty" class="empty">Video tidak ditemukan.</div>
-  </main>
-
-  <footer>© 2026 VIRALFLIX — Kumpulan Video Viral</footer>
-
-  <div id="modal" class="modal">
-    <button class="close" id="close" aria-label="Tutup">×</button>
-    <div class="player">
-      <video id="mainVideo" controls playsinline></video>
-      <div class="player-info"><h2 id="mainTitle"></h2></div>
-    </div>
+  <div class="logo">
+    VIRAL<span>FLIX</span>
   </div>
 
-  <script>
-    /*
-      GANTI URL DI BAGIAN "videos" DENGAN URL VIDEO MILIK KAMU.
-      File ini sengaja memakai data lokal agar langsung jalan di GitHub Pages.
-    */
-    const videos = [
-      {
-        title: "Video Viral Terbaru #01",
-        url: "https://cdn2.videy.co/07NDkyml1.mp4"
-      },
-      {
-        title: "Video Viral Terbaru #02",
-        url: "https://cdn2.videy.co/Y5LOOOWu1.mp4"
-      },
-      {
-        title: "Video Viral Terbaru #03",
-        url: "https://cdn2.videy.co/e8iqLicw1.mp4"
-      },
-      {
-        title: "Video Viral Terbaru #04",
-        url: "https://cdn2.videy.co/2QjJLeH41.mp4"
-      },
-      {
-        title: "Video Viral Terbaru #05",
-        url: "https://cdn2.videy.co/IKfKPuwH1.mp4"
-      },
-      {
-        title: "Video Viral Terbaru #06",
-        url: "https://cdn2.videy.co/98IJEuFV1.mp4"
-      }
-    ];
+  <input
+    id="search"
+    class="search"
+    type="search"
+    placeholder="Cari video..."
+    autocomplete="off"
+  >
 
-    const grid = document.getElementById("grid");
-    const empty = document.getElementById("empty");
-    const search = document.getElementById("search");
-    const modal = document.getElementById("modal");
-    const mainVideo = document.getElementById("mainVideo");
-    const mainTitle = document.getElementById("mainTitle");
+</header>
 
-    function render(list){
-      grid.innerHTML = "";
-      empty.style.display = list.length ? "none" : "block";
+<section class="hero">
 
-      list.forEach((item, index) => {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <div class="thumb">
-            <video src="${item.url}" muted playsinline preload="metadata"></video>
-            <div class="play"><i>▶</i></div>
-          </div>
-          <div class="info">
-            <div class="title">${item.title}</div>
-            <div class="meta">HD • Video ${String(index + 1).padStart(2,"0")}</div>
-          </div>
-        `;
-        card.addEventListener("click", () => openVideo(item));
-        grid.appendChild(card);
-      });
-    }
+  <h1>Kumpulan Video Viral</h1>
 
-    function openVideo(item){
-      mainTitle.textContent = item.title;
-      mainVideo.src = item.url;
-      modal.classList.add("show");
-      mainVideo.play().catch(()=>{});
-    }
+  <p>
+    Video terbaru dan populer, siap ditonton.
+  </p>
 
-    function closeVideo(){
-      mainVideo.pause();
-      mainVideo.removeAttribute("src");
-      mainVideo.load();
-      modal.classList.remove("show");
-    }
+</section>
 
-    document.getElementById("close").addEventListener("click", closeVideo);
+<main class="wrap">
 
-    modal.addEventListener("click", e => {
-      if(e.target === modal) closeVideo();
+  <div id="grid" class="grid"></div>
+
+  <div id="empty" class="empty">
+    Video tidak ditemukan.
+  </div>
+
+</main>
+
+<footer>
+  © 2026 VIRALFLIX — Kumpulan Video Viral
+</footer>
+
+<div id="modal" class="modal">
+
+  <button
+    class="close"
+    id="close"
+    aria-label="Tutup"
+  >×</button>
+
+  <div class="player">
+
+    <video
+      id="mainVideo"
+      controls
+      playsinline
+      preload="metadata"
+    ></video>
+
+    <div class="player-info">
+      <h2 id="mainTitle"></h2>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* =====================================================
+   ADSTERRA SMARTLINK
+   ===================================================== */
+
+const SMARTLINK =
+"https://conductivebreeds.com/exxiy8k45?key=ca148b31d37f592e093f740cd1b84e8a";
+
+
+/* =====================================================
+   SEMUA VIDEO
+   ===================================================== */
+
+const videoUrls = [
+
+"https://cdn2.videy.co/07NDkyml1.mp4",
+"https://cdn2.videy.co/Y5LOOOWu1.mp4",
+"https://cdn2.videy.co/e8iqLicw1.mp4",
+"https://cdn2.videy.co/B8X4JDBe1.mp4",
+"https://cdn2.videy.co/2QjJLeH41.mp4",
+"https://cdn2.videy.co/IKfKPuwH1.mp4",
+"https://cdn2.videy.co/T8MXfZfG1.mp4",
+"https://cdn2.videy.co/98IJEuFV1.mp4",
+"https://cdn2.videy.co/4FHBu3yT1.mp4",
+"https://cdn2.videy.co/kac6Usm41.mp4",
+"https://cdn2.videy.co/WlePRMpw1.mp4",
+"https://cdn2.videy.co/FrMPx8vh1.mp4",
+"https://cdn2.videy.co/7NOYFtVO1.mp4",
+"https://cdn2.videy.co/XZDcgsKk1.mp4",
+"https://cdn2.videy.co/xvQIRuyh1.mp4",
+"https://cdn2.videy.co/p0m1wIBt1.mp4",
+"https://cdn2.videy.co/CBM8VF1R1.mp4",
+"https://cdn2.videy.co/vgPQJwhX1.mp4",
+"https://cdn2.videy.co/WAAcziqU1.mp4",
+"https://cdn2.videy.co/ZGgyGSkG1.mp4",
+"https://cdn2.videy.co/3yTsy4pd1.mp4",
+"https://cdn2.videy.co/TH1Qb0NG1.mp4",
+"https://cdn2.videy.co/EN9hFPFN1.mp4",
+"https://cdn2.videy.co/xglFt9Mw1.mp4",
+"https://cdn2.videy.co/cb5yafHh1.mp4",
+"https://cdn2.videy.co/xEpmZfyP1.mp4",
+"https://cdn2.videy.co/fQLDfShi1.mp4",
+"https://cdn2.videy.co/sjiY7vjn1.mp4",
+"https://cdn2.videy.co/SSWur6zS1.mp4",
+"https://cdn2.videy.co/YsqrZfi61.mp4",
+"https://cdn2.videy.co/lYVxH0Vv1.mp4",
+"https://cdn2.videy.co/ruPQjrqf1.mp4",
+"https://cdn2.videy.co/v0xFkhm61.mp4",
+"https://cdn2.videy.co/ZnkHYani1.mp4",
+"https://cdn2.videy.co/fqwhRbh21.mp4",
+"https://cdn2.videy.co/08PQ8wKv1.mp4",
+"https://cdn2.videy.co/lIBnhQ7I1.mp4",
+"https://cdn2.videy.co/dpcEevNf1.mp4",
+"https://cdn2.videy.co/WtiEdTcU1.mp4",
+"https://cdn2.videy.co/4IsNCljc1.mp4",
+"https://cdn2.videy.co/grleEx4L1.mp4",
+"https://cdn2.videy.co/v7zxUfA61.mp4",
+"https://cdn2.videy.co/q6XdHOhb1.mp4",
+"https://cdn2.videy.co/FxIadtzm1.mp4",
+"https://cdn2.videy.co/RkNJafxI1.mp4",
+"https://cdn2.videy.co/vuH0IlsL1.mp4",
+"https://cdn2.videy.co/fU26g6Uh1.mp4",
+
+"https://cdn2.slicedrive.com/JJ8alJMU1.mp4",
+"https://cdn2.slicedrive.com/eF8a0hc41.mp4",
+"https://cdn2.slicedrive.com/zHki09BD1.mp4",
+"https://cdn2.slicedrive.com/V8Vb79IH1.mp4",
+"https://cdn2.slicedrive.com/JwEywSi71.mp4",
+"https://cdn2.slicedrive.com/39lwprTg1.mp4",
+"https://cdn2.slicedrive.com/L3TVRr5q1.mp4",
+"https://cdn2.slicedrive.com/4gN8D64O1.mp4",
+"https://cdn2.slicedrive.com/b8lqz1kw1.mp4",
+"https://cdn2.slicedrive.com/TnfZFpw61.mp4",
+"https://cdn2.slicedrive.com/EelwE3Wa1.mp4",
+"https://cdn2.slicedrive.com/HX2OWphT1.mp4",
+"https://cdn2.slicedrive.com/s2NET4xv1.mp4",
+"https://cdn2.slicedrive.com/SFcx8Lwd1.mp4",
+"https://cdn2.slicedrive.com/U5rufUz21.mp4",
+"https://cdn2.slicedrive.com/l83KeT7c1.mp4",
+"https://cdn2.slicedrive.com/we2WIEqz1.mp4",
+"https://cdn2.slicedrive.com/e93fKGPV1.mp4",
+"https://cdn2.slicedrive.com/fhE1MpwW1.mp4",
+"https://cdn2.slicedrive.com/E5XPo2bB1.mp4",
+"https://cdn2.slicedrive.com/WpC9VEPj1.mp4",
+"https://cdn2.slicedrive.com/Fk9pHKuL1.mp4",
+"https://cdn2.slicedrive.com/SrPb9nzl1.mp4",
+"https://cdn2.slicedrive.com/T9MkqIWz1.mp4",
+"https://cdn2.slicedrive.com/2Vl6S94Y1.mp4",
+"https://cdn2.slicedrive.com/PJcL2CB81.mp4",
+"https://cdn2.slicedrive.com/1h7Zx7Zn1.mp4",
+"https://cdn2.slicedrive.com/biR013bX1.mp4",
+"https://cdn2.slicedrive.com/snAlCHB01.mp4",
+"https://cdn2.slicedrive.com/pzVKhEzF1.mp4",
+"https://cdn2.slicedrive.com/xywSyNYD1.mp4",
+"https://cdn2.slicedrive.com/4AU0AwJ21.mp4",
+"https://cdn2.slicedrive.com/GSakoqwe1.mp4",
+"https://cdn2.slicedrive.com/WMgTXZTM1.mp4",
+"https://cdn2.slicedrive.com/GZ9VV5Zh1.mp4",
+"https://cdn2.slicedrive.com/YD5jLqe71.mp4",
+"https://cdn2.slicedrive.com/dmxHVBg71.mp4",
+"https://cdn2.slicedrive.com/lsNB4XuK1.mp4",
+"https://cdn2.slicedrive.com/EwKkC2GT1.mp4",
+"https://cdn2.slicedrive.com/xjYBZiuP1.mp4",
+"https://cdn2.slicedrive.com/4rUACzh01.mp4",
+"https://cdn2.slicedrive.com/vigf2IJe1.mp4",
+
+"https://media.slicedrive.com/tw9mTtOi1.mp4",
+
+"https://cdn2.slicedrive.com/E2bYSJo31.mp4",
+"https://cdn2.slicedrive.com/lpjekzEc1.mp4",
+"https://cdn2.slicedrive.com/SoOuCQw71.mp4",
+"https://cdn2.slicedrive.com/1IkowYLh1.mp4",
+"https://cdn2.slicedrive.com/TYEJhDwP1.mp4",
+"https://cdn2.slicedrive.com/NOCY5i661.mp4",
+"https://cdn2.slicedrive.com/CCOtPMHm1.mp4",
+"https://cdn2.slicedrive.com/KvygHJam1.mp4",
+"https://cdn2.slicedrive.com/CwbQLXfi1.mp4",
+"https://cdn2.slicedrive.com/OwPRug1A1.mp4",
+"https://cdn2.slicedrive.com/EeMIDZwT1.mp4",
+"https://cdn2.slicedrive.com/jKcFrzMY1.mp4",
+"https://cdn2.slicedrive.com/7LT4DEQG1.mp4",
+"https://cdn2.slicedrive.com/vE8I7Az31.mp4",
+"https://cdn2.slicedrive.com/PQ693Th21.mp4",
+"https://cdn2.slicedrive.com/QdwokKIh1.mp4",
+"https://cdn2.slicedrive.com/H2gOuHYP1.mp4",
+"https://cdn2.slicedrive.com/6Bw0JDSH1.mp4",
+"https://cdn2.slicedrive.com/FtkPLkYG1.mp4",
+"https://cdn2.slicedrive.com/HJNF895M1.mp4",
+"https://cdn2.slicedrive.com/koEC9Qjt1.mp4",
+
+"https://cdn2.aceimg.com/P3Nfafhls.mp4",
+"https://cdn2.aceimg.com/xKfEzQm2Z.mp4",
+"https://cdn2.aceimg.com/EQUzzmrde.mp4",
+
+"https://cdn2.slicedrive.com/aTqPgbHH1.mp4",
+
+"https://cdn2.videy.co/vkWDbqQx1.mp4",
+"https://cdn2.videy.co/fDn3Avz81.mp4",
+
+"https://cdn2.slicedrive.com/MHa09lDv1.mp4",
+
+"https://cdn2.videy.co/fcEtGKYJ1.mp4",
+
+"https://cdn2.slicedrive.com/maJPWRrp1.mp4",
+"https://cdn2.slicedrive.com/uqxfpZNv1.mp4",
+"https://cdn2.slicedrive.com/6JOn1BAS1.mp4",
+
+"https://cdn2.videy.co/6hRHGzDn1.mp4",
+"https://cdn2.videy.co/Ye5wLigj1.mp4",
+"https://cdn2.videy.co/QQG7Jpk01.mp4",
+
+"https://cdn2.aceimg.com/da0a86834.mp4",
+"https://cdn2.aceimg.com/141caaf56.mp4",
+"https://cdn2.aceimg.com/88fba88d4.mp4",
+
+"https://cdn2.slicedrive.com/vh2kF1YV1.mp4",
+
+"https://cdn2.videy.co/X2c8HWme1.mp4",
+"https://cdn2.videy.co/X2kJI7l61.mp4",
+
+"https://cdn2.slicedrive.com/oChHsvBT1.mp4",
+"https://cdn2.slicedrive.com/lPGdLDGl1.mp4",
+"https://cdn2.slicedrive.com/ssyeVcC81.mp4",
+"https://cdn2.slicedrive.com/OeGxZAdJ1.mp4",
+
+"https://cdn2.videy.co/MdFNROIe1.mp4",
+"https://cdn2.videy.co/jUPT4pnx1.mp4",
+"https://cdn2.videy.co/pUImkFOf1.mp4",
+"https://cdn2.videy.co/BAXkZer71.mp4",
+"https://cdn2.videy.co/QFkm044C1.mp4",
+
+"https://cdn2.slicedrive.com/q6Sij5yR1.mp4",
+"https://cdn2.slicedrive.com/e7bb5C5U1.mp4",
+"https://cdn2.slicedrive.com/fOev18Dw1.mp4",
+"https://cdn2.slicedrive.com/ZwM3spm91.mp4",
+"https://cdn2.slicedrive.com/dzysnykK1.mp4",
+"https://cdn2.slicedrive.com/m7H5oQta1.mp4",
+
+"https://cdn2.videy.co/kmLdZeYa1.mp4",
+
+"https://cdn2.slicedrive.com/QieK52vV1.mp4",
+"https://cdn2.slicedrive.com/kSVcKqtz1.mp4",
+"https://cdn2.slicedrive.com/F8zfMiYp1.mp4",
+"https://cdn2.slicedrive.com/4nzhpgBj1.mp4",
+"https://cdn2.slicedrive.com/V02R6EhM1.mp4",
+"https://cdn2.slicedrive.com/ZpP2GAkA1.mp4",
+
+"https://cdn2.videy.co/7ZLmmg7s1.mp4",
+"https://cdn2.videy.co/tt95U3V61.mp4",
+"https://cdn2.videy.co/z86DoR8G1.mp4",
+"https://cdn2.videy.co/64gCQT7r1.mp4",
+"https://cdn2.videy.co/OMOLpvdF1.mp4",
+"https://cdn2.videy.co/icUDPhyq1.mp4",
+
+"https://cdn2.aceimg.com/xXYim2GZX.mp4",
+"https://cdn2.aceimg.com/yuS9KDoU5.mp4",
+
+"https://cdn2.videy.co/Io0ffecP1.mp4",
+"https://cdn2.videy.co/9XZQthtf1.mp4",
+"https://cdn2.videy.co/h0kWvWyx1.mp4",
+"https://cdn2.videy.co/wMEmk1PZ1.mp4",
+"https://cdn2.videy.co/hSPXwfMv1.mp4",
+"https://cdn2.videy.co/uE4dHtoo1.mp4",
+
+"https://cdn2.aceimg.com/c2b9ed69b.mp4",
+"https://cdn2.aceimg.com/acf58ac94.mp4",
+
+"https://cdn2.videy.co/a5d5eZB41.mp4",
+"https://cdn2.videy.co/1j8NTKus1.mp4",
+
+"https://cdn.slicedrive.com/jNFOA6bq1.mp4",
+"https://cdn.slicedrive.com/yj351oEP1.mp4",
+"https://cdn.slicedrive.com/nUaJK6cX1.mp4",
+"https://cdn.slicedrive.com/z7gRZBDG1.mp4",
+"https://cdn.slicedrive.com/KSNqN25r1.mp4",
+"https://cdn.slicedrive.com/cT8KE4bo1.mp4",
+"https://cdn.slicedrive.com/Cyqi1AZi1.mp4",
+"https://cdn.slicedrive.com/eqEsHn8P1.mp4",
+"https://cdn.slicedrive.com/6iV5sCm61.mp4",
+"https://cdn.slicedrive.com/TcYDtVhY1.mp4",
+"https://cdn.slicedrive.com/KDyRKP5I1.mp4",
+"https://cdn.slicedrive.com/9JUxLiKS1.mp4",
+"https://cdn.slicedrive.com/FwYWoDkf1.mp4",
+"https://cdn.slicedrive.com/6kheFIsK1.mp4",
+"https://cdn.slicedrive.com/Mp3EMMDg1.mp4",
+"https://cdn.slicedrive.com/KhWswIWy1.mp4",
+"https://cdn.slicedrive.com/gWvSxozx1.mp4",
+"https://cdn.slicedrive.com/wshuRtc81.mp4",
+"https://cdn.slicedrive.com/gWfNdxWh1.mp4",
+"https://cdn.slicedrive.com/eKiKhHlz1.mp4",
+"https://cdn.slicedrive.com/7bpGob1p1.mp4",
+"https://cdn.slicedrive.com/9CSyPIM31.mp4",
+"https://cdn.slicedrive.com/5nI5xlkD1.mp4",
+"https://cdn.slicedrive.com/5HjLdoxz1.mp4",
+"https://cdn.slicedrive.com/3nqtCuCX1.mp4",
+"https://cdn.slicedrive.com/dFNY9U6z1.mp4",
+"https://cdn.slicedrive.com/EXQZX3RP1.mp4",
+"https://cdn.slicedrive.com/3Df17Mct1.mp4",
+"https://cdn.slicedrive.com/jLvnN3rU1.mp4",
+"https://cdn.slicedrive.com/scP3UF821.mp4",
+"https://cdn.slicedrive.com/gadfDBXe1.mp4",
+"https://cdn.slicedrive.com/1qaBml6c1.mp4",
+"https://cdn.slicedrive.com/wk6128LG1.mp4",
+"https://cdn.slicedrive.com/xxea0RFj1.mp4",
+"https://cdn.slicedrive.com/GDbL9hs21.mp4",
+"https://cdn.slicedrive.com/2HdXQAhn1.mp4",
+"https://cdn.slicedrive.com/h6z2COPZ1.mp4",
+"https://cdn.slicedrive.com/EV2WV4ix1.mp4",
+"https://cdn.slicedrive.com/ipWnRmhU1.mp4",
+"https://cdn.slicedrive.com/NuOu7zJ71.mp4",
+"https://cdn.slicedrive.com/ibWGggAX1.mp4",
+"https://cdn.slicedrive.com/aMIIZpMY1.mp4",
+
+"https://cdn.videy.co/8S6d0DW61.mp4",
+"https://cdn.videy.co/fr2EUIbo1.mp4",
+"https://cdn.videy.co/VAUgW0vO1.mp4",
+"https://cdn.videy.co/anmIJcGy1.mp4",
+"https://cdn.videy.co/BN3YyVfS1.mp4",
+"https://cdn.videy.co/xmeTv2EI1.mp4"
+
+];
+
+
+/* =====================================================
+   BUAT DATA VIDEO OTOMATIS
+   ===================================================== */
+
+const videos = videoUrls.map((url,index)=>({
+
+  title:
+    "Video Viral Terbaru #" +
+    String(index + 1).padStart(3,"0"),
+
+  url:url
+
+}));
+
+
+/* =====================================================
+   ELEMENT
+   ===================================================== */
+
+const grid =
+document.getElementById("grid");
+
+const empty =
+document.getElementById("empty");
+
+const search =
+document.getElementById("search");
+
+const modal =
+document.getElementById("modal");
+
+const mainVideo =
+document.getElementById("mainVideo");
+
+const mainTitle =
+document.getElementById("mainTitle");
+
+
+/* =====================================================
+   RENDER
+   ===================================================== */
+
+function render(list){
+
+  grid.innerHTML="";
+
+  empty.style.display =
+    list.length ? "none" : "block";
+
+  list.forEach((item,index)=>{
+
+    const card =
+      document.createElement("article");
+
+    card.className="card";
+
+    card.innerHTML=`
+
+      <div class="thumb">
+
+        <video
+          src="${item.url}"
+          muted
+          playsinline
+          preload="metadata"
+        ></video>
+
+        <div class="play">
+          <i>▶</i>
+        </div>
+
+      </div>
+
+      <div class="info">
+
+        <div class="title">
+          ${item.title}
+        </div>
+
+        <div class="meta">
+          HD • Video
+          ${String(index+1).padStart(3,"0")}
+        </div>
+
+      </div>
+
+    `;
+
+
+    card.addEventListener("click",()=>{
+
+      /*
+       * Smartlink dibuka saat kartu diklik.
+       * Player tetap dibuka setelahnya.
+       */
+
+      window.open(
+        SMARTLINK,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+      openVideo(item);
+
     });
 
-    document.addEventListener("keydown", e => {
-      if(e.key === "Escape") closeVideo();
-    });
 
-    search.addEventListener("input", () => {
-      const q = search.value.toLowerCase().trim();
-      render(videos.filter(v => v.title.toLowerCase().includes(q)));
-    });
+    grid.appendChild(card);
 
-    render(videos);
-  </script>
+  });
+
+}
+
+
+/* =====================================================
+   OPEN VIDEO
+   ===================================================== */
+
+function openVideo(item){
+
+  mainTitle.textContent =
+    item.title;
+
+  mainVideo.src =
+    item.url;
+
+  modal.classList.add("show");
+
+  mainVideo.play().catch(()=>{});
+
+}
+
+
+/* =====================================================
+   CLOSE VIDEO
+   ===================================================== */
+
+function closeVideo(){
+
+  mainVideo.pause();
+
+  mainVideo.removeAttribute("src");
+
+  mainVideo.load();
+
+  modal.classList.remove("show");
+
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+   ===================================================== */
+
+document
+.getElementById("close")
+.addEventListener(
+  "click",
+  closeVideo
+);
+
+
+/* =====================================================
+   KLIK LUAR PLAYER
+   ===================================================== */
+
+modal.addEventListener(
+  "click",
+  function(e){
+
+    if(e.target === modal){
+
+      closeVideo();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ESC
+   ===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key === "Escape"){
+
+      closeVideo();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+search.addEventListener(
+  "input",
+  function(){
+
+    const q =
+      search.value
+      .toLowerCase()
+      .trim();
+
+    const filtered =
+      videos.filter(video=>
+
+        video.title
+        .toLowerCase()
+        .includes(q)
+
+      );
+
+    render(filtered);
+
+  }
+);
+
+
+/* =====================================================
+   TAMPILKAN SEMUA VIDEO
+   ===================================================== */
+
+render(videos);
+
+</script>
+
 </body>
 </html>
