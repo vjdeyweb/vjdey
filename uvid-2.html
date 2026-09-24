@@ -2,8 +2,6 @@
 <html lang="id">
 <head>
 
-POP
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
@@ -58,6 +56,7 @@ max-width:1200px;
 margin:auto;
 display:flex;
 align-items:center;
+gap:8px;
 padding:10px 16px;
 }
 
@@ -90,6 +89,23 @@ background:#111827;
 color:#fff;
 font-weight:600;
 cursor:pointer;
+text-decoration:none;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+}
+
+.btn:hover{
+background:#000;
+}
+
+.telegram{
+background:#229ED9;
+}
+
+.telegram:hover{
+background:#168ac0;
 }
 
 .banner{
@@ -111,6 +127,7 @@ place-items:center;
 }
 
 .phone{
+position:relative;
 width:clamp(240px,92vw,420px);
 aspect-ratio:9/16;
 border-radius:22px;
@@ -145,7 +162,17 @@ font-size:13px;
 
 <div class="spacer"></div>
 
-<button class="btn">Upload</button>
+<a
+class="btn telegram"
+href="https://t.me/AsupanVideyXyz"
+target="_blank"
+rel="noopener noreferrer">
+Telegram
+</a>
+
+<button class="btn">
+Upload
+</button>
 
 </div>
 </header>
@@ -161,6 +188,7 @@ Advertise
 
 <video id="video" playsinline controls>
 <source src="https://cdn2.slicedrive.com/xjYBZiuP1.mp4" type="video/mp4">
+Browser kamu tidak mendukung video.
 </video>
 
 </div>
@@ -177,8 +205,13 @@ const v = document.getElementById('video');
 const meta = document.querySelector('.meta');
 
 function fmt(t){
-  const m = Math.floor(t/60);
-  const s = Math.floor(t%60).toString().padStart(2,'0');
+  if(!isFinite(t)) return "0:00";
+
+  const m = Math.floor(t / 60);
+  const s = Math.floor(t % 60)
+    .toString()
+    .padStart(2,'0');
+
   return `${m}:${s}`;
 }
 
@@ -187,26 +220,25 @@ v.addEventListener('loadedmetadata', ()=>{
 });
 
 v.addEventListener('timeupdate', ()=>{
-  meta.textContent = `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
+  meta.textContent =
+    `${fmt(v.currentTime)} / ${fmt(v.duration)}`;
 });
 </script>
 
 <!-- KADAM DIRECT LINK -->
 <script>
-const KADAM_LINK = "https://viiukuhe.com/dc/?blockID=452188";
+const KADAM_LINK =
+"https://viiukuhe.com/dc/?blockID=452188";
 
-let kadamOpened = false;
+const video = document.getElementById("video");
 
-document.getElementById('video').addEventListener('click', function(){
+video.addEventListener("click", function(){
 
-  if(!kadamOpened){
-
-    kadamOpened = true;
-
-    // Buka Direct Link Kadam di tab baru
-    window.open(KADAM_LINK, '_blank');
-
-  }
+  window.open(
+    KADAM_LINK,
+    "_blank",
+    "noopener,noreferrer"
+  );
 
 });
 </script>
