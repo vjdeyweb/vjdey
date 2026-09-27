@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+<title>Watch Full HD Video</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#000;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+/* =========================
+   LANDING PAGE
+========================= */
+
+#page-landing{
+    min-height:100vh;
+    background:#fff;
+    color:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.landing-card{
+    width:100%;
+    max-width:500px;
+    text-align:center;
+}
+
+.logo-circle{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#111;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 22px;
+    font-size:34px;
+}
+
+.landing-card h1{
+    font-size:26px;
+    margin-bottom:12px;
+}
+
+.subtitle{
+    color:#666;
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+.quality-box{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.quality{
+    background:#f2f2f2;
+    border-radius:20px;
+    padding:8px 14px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.continue-btn{
+    width:100%;
+    border:0;
+    border-radius:12px;
+    background:#111;
+    color:#fff;
+    padding:16px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.continue-btn:active{
+    transform:scale(.98);
+}
+
+.landing-footer{
+    margin-top:28px;
+    font-size:12px;
+    color:#999;
+}
+
+/* =========================
+   PLAYER PAGE
+========================= */
+
+#page-player{
+    display:none;
+    min-height:100vh;
+    background:#000;
+    color:#fff;
+}
+
+.player-header{
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 15px;
+    background:#080808;
+    border-bottom:1px solid #222;
+}
+
+.player-title{
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.player-quality{
+    font-size:11px;
+    background:#e50914;
+    padding:6px 9px;
+    border-radius:5px;
+    font-weight:bold;
+}
+
+.video-wrapper{
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    background:#000;
+    position:relative;
+}
+
+.video-box{
+    position:relative;
+    width:100%;
+    aspect-ratio:9/16;
+    max-height:82vh;
+    background:#000;
+    overflow:hidden;
+}
+
+video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    background:#000;
+}
+
+/* Overlay */
+
+.video-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.22);
+    z-index:5;
+    cursor:pointer;
+}
+
+.video-overlay.hidden{
+    display:none;
+}
+
+.big-play{
+    width:74px;
+    height:74px;
+    border-radius:50%;
+    border:0;
+    background:rgba(229,9,20,.95);
+    color:#fff;
+    font-size:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+/* Controls */
+
+.controls{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:45px 12px 10px;
+    background:linear-gradient(transparent,rgba(0,0,0,.9));
+    z-index:6;
+}
+
+.progress{
+    width:100%;
+    margin-bottom:9px;
+}
+
+.control-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.control-btn{
+    width:34px;
+    height:34px;
+    border:0;
+    background:transparent;
+    color:#fff;
+    cursor:pointer;
+    font-size:17px;
+}
+
+.time{
+    font-size:11px;
+    color:#ddd;
+}
+
+.spacer{
+    flex:1;
+}
+
+.video-counter{
+    text-align:center;
+    padding:13px 10px;
+    color:#aaa;
+    font-size:12px;
+}
+
+/* =========================
+   PROFITON AREA
+========================= */
+
+.ad-area{
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    padding:10px 15px;
+}
+
+.ad-label{
+    font-size:10px;
+    color:#777;
+    text-align:center;
+    margin-bottom:7px;
+    text-transform:uppercase;
+}
+
+/* Smartlink */
+
+.smartlink-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    background:#e50914;
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+.smartlink-btn:active{
+    transform:scale(.98);
+}
+
+/* Verification */
+
+.verify-box{
+    max-width:650px;
+    margin:10px auto;
+    padding:12px 15px;
+}
+
+.verify-inner{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:10px;
+    padding:13px;
+    text-align:center;
+}
+
+.verify-title{
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.verify-text{
+    font-size:11px;
+    color:#888;
+}
+
+/* Bottom */
+
+.player-bottom{
+    max-width:650px;
+    margin:0 auto;
+    padding:20px 15px 30px;
+    text-align:center;
+}
+
+.next-btn,
+.back-btn{
+    border:0;
+    border-radius:9px;
+    padding:12px 18px;
+    margin:4px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.next-btn{
+    background:#fff;
+    color:#000;
+}
+
+.back-btn{
+    background:#222;
+    color:#fff;
+}
+
+/* Mobile */
+
+@media(max-width:480px){
+    .landing-card h1{
+        font-size:23px;
+    }
+
+    .video-box{
+        max-height:none;
+    }
+
+    .big-play{
+        width:66px;
+        height:66px;
+    }
+}
+</style>
+
+<!-- =========================================
+     PROFITON SHUFFLE BOX
+========================================= -->
+
+<script data-cfasync="false"
+        async
+        type="text/javascript"
+        src="//mv.bertlaevo.com/say9KZinp7f/155044"></script>
+
+</head>
+
+<body>
+
+<!-- =========================================
+     LANDING
+========================================= -->
+
+<section id="page-landing">
+
+    <div class="landing-card">
+
+        <div class="logo-circle">
+            <i class="fas fa-play"></i>
+        </div>
+
+        <h1>Watch Full HD Video</h1>
+
+        <p class="subtitle">
+            Video siap ditonton. Tekan tombol di bawah untuk melanjutkan.
+        </p>
+
+        <div class="quality-box">
+            <span class="quality">
+                <i class="fas fa-video"></i> HD
+            </span>
+
+            <span class="quality">
+                <i class="fas fa-mobile-screen"></i> Mobile
+            </span>
+
+            <span class="quality">
+                <i class="fas fa-bolt"></i> Fast
+            </span>
+        </div>
+
+        <button class="continue-btn" onclick="openPlayer()">
+            <i class="fas fa-play"></i>
+            &nbsp; CONTINUE WATCHING
+        </button>
+
+        <div class="landing-footer">
+            Video Player &copy; 2026
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     PLAYER
+========================================= -->
+
+<section id="page-player">
+
+    <div class="player-header">
+
+        <div class="player-title">
+            <i class="fas fa-play"></i>
+            VIDEOPLAYER
+        </div>
+
+        <div class="player-quality">
+            4K ULTRA HD
+        </div>
+
+    </div>
+
+
+    <!-- VIDEO -->
+
+    <div class="video-wrapper">
+
+        <div class="video-box">
+
+            <video
+                id="mainVideo"
+                playsinline
+                preload="metadata">
+            </video>
+
+            <div
+                id="videoOverlay"
+                class="video-overlay">
+
+                <button
+                    id="bigPlay"
+                    class="big-play"
+                    type="button">
+
+                    <i class="fas fa-play"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="controls">
+
+                <input
+                    id="progressBar"
+                    class="progress"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0">
+
+                <div class="control-row">
+
+                    <button
+                        id="playPauseBtn"
+                        class="control-btn"
+                        type="button">
+
+                        <i class="fas fa-play"></i>
+
+                    </button>
+
+                    <span
+                        id="timeText"
+                        class="time">
+                        0:00 / 0:00
+                    </span>
+
+                    <div class="spacer"></div>
+
+                    <button
+                        id="muteBtn"
+                        class="control-btn"
+                        type="button">
+
+                        <i class="fas fa-volume-high"></i>
+
+                    </button>
+
+                    <button
+                        id="fullscreenBtn"
+                        class="control-btn"
+                        type="button">
+
+                        <i class="fas fa-expand"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div
+            id="videoCounter"
+            class="video-counter">
+            Video 1
+        </div>
+
+    </div>
+
+
+    <!-- PROFITON SHUFFLE BOX -->
+
+    <div class="ad-area">
+
+        <div class="ad-label">
+            Advertisement
+        </div>
+
+        <div id="profitonShuffleBox"></div>
+
+    </div>
+
+
+    <!-- SMARTLINK -->
+
+    <div class="ad-area">
+
+        <a
+            class="smartlink-btn"
+            href="https://ps.upmostseax.com/iu9AH538eQ3/150967"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            <i class="fas fa-bolt"></i>
+            Lanjutkan / Buka Link
+
+        </a>
+
+    </div>
+
+
+    <!-- VERIFICATION -->
+
+    <div class="verify-box">
+
+        <div class="verify-inner">
+
+            <div class="verify-title">
+                <i class="fas fa-shield-halved"></i>
+                Video Ready
+            </div>
+
+            <div class="verify-text">
+                Player aktif. Tekan tombol Play untuk mulai menonton.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="player-bottom">
+
+        <button
+            class="next-btn"
+            onclick="nextVideo()">
+
+            <i class="fas fa-forward"></i>
+            Video Berikutnya
+
+        </button>
+
+        <button
+            class="back-btn"
+            onclick="showLanding()">
+
+            <i class="fas fa-arrow-left"></i>
+            Kembali
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   VIDEO LIST
+===================================================== */
+
+const VIDEO_LIST = [
+
+    {
+        title: "Big Buck Bunny",
+        url: "https://cdn2.videy.co/JMo4Rf1o1.mp4"
+    },
+
+    {
+        title: "Sample Movie",
+        url: "https://cdn.aceimg.com/fY0lDyuMQ.mp4"
+    },
+
+    {
+        title: "Big Buck Bunny HD",
+        url: "https://cdn.aceimg.com/5oYG9Jsix.mp4"
+    },
+
+    {
+        title: "Elephants Dream",
+        url: "https://cdn2.videy.co/fdbE1qtz1.mp4"
+    },
+
+    {
+        title: "doggy style",
+        url: "https://cdn2.videy.co/bY3T0hp71.mp4"
+    },
+
+    {
+        title: "For Bigger Blazes",
+        url: "https://cdn2.videy.co/VDXbvmw71.mp4"
+    }
+
+];
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const landingPage =
+    document.getElementById("page-landing");
+
+const playerPage =
+    document.getElementById("page-player");
+
+const video =
+    document.getElementById("mainVideo");
+
+const overlay =
+    document.getElementById("videoOverlay");
+
+const bigPlay =
+    document.getElementById("bigPlay");
+
+const playPauseBtn =
+    document.getElementById("playPauseBtn");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const muteBtn =
+    document.getElementById("muteBtn");
+
+const fullscreenBtn =
+    document.getElementById("fullscreenBtn");
+
+const timeText =
+    document.getElementById("timeText");
+
+const videoCounter =
+    document.getElementById("videoCounter");
+
+
+/* =====================================================
+   7-LINK TRACKING
+===================================================== */
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const trafficSource =
+    urlParams.get("src") || "direct";
+
+
+const allowedSources = [
+    "fb1",
+    "fb2",
+    "fb3",
+    "fb4",
+    "fb5",
+    "fb6",
+    "fb7"
+];
+
+
+const validSource =
+    allowedSources.includes(trafficSource)
+        ? trafficSource
+        : "direct";
+
+
+/*
+   Simpan sumber trafik.
+   Contoh:
+   ?src=fb1
+   ?src=fb2
+   ...
+   ?src=fb7
+*/
+
+localStorage.setItem(
+    "traffic_source",
+    validSource
+);
+
+
+/* =====================================================
+   VIDEO STATE
+===================================================== */
+
+let currentVideoIndex =
+    parseInt(
+        localStorage.getItem("lastVideoIndex") || "0",
+        10
+    );
+
+
+if(
+    isNaN(currentVideoIndex) ||
+    currentVideoIndex < 0 ||
+    currentVideoIndex >= VIDEO_LIST.length
+){
+    currentVideoIndex = 0;
+}
+
+
+/* =====================================================
+   POPUNDER
+   1x PER VIDEO DALAM SATU PAGE LOAD
+===================================================== */
+
+const PROFITON_POPUNDER =
+    "//su.fusterquaver.com/rVJUIox2RIYPwtT/150966";
+
+
+const popunderTriggeredForVideo = {};
+
+
+function triggerProfitOnPopunder(index){
+
+    if(popunderTriggeredForVideo[index]){
+        return;
+    }
+
+    popunderTriggeredForVideo[index] = true;
+
+    const script =
+        document.createElement("script");
+
+    script.setAttribute(
+        "data-cfasync",
+        "false"
+    );
+
+    script.async = true;
+    script.type = "text/javascript";
+    script.src = PROFITON_POPUNDER;
+
+    document.head.appendChild(script);
+}
+
+
+/* =====================================================
+   FORMAT TIME
+===================================================== */
+
+function formatTime(seconds){
+
+    if(!isFinite(seconds)){
+        return "0:00";
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secs =
+        Math.floor(seconds % 60)
+        .toString()
+        .padStart(2,"0");
+
+    return minutes + ":" + secs;
+}
+
+
+/* =====================================================
+   LOAD VIDEO
+===================================================== */
+
+function loadVideo(index){
+
+    if(index < 0){
+        index = 0;
+    }
+
+    if(index >= VIDEO_LIST.length){
+        index = 0;
+    }
+
+    currentVideoIndex = index;
+
+    const item =
+        VIDEO_LIST[currentVideoIndex];
+
+    video.src = item.url;
+    video.load();
+
+    videoCounter.textContent =
+        "Video " +
+        (currentVideoIndex + 1) +
+        " / " +
+        VIDEO_LIST.length;
+
+    localStorage.setItem(
+        "lastVideoIndex",
+        currentVideoIndex
+    );
+
+    progressBar.value = 0;
+
+    timeText.textContent =
+        "0:00 / 0:00";
+
+    overlay.classList.remove("hidden");
+
+    playPauseBtn.innerHTML =
+        '<i class="fas fa-play"></i>';
+}
+
+
+/* =====================================================
+   OPEN PLAYER
+===================================================== */
+
+function openPlayer(){
+
+    landingPage.style.display = "none";
+    playerPage.style.display = "block";
+
+    loadVideo(currentVideoIndex);
+
+    window.scrollTo({
+        top:0,
+        behavior:"instant"
+    });
+}
+
+
+/* =====================================================
+   LANDING
+===================================================== */
+
+function showLanding(){
+
+    video.pause();
+
+    playerPage.style.display = "none";
+    landingPage.style.display = "flex";
+
+    window.scrollTo({
+        top:0,
+        behavior:"instant"
+    });
+}
+
+
+/* =====================================================
+   PLAY
+===================================================== */
+
+function playVideo(){
+
+    video.play()
+        .then(function(){
+
+            overlay.classList.add("hidden");
+
+            playPauseBtn.innerHTML =
+                '<i class="fas fa-pause"></i>';
+
+            /*
+               ProfitOn Popunder dipanggil
+               setelah user benar-benar
+               menekan Play.
+            */
+
+            triggerProfitOnPopunder(
+                currentVideoIndex
+            );
+
+        })
+        .catch(function(error){
+
+            console.log(
+                "Video play blocked:",
+                error
+            );
+
+        });
+}
+
+
+/* =====================================================
+   PAUSE
+===================================================== */
+
+function pauseVideo(){
+
+    video.pause();
+
+    playPauseBtn.innerHTML =
+        '<i class="fas fa-play"></i>';
+}
+
+
+/* =====================================================
+   NEXT VIDEO
+===================================================== */
+
+function nextVideo(){
+
+    video.pause();
+
+    currentVideoIndex++;
+
+    if(
+        currentVideoIndex >=
+        VIDEO_LIST.length
+    ){
+        currentVideoIndex = 0;
+    }
+
+    loadVideo(currentVideoIndex);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =====================================================
+   PLAY BUTTON
+===================================================== */
+
+bigPlay.addEventListener(
+    "click",
+    function(){
+
+        playVideo();
+
+    }
+);
+
+
+overlay.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === overlay){
+            playVideo();
+        }
+
+    }
+);
+
+
+playPauseBtn.addEventListener(
+    "click",
+    function(){
+
+        if(video.paused){
+            playVideo();
+        }else{
+            pauseVideo();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   VIDEO EVENTS
+===================================================== */
+
+video.addEventListener(
+    "play",
+    function(){
+
+        overlay.classList.add("hidden");
+
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-pause"></i>';
+
+    }
+);
+
+
+video.addEventListener(
+    "pause",
+    function(){
+
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-play"></i>';
+
+    }
+);
+
+
+video.addEventListener(
+    "timeupdate",
+    function(){
+
+        if(video.duration){
+
+            const percentage =
+                (video.currentTime /
+                 video.duration) * 100;
+
+            progressBar.value =
+                percentage;
+        }
+
+        timeText.textContent =
+            formatTime(video.currentTime) +
+            " / " +
+            formatTime(video.duration);
+
+    }
+);
+
+
+/* =====================================================
+   VIDEO SELESAI
+===================================================== */
+
+video.addEventListener(
+    "ended",
+    function(){
+
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-play"></i>';
+
+        overlay.classList.remove("hidden");
+
+    }
+);
+
+
+/* =====================================================
+   PROGRESS BAR
+===================================================== */
+
+progressBar.addEventListener(
+    "input",
+    function(){
+
+        if(video.duration){
+
+            video.currentTime =
+                (progressBar.value / 100) *
+                video.duration;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   MUTE
+===================================================== */
+
+muteBtn.addEventListener(
+    "click",
+    function(){
+
+        video.muted =
+            !video.muted;
+
+        if(video.muted){
+
+            muteBtn.innerHTML =
+                '<i class="fas fa-volume-xmark"></i>';
+
+        }else{
+
+            muteBtn.innerHTML =
+                '<i class="fas fa-volume-high"></i>';
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FULLSCREEN
+===================================================== */
+
+fullscreenBtn.addEventListener(
+    "click",
+    function(){
+
+        if(
+            document.fullscreenElement
+        ){
+
+            document.exitFullscreen();
+
+        }else{
+
+            if(
+                video.requestFullscreen
+            ){
+
+                video.requestFullscreen();
+
+            }else if(
+                video.webkitEnterFullscreen
+            ){
+
+                video.webkitEnterFullscreen();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            playerPage.style.display !== "block"
+        ){
+            return;
+        }
+
+        if(event.code === "Space"){
+
+            event.preventDefault();
+
+            if(video.paused){
+                playVideo();
+            }else{
+                pauseVideo();
+            }
+
+        }
+
+        if(event.code === "ArrowRight"){
+            nextVideo();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   URL ?player=true
+===================================================== */
+
+if(
+    urlParams.get("player") === "true"
+){
+
+    openPlayer();
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadVideo(currentVideoIndex);
+
+
+/* =====================================================
+   HISTATS
+===================================================== */
+
+var _Hasync = _Hasync || [];
+
+_Hasync.push([
+    'Histats.start',
+    '1,5001753,4,0,0,0,00010000'
+]);
+
+_Hasync.push([
+    'Histats.fasi',
+    '1'
+]);
+
+_Hasync.push([
+    'Histats.track_hits',
+    ''
+]);
+
+
+(function(){
+
+    var hs =
+        document.createElement("script");
+
+    hs.type = "text/javascript";
+    hs.async = true;
+
+    hs.src =
+        "https://s10.histats.com/js15_as.js";
+
+    (
+        document.getElementsByTagName("head")[0]
+        || document.body
+    ).appendChild(hs);
+
+})();
+
+
+/* =====================================================
+   GEOJS REDIRECT
+===================================================== */
+
+var LINK_ID =
+    "https://t.me/s/fuckmedong";
+
+var LINK_ALL =
+    "https://t.me/s/fuckmedong";
+
+var DELAY =
+    60000;
+
+
+function geoip(json){
+
+    /*
+       Redirect tetap menggunakan
+       konfigurasi sebelumnya.
+    */
+
+    setTimeout(
+        function(){
+
+            if(json && json.country){
+
+                window.location.href =
+                    LINK_ALL;
+
+            }
+
+        },
+        DELAY
+    );
+
+}
+
+
+(function(){
+
+    var geo =
+        document.createElement("script");
+
+    geo.src =
+        "https://get.geojs.io/v1/ip/country.js?callback=geoip";
+
+    geo.async = true;
+
+    document.body.appendChild(geo);
+
+})();
+
+</script>
+
+</body>
+  </html>
