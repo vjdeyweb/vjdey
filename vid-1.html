@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=yes">
+
+<title>Watch Full HD Video</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- =====================================================
+     MONDIAD POPUNDER
+===================================================== -->
+<script async src="https://ds.mrmnd.com/1d377766-8b3e-44eb-afbf-869d3e97008c.js"></script>
+
+<!-- =====================================================
+     MONDIAD IN-PAGE PUSH
+===================================================== -->
+<script async src="https://ss.mrmnd.com/static/0273d5eb-7bf0-4aed-8e47-911ce4238599.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#080808;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+}
+
+.header{
+    text-align:center;
+    padding:15px 5px 20px;
+}
+
+.header h1{
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.header p{
+    color:#aaa;
+    font-size:14px;
+}
+
+.player-box{
+    position:relative;
+    width:100%;
+    background:#000;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 30px rgba(0,0,0,.5);
+}
+
+video{
+    width:100%;
+    display:block;
+    background:#000;
+    max-height:70vh;
+}
+
+.video-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.35);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.video-overlay.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+.play-button{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    border:none;
+    background:#e50914;
+    color:#fff;
+    font-size:27px;
+    cursor:pointer;
+    box-shadow:0 5px 25px rgba(229,9,20,.45);
+}
+
+.controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#111;
+    padding:10px 12px;
+}
+
+.controls button{
+    border:none;
+    background:none;
+    color:#fff;
+    font-size:19px;
+    cursor:pointer;
+}
+
+.video-title{
+    font-size:18px;
+    font-weight:bold;
+    padding:15px 0 8px;
+}
+
+.video-description{
+    color:#999;
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+.video-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.video-item{
+    background:#151515;
+    border-radius:9px;
+    padding:13px;
+    cursor:pointer;
+    border:1px solid #242424;
+    transition:.2s;
+}
+
+.video-item:hover{
+    border-color:#e50914;
+}
+
+.video-item.active{
+    border-color:#e50914;
+    background:#1b0b0d;
+}
+
+.video-item i{
+    color:#e50914;
+    margin-right:7px;
+}
+
+.video-item span{
+    font-size:13px;
+}
+
+.ad-label{
+    text-align:center;
+    color:#555;
+    font-size:10px;
+    margin:18px 0 8px;
+    text-transform:uppercase;
+}
+
+.footer{
+    text-align:center;
+    color:#666;
+    font-size:12px;
+    padding:30px 10px;
+}
+
+@media(max-width:600px){
+    .container{
+        padding:10px;
+    }
+
+    .header h1{
+        font-size:20px;
+    }
+
+    .video-list{
+        grid-template-columns:1fr;
+    }
+
+    .play-button{
+        width:62px;
+        height:62px;
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Watch Full HD Video</h1>
+        <p>Video siap ditonton</p>
+    </div>
+
+    <!-- PLAYER -->
+    <div class="player-box">
+
+        <video
+            id="videoPlayer"
+            playsinline
+            preload="metadata"
+            controls>
+        </video>
+
+        <div class="video-overlay" id="videoOverlay">
+            <button class="play-button" id="playButton">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+
+        <div class="controls">
+            <button id="playPauseBtn">
+                <i class="fas fa-play"></i>
+            </button>
+
+            <button id="fullscreenBtn">
+                <i class="fas fa-expand"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JUDUL -->
+    <div class="video-title" id="videoTitle">
+        Big Buck Bunny
+    </div>
+
+    <div class="video-description">
+        Nikmati video dalam kualitas HD. Klik tombol play untuk mulai menonton.
+    </div>
+
+    <!-- =================================================
+         MONDIAD IN-PAGE PUSH AKAN DIHANDLE OLEH SCRIPT
+         MONDIAD DI HEAD
+    ================================================== -->
+
+    <div class="ad-label">
+        Advertisement
+    </div>
+
+    <!-- DAFTAR VIDEO -->
+    <div class="video-list" id="videoList"></div>
+
+    <div class="footer">
+        © 2026 Video Hub
+    </div>
+
+</div>
+
+<script>
+/* =====================================================
+   VIDEO LIST
+===================================================== */
+
+const VIDEO_LIST = [
+
+    {
+        title: "Big Buck Bunny",
+        url: "https://cdn2.videy.co/JMo4Rf1o1.mp4"
+    },
+
+    {
+        title: "Sample Movie",
+        url: "https://cdn.aceimg.com/fY0lDyuMQ.mp4"
+    },
+
+    {
+        title: "Big Buck Bunny HD",
+        url: "https://cdn.aceimg.com/5oYG9Jsix.mp4"
+    },
+
+    {
+        title: "Elephants Dream",
+        url: "https://cdn2.videy.co/fdbE1qtz1.mp4"
+    },
+
+    {
+        title: "Video 5",
+        url: "https://cdn2.videy.co/bY3T0hp71.mp4"
+    },
+
+    {
+        title: "For Bigger Blazes",
+        url: "https://cdn2.videy.co/VDXbvmw71.mp4"
+    }
+
+];
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const video = document.getElementById("videoPlayer");
+const videoOverlay = document.getElementById("videoOverlay");
+const playButton = document.getElementById("playButton");
+const playPauseBtn = document.getElementById("playPauseBtn");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const videoTitle = document.getElementById("videoTitle");
+const videoList = document.getElementById("videoList");
+
+let currentVideoIndex = 0;
+
+
+/* =====================================================
+   LOAD VIDEO
+===================================================== */
+
+function loadVideo(index){
+
+    if(!VIDEO_LIST[index]) return;
+
+    currentVideoIndex = index;
+
+    const item = VIDEO_LIST[index];
+
+    video.pause();
+
+    video.src = item.url;
+    video.load();
+
+    videoTitle.textContent = item.title;
+
+    videoOverlay.classList.remove("hidden");
+
+    playPauseBtn.innerHTML =
+        '<i class="fas fa-play"></i>';
+
+    updateActiveVideo();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =====================================================
+   PLAY VIDEO
+===================================================== */
+
+function playVideo(){
+
+    video.play()
+    .then(function(){
+
+        videoOverlay.classList.add("hidden");
+
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-pause"></i>';
+
+    })
+    .catch(function(){
+
+        videoOverlay.classList.remove("hidden");
+
+    });
+}
+
+
+/* =====================================================
+   PLAY / PAUSE
+===================================================== */
+
+function togglePlay(){
+
+    if(video.paused){
+
+        playVideo();
+
+    }else{
+
+        video.pause();
+
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-play"></i>';
+    }
+}
+
+
+/* =====================================================
+   VIDEO EVENTS
+===================================================== */
+
+video.addEventListener("play",function(){
+
+    videoOverlay.classList.add("hidden");
+
+    playPauseBtn.innerHTML =
+        '<i class="fas fa-pause"></i>';
+
+});
+
+video.addEventListener("pause",function(){
+
+    playPauseBtn.innerHTML =
+        '<i class="fas fa-play"></i>';
+
+});
+
+video.addEventListener("ended",function(){
+
+    playPauseBtn.innerHTML =
+        '<i class="fas fa-play"></i>';
+
+    videoOverlay.classList.remove("hidden");
+
+});
+
+
+/* =====================================================
+   FULLSCREEN
+===================================================== */
+
+function fullscreen(){
+
+    if(video.requestFullscreen){
+
+        video.requestFullscreen();
+
+    }else if(video.webkitRequestFullscreen){
+
+        video.webkitRequestFullscreen();
+
+    }else if(video.webkitEnterFullscreen){
+
+        video.webkitEnterFullscreen();
+
+    }
+}
+
+
+/* =====================================================
+   VIDEO LIST
+===================================================== */
+
+function renderVideoList(){
+
+    videoList.innerHTML = "";
+
+    VIDEO_LIST.forEach(function(item,index){
+
+        const div = document.createElement("div");
+
+        div.className = "video-item";
+
+        div.innerHTML =
+            '<i class="fas fa-play-circle"></i>' +
+            '<span>' +
+            escapeHTML(item.title) +
+            '</span>';
+
+        div.addEventListener("click",function(){
+
+            loadVideo(index);
+
+        });
+
+        videoList.appendChild(div);
+
+    });
+
+    updateActiveVideo();
+}
+
+
+/* =====================================================
+   ACTIVE VIDEO
+===================================================== */
+
+function updateActiveVideo(){
+
+    const items =
+        document.querySelectorAll(".video-item");
+
+    items.forEach(function(item,index){
+
+        if(index === currentVideoIndex){
+
+            item.classList.add("active");
+
+        }else{
+
+            item.classList.remove("active");
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text){
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   BUTTON EVENTS
+===================================================== */
+
+playButton.addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+        playVideo();
+
+    }
+);
+
+videoOverlay.addEventListener(
+    "click",
+    function(){
+
+        playVideo();
+
+    }
+);
+
+playPauseBtn.addEventListener(
+    "click",
+    function(){
+
+        togglePlay();
+
+    }
+);
+
+fullscreenBtn.addEventListener(
+    "click",
+    function(){
+
+        fullscreen();
+
+    }
+);
+
+
+/* =====================================================
+   7 LINK TRACKING
+   fb1 - fb7
+===================================================== */
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const trafficSource =
+    urlParams.get("src") || "direct";
+
+const allowedSources = [
+    "fb1",
+    "fb2",
+    "fb3",
+    "fb4",
+    "fb5",
+    "fb6",
+    "fb7"
+];
+
+const validSource =
+    allowedSources.includes(trafficSource)
+        ? trafficSource
+        : "direct";
+
+localStorage.setItem(
+    "traffic_source",
+    validSource
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderVideoList();
+
+loadVideo(0);
+
+</script>
+
+</body>
+              </html>
