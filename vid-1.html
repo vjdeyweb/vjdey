@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="id">
 <head>
+
 <meta charset="utf-8">
 
 <meta name="viewport"
@@ -14,6 +15,7 @@
 
 <!-- =====================================================
      MONDIAD POPUNDER
+     TANPA PEMBATAS DARI HTML
 ===================================================== -->
 <script async src="https://ds.mrmnd.com/1d377766-8b3e-44eb-afbf-869d3e97008c.js"></script>
 
@@ -23,6 +25,7 @@
 <script async src="https://ss.mrmnd.com/static/0273d5eb-7bf0-4aed-8e47-911ce4238599.js"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -182,6 +185,7 @@ video{
 }
 
 @media(max-width:600px){
+
     .container{
         padding:10px;
     }
@@ -199,8 +203,11 @@ video{
         height:62px;
         font-size:23px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -208,11 +215,18 @@ video{
 <div class="container">
 
     <div class="header">
+
         <h1>Watch Full HD Video</h1>
+
         <p>Video siap ditonton</p>
+
     </div>
 
-    <!-- PLAYER -->
+
+    <!-- =================================================
+         VIDEO PLAYER
+    ================================================== -->
+
     <div class="player-box">
 
         <video
@@ -222,13 +236,23 @@ video{
             controls>
         </video>
 
-        <div class="video-overlay" id="videoOverlay">
-            <button class="play-button" id="playButton">
+        <div
+            class="video-overlay"
+            id="videoOverlay">
+
+            <button
+                class="play-button"
+                id="playButton">
+
                 <i class="fas fa-play"></i>
+
             </button>
+
         </div>
 
+
         <div class="controls">
+
             <button id="playPauseBtn">
                 <i class="fas fa-play"></i>
             </button>
@@ -236,38 +260,59 @@ video{
             <button id="fullscreenBtn">
                 <i class="fas fa-expand"></i>
             </button>
+
         </div>
 
     </div>
 
-    <!-- JUDUL -->
-    <div class="video-title" id="videoTitle">
-        Big Buck Bunny
-    </div>
-
-    <div class="video-description">
-        Nikmati video dalam kualitas HD. Klik tombol play untuk mulai menonton.
-    </div>
 
     <!-- =================================================
-         MONDIAD IN-PAGE PUSH AKAN DIHANDLE OLEH SCRIPT
-         MONDIAD DI HEAD
+         JUDUL
     ================================================== -->
+
+    <div
+        class="video-title"
+        id="videoTitle">
+
+        Big Buck Bunny
+
+    </div>
+
+
+    <div class="video-description">
+
+        Nikmati video dalam kualitas HD.
+        Klik tombol play untuk mulai menonton.
+
+    </div>
+
 
     <div class="ad-label">
         Advertisement
     </div>
 
-    <!-- DAFTAR VIDEO -->
-    <div class="video-list" id="videoList"></div>
+
+    <!-- =================================================
+         VIDEO LIST
+    ================================================== -->
+
+    <div
+        class="video-list"
+        id="videoList">
+    </div>
+
 
     <div class="footer">
+
         © 2026 Video Hub
+
     </div>
 
 </div>
 
+
 <script>
+
 /* =====================================================
    VIDEO LIST
 ===================================================== */
@@ -311,13 +356,26 @@ const VIDEO_LIST = [
    ELEMENT
 ===================================================== */
 
-const video = document.getElementById("videoPlayer");
-const videoOverlay = document.getElementById("videoOverlay");
-const playButton = document.getElementById("playButton");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const fullscreenBtn = document.getElementById("fullscreenBtn");
-const videoTitle = document.getElementById("videoTitle");
-const videoList = document.getElementById("videoList");
+const video =
+    document.getElementById("videoPlayer");
+
+const videoOverlay =
+    document.getElementById("videoOverlay");
+
+const playButton =
+    document.getElementById("playButton");
+
+const playPauseBtn =
+    document.getElementById("playPauseBtn");
+
+const fullscreenBtn =
+    document.getElementById("fullscreenBtn");
+
+const videoTitle =
+    document.getElementById("videoTitle");
+
+const videoList =
+    document.getElementById("videoList");
 
 let currentVideoIndex = 0;
 
@@ -337,9 +395,11 @@ function loadVideo(index){
     video.pause();
 
     video.src = item.url;
+
     video.load();
 
-    videoTitle.textContent = item.title;
+    videoTitle.textContent =
+        item.title;
 
     videoOverlay.classList.remove("hidden");
 
@@ -348,10 +408,6 @@ function loadVideo(index){
 
     updateActiveVideo();
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
 }
 
 
@@ -375,6 +431,7 @@ function playVideo(){
         videoOverlay.classList.remove("hidden");
 
     });
+
 }
 
 
@@ -394,7 +451,9 @@ function togglePlay(){
 
         playPauseBtn.innerHTML =
             '<i class="fas fa-play"></i>';
+
     }
+
 }
 
 
@@ -402,30 +461,41 @@ function togglePlay(){
    VIDEO EVENTS
 ===================================================== */
 
-video.addEventListener("play",function(){
+video.addEventListener(
+    "play",
+    function(){
 
-    videoOverlay.classList.add("hidden");
+        videoOverlay.classList.add("hidden");
 
-    playPauseBtn.innerHTML =
-        '<i class="fas fa-pause"></i>';
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-pause"></i>';
 
-});
+    }
+);
 
-video.addEventListener("pause",function(){
 
-    playPauseBtn.innerHTML =
-        '<i class="fas fa-play"></i>';
+video.addEventListener(
+    "pause",
+    function(){
 
-});
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-play"></i>';
 
-video.addEventListener("ended",function(){
+    }
+);
 
-    playPauseBtn.innerHTML =
-        '<i class="fas fa-play"></i>';
 
-    videoOverlay.classList.remove("hidden");
+video.addEventListener(
+    "ended",
+    function(){
 
-});
+        playPauseBtn.innerHTML =
+            '<i class="fas fa-play"></i>';
+
+        videoOverlay.classList.remove("hidden");
+
+    }
+);
 
 
 /* =====================================================
@@ -447,6 +517,7 @@ function fullscreen(){
         video.webkitEnterFullscreen();
 
     }
+
 }
 
 
@@ -458,29 +529,37 @@ function renderVideoList(){
 
     videoList.innerHTML = "";
 
-    VIDEO_LIST.forEach(function(item,index){
+    VIDEO_LIST.forEach(
+        function(item,index){
 
-        const div = document.createElement("div");
+            const div =
+                document.createElement("div");
 
-        div.className = "video-item";
+            div.className =
+                "video-item";
 
-        div.innerHTML =
-            '<i class="fas fa-play-circle"></i>' +
-            '<span>' +
-            escapeHTML(item.title) +
-            '</span>';
+            div.innerHTML =
+                '<i class="fas fa-play-circle"></i>' +
+                '<span>' +
+                escapeHTML(item.title) +
+                '</span>';
 
-        div.addEventListener("click",function(){
+            div.addEventListener(
+                "click",
+                function(){
 
-            loadVideo(index);
+                    loadVideo(index);
 
-        });
+                }
+            );
 
-        videoList.appendChild(div);
+            videoList.appendChild(div);
 
-    });
+        }
+    );
 
     updateActiveVideo();
+
 }
 
 
@@ -493,19 +572,21 @@ function updateActiveVideo(){
     const items =
         document.querySelectorAll(".video-item");
 
-    items.forEach(function(item,index){
+    items.forEach(
+        function(item,index){
 
-        if(index === currentVideoIndex){
+            if(index === currentVideoIndex){
 
-            item.classList.add("active");
+                item.classList.add("active");
 
-        }else{
+            }else{
 
-            item.classList.remove("active");
+                item.classList.remove("active");
+
+            }
 
         }
-
-    });
+    );
 
 }
 
@@ -516,7 +597,8 @@ function updateActiveVideo(){
 
 function escapeHTML(text){
 
-    const div = document.createElement("div");
+    const div =
+        document.createElement("div");
 
     div.textContent = text;
 
@@ -540,6 +622,7 @@ playButton.addEventListener(
     }
 );
 
+
 videoOverlay.addEventListener(
     "click",
     function(){
@@ -549,6 +632,7 @@ videoOverlay.addEventListener(
     }
 );
 
+
 playPauseBtn.addEventListener(
     "click",
     function(){
@@ -557,6 +641,7 @@ playPauseBtn.addEventListener(
 
     }
 );
+
 
 fullscreenBtn.addEventListener(
     "click",
@@ -574,12 +659,15 @@ fullscreenBtn.addEventListener(
 ===================================================== */
 
 const urlParams =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+        window.location.search
+    );
 
 const trafficSource =
     urlParams.get("src") || "direct";
 
 const allowedSources = [
+
     "fb1",
     "fb2",
     "fb3",
@@ -587,6 +675,7 @@ const allowedSources = [
     "fb5",
     "fb6",
     "fb7"
+
 ];
 
 const validSource =
@@ -611,4 +700,4 @@ loadVideo(0);
 </script>
 
 </body>
-              </html>
+</html>
